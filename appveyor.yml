@@ -1,7 +1,7 @@
 image: Visual Studio 2019
 
 environment:
-  - solutuon_name: AutomataConstructor/AutomataConstructor.sln
+  $solutuon_name = "AutomataConstructor/AutomataConstructor.sln"
 
 before_build:
   - nuget restore %solution_name%
