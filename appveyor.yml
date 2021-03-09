@@ -1,11 +1,5 @@
 image: Visual Studio 2019
 
-build_script:
-  - dotnet build %solution_name%
-test_script:
-  - dotnet test %solution_name%
-image: Visual Studio 2019
-
 before_build:
   - ps: |
       $solutuon = "AutomataConstructor/AutomataConstructor.sln"
