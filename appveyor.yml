@@ -1,9 +1,18 @@
 image: Visual Studio 2019
-before_build:
-  $solutuon_name = "AutomataConstructor/AutomataConstructor.sln"
-  - nuget restore 
 
 build_script:
   - dotnet build %solution_name%
 test_script:
   - dotnet test %solution_name%
+image: Visual Studio 2019
+
+before_build:
+  - ps: |
+      $solutuon = "AutomataConstructor/AutomataConstructor.sln"
+      nuget restore $solution
+build_script:
+  - ps: |
+      dotnet build $solution
+test_script:
+  - ps: |
+      dotnet test $solution
