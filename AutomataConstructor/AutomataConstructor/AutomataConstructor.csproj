@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GraphX" Version="3.0.0" />
   </ItemGroup>
 
 </Project>
