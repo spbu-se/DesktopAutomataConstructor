@@ -43,5 +43,6 @@ namespace AutomataConstructor
         private VertexControl selectedVertex;
         private SelectedTool selectedTool;
 
+
     }
 }

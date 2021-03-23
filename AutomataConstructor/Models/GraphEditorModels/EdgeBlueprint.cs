@@ -13,7 +13,7 @@ namespace AutomataConstructor.Models.GraphEditorModels
         public Point TargetPosition { get; set; }
         public Path EdgePath { get; set; }
 
-        public EdgeBlueprint(VertexControl source, Brush brush)
+        public EdgeBlueprint(VertexControl source, Point targetPosition, Brush brush)
         {
             EdgePath = new Path() { Stroke = brush, Data = new LineGeometry() };
             Source = source;
