@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomataConstructor"
         xmlns:graphx="http://schemas.panthernet.ru/graphx/"
+        xmlns:graphModels="clr-namespace:AutomataConstructor.Models.GraphModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -42,9 +43,18 @@
                 </ToggleButton>
             </StackPanel>
         </DockPanel>
-        
-        
-        
-        
+
+        <Border  Grid.Row="1" Grid.Column="0" BorderBrush="Aqua" BorderThickness="1"  Margin="2" >
+            <Border.Background>
+                <VisualBrush TileMode="Tile"  Viewport="0,0,0.09,0.095">
+                    <VisualBrush.Visual>
+                        <Image Source="pack://application:,,,/Assets/grid_paper.png" Stretch="Uniform" UseLayoutRounding="True" SnapsToDevicePixels="True"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Border.Background>
+            <graphx:ZoomControl x:Name="zoomControl" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center">
+                <graphModels:DFAGraphArea x:Name="graphArea"/>
+            </graphx:ZoomControl>
+        </Border>
     </Grid>
 </Window>
