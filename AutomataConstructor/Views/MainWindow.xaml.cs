@@ -45,10 +45,11 @@ namespace AutomataConstructor
             var graphLogic = new DFAGraphLogic();
             graphArea.LogicCore = graphLogic;
             graphLogic.DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.Custom;
-            graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.None;
+            graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
             graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
             graphLogic.EdgeCurvingEnabled = true;
-            graphArea.SetVerticesMathShape(VertexShape.Circle);
+            //graphLogic.EnableParallelEdges = true;
+            //graphLogic.ParallelEdgeDistance = 50;
             graphArea.VertexSelected += graphArea_VertexSelected;
             graphArea.EdgeSelected += graphArea_EdgeSelected;
         }
@@ -89,10 +90,6 @@ namespace AutomataConstructor
                 editor.CreateVirtualEdge(vc, vc.GetPosition());
                 selectedVertex = vc;
                 HighlightBehaviour.SetHighlighted(selectedVertex, true);
-                return;
-            }
-            if (selectedVertex == vc)
-            {
                 return;
             }
 
