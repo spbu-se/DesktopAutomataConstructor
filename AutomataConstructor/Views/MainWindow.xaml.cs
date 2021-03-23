@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutomataConstructor.Models.GraphModels;
+using AutomataConstructor.ViewModels;
+using GraphX.Common.Enums;
+using GraphX.Controls;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AutomataConstructor
 {
@@ -23,6 +14,29 @@ namespace AutomataConstructor
         public MainWindow()
         {
             InitializeComponent();
+            SetZoomControlProperties();
+            SetGraphAreaProperties();
+        }
+
+        private void SetZoomControlProperties()
+        {
+            zoomControl.Zoom = 2;
+            zoomControl.MinZoom = .5;
+            zoomControl.MaxZoom = 50;
+            zoomControl.ZoomSensitivity = 25;
+            zoomControl.IsAnimationEnabled = false;
+            ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Hidden);
+        }
+
+        private void SetGraphAreaProperties()
+        {
+            var graphLogic = new DFAGraphLogic();
+            graphArea.LogicCore = graphLogic;
+            graphLogic.DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.Custom;
+            graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.None;
+            graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
+            graphLogic.EdgeCurvingEnabled = true;
+            graphArea.SetVerticesMathShape(VertexShape.Circle);
         }
     }
 }
