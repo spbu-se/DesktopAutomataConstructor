@@ -7,13 +7,14 @@ using System.Windows;
 using System.Windows.Input;
 using System;
 using System.Linq;
+using GraphX.Controls.Models;
 
 namespace AutomataConstructor
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IDisposable
     {
         public MainWindow()
         {
@@ -48,13 +49,21 @@ namespace AutomataConstructor
             graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
             graphLogic.EdgeCurvingEnabled = true;
             graphArea.SetVerticesMathShape(VertexShape.Circle);
+            graphArea.VertexSelected += graphArea_VertexSelected;
+            graphArea.EdgeSelected += graphArea_EdgeSelected;
+        }
+
+        private void graphArea_EdgeSelected(object sender, EdgeSelectedEventArgs args)
+        {
+            if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && selectedTool == SelectedTool.Delete)
+                graphArea.RemoveEdge(args.EdgeControl.Edge as TransitionEdge, true);
         }
 
         private VertexControl selectedVertex;
         private SelectedTool selectedTool;
         private readonly EditorObjectManager editor;
 
-        void zoomControl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void zoomControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -73,14 +82,32 @@ namespace AutomataConstructor
             }
         }
 
-        private void CreateEdgeControl(object vc)
+        private void CreateEdgeControl(VertexControl vc)
         {
-            throw new NotImplementedException();
+            if (selectedVertex == null)
+            {
+                editor.CreateVirtualEdge(vc, vc.GetPosition());
+                selectedVertex = vc;
+                HighlightBehaviour.SetHighlighted(selectedVertex, true);
+                return;
+            }
+            if (selectedVertex == vc)
+            {
+                return;
+            }
+
+            var data = new TransitionEdge((StateVertex)selectedVertex.Vertex, (StateVertex)vc.Vertex, "One more edge");
+            var ec = new EdgeControl(selectedVertex, vc, data);
+            graphArea.InsertEdgeAndData(data, ec, 0, true);
+
+            HighlightBehaviour.SetHighlighted(selectedVertex, false);
+            selectedVertex = null;
+            editor.DestroyVirtualEdge();
         }
 
-        private object CreateVertexControl(Point position)
+        private VertexControl CreateVertexControl(Point position)
         {
-            var data = new StateVertex() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false};
+            var data = new StateVertex() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false };
             var vc = new VertexControl(data);
             vc.SetPosition(position);
             graphArea.AddVertexAndData(data, vc, true);
@@ -143,6 +170,51 @@ namespace AutomataConstructor
             selectedVertex = null;
         }
 
+        void graphArea_VertexSelected(object sender, VertexSelectedEventArgs args)
+        {
+            if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
+            {
+                switch (selectedTool)
+                {
+                    case SelectedTool.Edit:
+                        CreateEdgeControl(args.VertexControl);
+                        break;
+                    case SelectedTool.Delete:
+                        SafeRemoveVertex(args.VertexControl);
+                        break;
+                    default:
+                        if (selectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
+                            SelectVertex(args.VertexControl);
+                        break;
+                }
+            }
+        }
 
+        private static void SelectVertex(DependencyObject vc)
+        {
+            if (DragBehaviour.GetIsTagged(vc))
+            {
+                HighlightBehaviour.SetHighlighted(vc, false);
+                DragBehaviour.SetIsTagged(vc, false);
+            }
+            else
+            {
+                HighlightBehaviour.SetHighlighted(vc, true);
+                DragBehaviour.SetIsTagged(vc, true);
+            }
+        }
+
+        private void SafeRemoveVertex(VertexControl vc)
+        {
+            graphArea.RemoveVertexAndEdges(vc.Vertex as StateVertex);
+        }
+
+        public void Dispose()
+        {
+            if (editor != null)
+                editor.Dispose();
+            if (graphArea != null)
+                graphArea.Dispose();
+        }
     }
 }
