@@ -10,6 +10,16 @@ namespace AutomataConstructor.Models.GraphEditorModels
         private readonly DFAGraphArea graphArea;
         private readonly ZoomControl zoomControl;
         private readonly ResourceDictionary resourceDictionary;
+        private EdgeBlueprint edgeBlueprint;
+
+        public EditorObjectManager(DFAGraphArea graphArea, ZoomControl zoomControl)
+        {
+            this.graphArea = graphArea;
+            this.zoomControl = zoomControl;
+            resourceDictionary = new ResourceDictionary();
+        }
+
+
 
         public void Dispose()
         {
