@@ -1,5 +1,6 @@
 ﻿using AutomataConstructor.Models.GraphModels;
 using AutomataConstructor.ViewModels;
+using AutomataConstructor.Models.GraphEditorModels;
 using GraphX.Common.Enums;
 using GraphX.Controls;
 using System.Windows;
@@ -38,5 +39,7 @@ namespace AutomataConstructor
             graphLogic.EdgeCurvingEnabled = true;
             graphArea.SetVerticesMathShape(VertexShape.Circle);
         }
+
+        private VertexControl selectedVertex;
     }
 }
