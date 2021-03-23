@@ -4,6 +4,9 @@ using AutomataConstructor.Models.GraphEditorModels;
 using GraphX.Common.Enums;
 using GraphX.Controls;
 using System.Windows;
+using System.Windows.Input;
+using System;
+using System.Linq;
 
 namespace AutomataConstructor
 {
@@ -17,6 +20,12 @@ namespace AutomataConstructor
             InitializeComponent();
             SetZoomControlProperties();
             SetGraphAreaProperties();
+            editor = new EditorObjectManager(graphArea, zoomControl);
+            butDelete.Checked += ToolbarButton_Checked;
+            butSelect.Checked += ToolbarButton_Checked;
+            butEdit.Checked += ToolbarButton_Checked;
+
+            butSelect.IsChecked = true;
         }
 
         private void SetZoomControlProperties()
@@ -27,6 +36,7 @@ namespace AutomataConstructor
             zoomControl.ZoomSensitivity = 25;
             zoomControl.IsAnimationEnabled = false;
             ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Hidden);
+            zoomControl.MouseDown += zoomControl_MouseDown;
         }
 
         private void SetGraphAreaProperties()
@@ -42,6 +52,96 @@ namespace AutomataConstructor
 
         private VertexControl selectedVertex;
         private SelectedTool selectedTool;
+        private readonly EditorObjectManager editor;
+
+        void zoomControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (selectedTool == SelectedTool.Edit)
+                {
+                    var pos = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
+                    pos.Offset(-22.5, -22.5);
+                    var vc = CreateVertexControl(pos);
+                    if (selectedVertex != null)
+                        CreateEdgeControl(vc);
+                }
+                else if (selectedTool == SelectedTool.Select)
+                {
+                    ClearSelectMode(true);
+                }
+            }
+        }
+
+        private void CreateEdgeControl(object vc)
+        {
+            throw new NotImplementedException();
+        }
+
+        private object CreateVertexControl(Point position)
+        {
+            var data = new StateVertex() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false};
+            var vc = new VertexControl(data);
+            vc.SetPosition(position);
+            graphArea.AddVertexAndData(data, vc, true);
+            return vc;
+        }
+
+        void ToolbarButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (butDelete.IsChecked == true && sender == butDelete)
+            {
+                butEdit.IsChecked = false;
+                butSelect.IsChecked = false;
+                zoomControl.Cursor = Cursors.Help;
+                selectedTool = SelectedTool.Delete;
+                ClearEditMode();
+                ClearSelectMode();
+                return;
+            }
+            if (butEdit.IsChecked == true && sender == butEdit)
+            {
+                butDelete.IsChecked = false;
+                butSelect.IsChecked = false;
+                zoomControl.Cursor = Cursors.Pen;
+                selectedTool = SelectedTool.Edit;
+                ClearSelectMode();
+                return;
+            }
+            if (butSelect.IsChecked == true && sender == butSelect)
+            {
+                butEdit.IsChecked = false;
+                butDelete.IsChecked = false;
+                zoomControl.Cursor = Cursors.Hand;
+                selectedTool = SelectedTool.Select;
+                ClearEditMode();
+                graphArea.SetVerticesDrag(true, true);
+                graphArea.SetEdgesDrag(true);
+                return;
+            }
+        }
+
+        private void ClearSelectMode(bool soft = false)
+        {
+            graphArea.VertexList.Values
+                .Where(DragBehaviour.GetIsTagged)
+                .ToList()
+                .ForEach(a =>
+                {
+                    HighlightBehaviour.SetHighlighted(a, false);
+                    DragBehaviour.SetIsTagged(a, false);
+                });
+
+            if (!soft)
+                graphArea.SetVerticesDrag(false);
+        }
+
+        private void ClearEditMode()
+        {
+            if (selectedVertex != null) HighlightBehaviour.SetHighlighted(selectedVertex, false);
+            editor.DestroyVirtualEdge();
+            selectedVertex = null;
+        }
 
 
     }

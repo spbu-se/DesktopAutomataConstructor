@@ -21,7 +21,7 @@ namespace AutomataConstructor.Models.GraphEditorModels
             zoomControl.MouseMove += zoomControl_MouseMove;
             resourceDictionary = new ResourceDictionary
             {
-                Source = new Uri("/AutomataConstructor;component/Templates/EditorGraphXTemplates.xaml",
+                Source = new Uri("pack://application:,,,/Views/Templates/EditorTemplates.xaml",
                     UriKind.RelativeOrAbsolute)
             };
         }
