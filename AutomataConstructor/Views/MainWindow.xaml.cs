@@ -8,6 +8,8 @@ using System.Windows.Input;
 using System;
 using System.Linq;
 using GraphX.Controls.Models;
+using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace AutomataConstructor
 {
@@ -93,7 +95,7 @@ namespace AutomataConstructor
                 return;
             }
 
-            var data = new TransitionEdge((StateVertex)selectedVertex.Vertex, (StateVertex)vc.Vertex, "One more edge");
+            var data = new TransitionEdge((StateVertex)selectedVertex.Vertex, (StateVertex)vc.Vertex, "", new List<char>() { 'a' });
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
