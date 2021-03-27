@@ -11,6 +11,7 @@ using System.Linq;
 using GraphX.Controls.Models;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using System.Windows.Data;
 
 namespace AutomataConstructor
 {
@@ -136,6 +137,7 @@ namespace AutomataConstructor
                 selectedTool = SelectedTool.Delete;
                 ClearEditMode();
                 ClearSelectMode();
+                ClearEditPropertiesMode();
                 return;
             }
             if (butEdit.IsChecked == true && sender == butEdit)
@@ -146,6 +148,7 @@ namespace AutomataConstructor
                 zoomControl.Cursor = Cursors.Pen;
                 selectedTool = SelectedTool.Edit;
                 ClearSelectMode();
+                ClearEditPropertiesMode();
                 return;
             }
             if (butSelect.IsChecked == true && sender == butSelect)
@@ -156,6 +159,7 @@ namespace AutomataConstructor
                 zoomControl.Cursor = Cursors.Hand;
                 selectedTool = SelectedTool.Select;
                 ClearEditMode();
+                ClearEditPropertiesMode();
                 graphArea.SetVerticesDrag(true, true);
                 graphArea.SetEdgesDrag(true);
                 return;
@@ -184,6 +188,8 @@ namespace AutomataConstructor
             selectedVertex = null;
         }
 
+        private void ClearEditPropertiesMode() => properties.Items.Clear();
+
         void graphArea_VertexSelected(object sender, VertexSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
@@ -197,7 +203,7 @@ namespace AutomataConstructor
                         SafeRemoveVertex(args.VertexControl);
                         break;
                     case SelectedTool.EditProperties:
-                        var tb = new TextBlock() { Text = DateTime.Now.ToString() };
+                        var tb = new TextBox();
                         properties.Items.Clear();
                         properties.Items.Add(tb);
                         break;
