@@ -4,6 +4,7 @@
     {
         Select = 0,
         Edit,
-        Delete
+        Delete,
+        EditProperties
     }
 }

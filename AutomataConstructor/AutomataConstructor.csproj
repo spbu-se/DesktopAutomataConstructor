@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\edit.svg" />
     <None Remove="Assets\grid_paper.png" />
+    <None Remove="Assets\settings.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\edit.svg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\grid_paper.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\settings.svg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

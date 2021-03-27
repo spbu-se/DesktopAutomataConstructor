@@ -28,6 +28,7 @@ namespace AutomataConstructor
             butDelete.Checked += ToolbarButton_Checked;
             butSelect.Checked += ToolbarButton_Checked;
             butEdit.Checked += ToolbarButton_Checked;
+            butProps.Checked += ToolbarButton_Checked;
         }
 
         private void SetZoomControlProperties()
@@ -56,7 +57,10 @@ namespace AutomataConstructor
         private void graphArea_EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && selectedTool == SelectedTool.Delete)
+            {
                 graphArea.RemoveEdge(args.EdgeControl.Edge as TransitionEdge, true);
+                return;
+            }
         }
 
         private VertexControl selectedVertex;
@@ -112,10 +116,22 @@ namespace AutomataConstructor
 
         void ToolbarButton_Checked(object sender, RoutedEventArgs e)
         {
+            if (butProps.IsChecked == true && sender == butProps)
+            {
+                butEdit.IsChecked = false;
+                butSelect.IsChecked = false;
+                butDelete.IsChecked = false;
+                zoomControl.Cursor = Cursors.Pen;
+                selectedTool = SelectedTool.EditProperties;
+                ClearEditMode();
+                ClearSelectMode();
+                return;
+            }
             if (butDelete.IsChecked == true && sender == butDelete)
             {
                 butEdit.IsChecked = false;
                 butSelect.IsChecked = false;
+                butProps.IsChecked = false;
                 zoomControl.Cursor = Cursors.Help;
                 selectedTool = SelectedTool.Delete;
                 ClearEditMode();
@@ -126,6 +142,7 @@ namespace AutomataConstructor
             {
                 butDelete.IsChecked = false;
                 butSelect.IsChecked = false;
+                butProps.IsChecked = false;
                 zoomControl.Cursor = Cursors.Pen;
                 selectedTool = SelectedTool.Edit;
                 ClearSelectMode();
@@ -135,6 +152,7 @@ namespace AutomataConstructor
             {
                 butEdit.IsChecked = false;
                 butDelete.IsChecked = false;
+                butProps.IsChecked = false;
                 zoomControl.Cursor = Cursors.Hand;
                 selectedTool = SelectedTool.Select;
                 ClearEditMode();
@@ -177,6 +195,11 @@ namespace AutomataConstructor
                         break;
                     case SelectedTool.Delete:
                         SafeRemoveVertex(args.VertexControl);
+                        break;
+                    case SelectedTool.EditProperties:
+                        var tb = new TextBlock() { Text = DateTime.Now.ToString() };
+                        properties.Items.Clear();
+                        properties.Items.Add(tb);
                         break;
                     default:
                         if (selectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
