@@ -6,6 +6,7 @@ using GraphX.Controls;
 using System.Windows;
 using System.Windows.Input;
 using System;
+using QuickGraph;
 using System.Linq;
 using GraphX.Controls.Models;
 using System.Windows.Controls;
@@ -27,8 +28,6 @@ namespace AutomataConstructor
             butDelete.Checked += ToolbarButton_Checked;
             butSelect.Checked += ToolbarButton_Checked;
             butEdit.Checked += ToolbarButton_Checked;
-
-            butSelect.IsChecked = true;
         }
 
         private void SetZoomControlProperties()
@@ -50,8 +49,6 @@ namespace AutomataConstructor
             graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
             graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
             graphLogic.EdgeCurvingEnabled = true;
-            //graphLogic.EnableParallelEdges = true;
-            //graphLogic.ParallelEdgeDistance = 50;
             graphArea.VertexSelected += graphArea_VertexSelected;
             graphArea.EdgeSelected += graphArea_EdgeSelected;
         }
