@@ -11,8 +11,6 @@ using System.Linq;
 using GraphX.Controls.Models;
 using System.Windows.Controls;
 using System.Collections.Generic;
-using System.Windows.Data;
-using AutomataConstructor.Controls.PanelAttributes;
 
 namespace AutomataConstructor
 {
@@ -54,6 +52,8 @@ namespace AutomataConstructor
             graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
             graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
             graphLogic.EdgeCurvingEnabled = true;
+            //graphLogic.EnableParallelEdges = true;
+            //graphLogic.ParallelEdgeDistance = 50;
             graphArea.VertexSelected += graphArea_VertexSelected;
             graphArea.EdgeSelected += graphArea_EdgeSelected;
         }
