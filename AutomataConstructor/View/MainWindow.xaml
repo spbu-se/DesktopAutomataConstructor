@@ -1,0 +1,52 @@
+﻿<Window x:Class="AutomataConstructor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutomataConstructor"
+        xmlns:scene="clr-namespace:ControlsLibrary.Controls.Scene;assembly=ControlsLibrary"
+        xmlns:toolbox="clr-namespace:ControlsLibrary.Controls.Toolbox;assembly=ControlsLibrary"
+        xmlns:attributes="clr-namespace:ControlsLibrary.Controls.AttributesPanel;assembly=ControlsLibrary"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border CornerRadius="2" BorderBrush="Aqua" Background="AliceBlue" Margin="2" BorderThickness="1">
+            <TextBlock Margin="1" TextWrapping="Wrap" TextAlignment="Center" Text="Draw your DFA graph here"/>
+        </Border>
+
+        <toolbox:Toolbox Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="3"/>
+
+        <Border  Grid.Row="1" Grid.Column="0" BorderBrush="Aqua" BorderThickness="1"  Margin="2" >
+            <Border.Background>
+                <VisualBrush TileMode="Tile"  Viewport="0,0,0.09,0.095">
+                    <VisualBrush.Visual>
+                        <Image Source="pack://application:,,,/Assets/grid_paper.png" Stretch="Uniform" UseLayoutRounding="True" SnapsToDevicePixels="True"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <scene:Scene Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" Background="White" CornerRadius="5">
+                    <attributes:AttributesPanel/>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
