@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AutomataConstructor"
         xmlns:graphx="http://schemas.panthernet.ru/graphx/"
         xmlns:graphModels="clr-namespace:AutomataConstructor.Models.GraphModels"
+        xmlns:controls="clr-namespace:AutomataConstructor.Controls.PanelAttributes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -69,9 +70,8 @@
                 </graphx:ZoomControl>
                 <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" Background="White" CornerRadius="5">
                     <StackPanel>
-                        <TextBlock Text="Properties:"/>
-                        <ListBox x:Name="properties">
-                        </ListBox>
+                        <Label x:Name="selectedEntityLabel" Grid.Row="3" Content="Properties:" HorizontalAlignment="Stretch" />
+                        <controls:AttributesPanel/>
                     </StackPanel>
                 </Border>
             </Grid>

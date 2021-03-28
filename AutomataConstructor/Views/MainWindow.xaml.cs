@@ -12,6 +12,7 @@ using GraphX.Controls.Models;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Windows.Data;
+using AutomataConstructor.Controls.PanelAttributes;
 
 namespace AutomataConstructor
 {
@@ -20,6 +21,8 @@ namespace AutomataConstructor
     /// </summary>
     public partial class MainWindow : Window, IDisposable
     {
+        public AttributesPanelViewModel AttributesPanel { get; } = new AttributesPanelViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -137,7 +140,7 @@ namespace AutomataConstructor
                 selectedTool = SelectedTool.Delete;
                 ClearEditMode();
                 ClearSelectMode();
-                ClearEditPropertiesMode();
+                //ClearEditPropertiesMode();
                 return;
             }
             if (butEdit.IsChecked == true && sender == butEdit)
@@ -148,7 +151,7 @@ namespace AutomataConstructor
                 zoomControl.Cursor = Cursors.Pen;
                 selectedTool = SelectedTool.Edit;
                 ClearSelectMode();
-                ClearEditPropertiesMode();
+                //ClearEditPropertiesMode();
                 return;
             }
             if (butSelect.IsChecked == true && sender == butSelect)
@@ -159,7 +162,7 @@ namespace AutomataConstructor
                 zoomControl.Cursor = Cursors.Hand;
                 selectedTool = SelectedTool.Select;
                 ClearEditMode();
-                ClearEditPropertiesMode();
+                //ClearEditPropertiesMode();
                 graphArea.SetVerticesDrag(true, true);
                 graphArea.SetEdgesDrag(true);
                 return;
@@ -188,7 +191,7 @@ namespace AutomataConstructor
             selectedVertex = null;
         }
 
-        private void ClearEditPropertiesMode() => properties.Items.Clear();
+        //private void ClearEditPropertiesMode() => properties.Items.Clear();
 
         void graphArea_VertexSelected(object sender, VertexSelectedEventArgs args)
         {
@@ -204,8 +207,8 @@ namespace AutomataConstructor
                         break;
                     case SelectedTool.EditProperties:
                         var tb = new TextBox();
-                        properties.Items.Clear();
-                        properties.Items.Add(tb);
+                        //properties.Items.Clear();
+                        //properties.Items.Add(tb);
                         break;
                     default:
                         if (selectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)

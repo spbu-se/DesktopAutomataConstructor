@@ -9,7 +9,7 @@ namespace AutomataConstructor.ViewModels.Base
     /// <summary>
     /// Base class for all view models
     /// </summary>
-    internal abstract class ViewModel : INotifyPropertyChanged
+    public abstract class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
