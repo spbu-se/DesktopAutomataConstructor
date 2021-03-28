@@ -6,10 +6,12 @@ using GraphX.Controls;
 using System.Windows;
 using System.Windows.Input;
 using System;
+using QuickGraph;
 using System.Linq;
 using GraphX.Controls.Models;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using AutomataConstructor.Controls.PanelAttributes;
 
 namespace AutomataConstructor
 {
@@ -18,6 +20,8 @@ namespace AutomataConstructor
     /// </summary>
     public partial class MainWindow : Window, IDisposable
     {
+        public AttributesPanelViewModel AttributesPanel { get; } = new AttributesPanelViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,8 +31,7 @@ namespace AutomataConstructor
             butDelete.Checked += ToolbarButton_Checked;
             butSelect.Checked += ToolbarButton_Checked;
             butEdit.Checked += ToolbarButton_Checked;
-
-            butSelect.IsChecked = true;
+            butProps.Checked += ToolbarButton_Checked;
         }
 
         private void SetZoomControlProperties()
@@ -59,7 +62,10 @@ namespace AutomataConstructor
         private void graphArea_EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && selectedTool == SelectedTool.Delete)
+            {
                 graphArea.RemoveEdge(args.EdgeControl.Edge as TransitionEdge, true);
+                return;
+            }
         }
 
         private VertexControl selectedVertex;
@@ -115,32 +121,49 @@ namespace AutomataConstructor
 
         void ToolbarButton_Checked(object sender, RoutedEventArgs e)
         {
+            if (butProps.IsChecked == true && sender == butProps)
+            {
+                butEdit.IsChecked = false;
+                butSelect.IsChecked = false;
+                butDelete.IsChecked = false;
+                zoomControl.Cursor = Cursors.Pen;
+                selectedTool = SelectedTool.EditProperties;
+                ClearEditMode();
+                ClearSelectMode();
+                return;
+            }
             if (butDelete.IsChecked == true && sender == butDelete)
             {
                 butEdit.IsChecked = false;
                 butSelect.IsChecked = false;
+                butProps.IsChecked = false;
                 zoomControl.Cursor = Cursors.Help;
                 selectedTool = SelectedTool.Delete;
                 ClearEditMode();
                 ClearSelectMode();
+                ClearEditPropertiesMode();
                 return;
             }
             if (butEdit.IsChecked == true && sender == butEdit)
             {
                 butDelete.IsChecked = false;
                 butSelect.IsChecked = false;
+                butProps.IsChecked = false;
                 zoomControl.Cursor = Cursors.Pen;
                 selectedTool = SelectedTool.Edit;
                 ClearSelectMode();
+                ClearEditPropertiesMode();
                 return;
             }
             if (butSelect.IsChecked == true && sender == butSelect)
             {
                 butEdit.IsChecked = false;
                 butDelete.IsChecked = false;
+                butProps.IsChecked = false;
                 zoomControl.Cursor = Cursors.Hand;
                 selectedTool = SelectedTool.Select;
                 ClearEditMode();
+                ClearEditPropertiesMode();
                 graphArea.SetVerticesDrag(true, true);
                 graphArea.SetEdgesDrag(true);
                 return;
@@ -169,6 +192,8 @@ namespace AutomataConstructor
             selectedVertex = null;
         }
 
+        private void ClearEditPropertiesMode() => AttributesPanel.Attributes.Clear();
+
         void graphArea_VertexSelected(object sender, VertexSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
@@ -180,6 +205,11 @@ namespace AutomataConstructor
                         break;
                     case SelectedTool.Delete:
                         SafeRemoveVertex(args.VertexControl);
+                        break;
+                    case SelectedTool.EditProperties:
+                        var tb = new TextBox();
+                        //properties.Items.Clear();
+                        //properties.Items.Add(tb);
                         break;
                     default:
                         if (selectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)

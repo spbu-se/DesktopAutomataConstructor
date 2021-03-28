@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AutomataConstructor"
         xmlns:graphx="http://schemas.panthernet.ru/graphx/"
         xmlns:graphModels="clr-namespace:AutomataConstructor.Models.GraphModels"
+        xmlns:controls="clr-namespace:AutomataConstructor.Controls.PanelAttributes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -41,6 +42,9 @@
                 <ToggleButton Name="butDelete" ToolTip="Click vertices and edges to delete them" x:FieldModifier="private">
                     <Path  Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=Foreground}" Data="F1 M 56.0143,57L 45.683,57L 39.0246,44.6245C 38.7758,44.1665 38.5156,43.3183 38.2442,42.0799L 38.1339,42.0799C 38.0095,42.6623 37.7127,43.5473 37.2433,44.7348L 30.5594,57L 20.1857,57L 32.5018,38L 21.2714,19L 31.8487,19L 37.3621,30.3915C 37.7918,31.2963 38.1763,32.365 38.5156,33.5977L 38.6259,33.5977C 38.8408,32.857 39.2394,31.7543 39.8219,30.2897L 45.8951,19L 55.4714,19L 44.0969,37.8388L 56.0143,57 Z "/>
                 </ToggleButton>
+                <ToggleButton Name="butProps" ToolTip="Click vertices and edges to edit properties" x:FieldModifier="private">
+                    <Path  Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=Foreground}" Data="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/>
+                </ToggleButton>
             </StackPanel>
         </DockPanel>
 
@@ -52,9 +56,25 @@
                     </VisualBrush.Visual>
                 </VisualBrush>
             </Border.Background>
-            <graphx:ZoomControl x:Name="zoomControl" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center">
-                <graphModels:DFAGraphArea x:Name="graphArea"/>
-            </graphx:ZoomControl>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <graphx:ZoomControl x:Name="zoomControl" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                    <graphModels:DFAGraphArea x:Name="graphArea"/>
+                </graphx:ZoomControl>
+                <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" Background="White" CornerRadius="5">
+                    <StackPanel>
+                        <Label x:Name="selectedEntityLabel" Grid.Row="3" Content="Properties:" HorizontalAlignment="Stretch" />
+                        <controls:AttributesPanel/>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Border>
     </Grid>
 </Window>
