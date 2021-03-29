@@ -5,19 +5,12 @@ using GraphX.Controls;
 using GraphX.Controls.Models;
 using GraphX.Logic.Models;
 using QuickGraph;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ControlsLibrary.Controls.Toolbar;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -28,12 +21,15 @@ namespace ControlsLibrary.Controls.Scene
     {
         public AttributesPanelViewModel AttributesPanel { get; } = new AttributesPanelViewModel();
 
-        public Scene()
+        public ToolbarViewModel toolbar;
+
+        public Scene(ToolbarViewModel toolbar)
         {
             InitializeComponent();
             SetZoomControlProperties();
             SetGraphAreaProperties();
             editor = new EditorObjectManager(graphArea, zoomControl);
+            this.toolbar = toolbar;
             /*butDelete.Checked += ToolbarButton_Checked;
             butSelect.Checked += ToolbarButton_Checked;
             butEdit.Checked += ToolbarButton_Checked;
