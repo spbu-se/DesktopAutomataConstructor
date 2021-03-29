@@ -15,7 +15,7 @@ namespace ControlsLibrary.ViewModel
         public string Value
         {
             get => value;
-            set => Set(ref value, value);
+            set => Set(ref this.value, value);
         }
 
         public string Name { get; }
