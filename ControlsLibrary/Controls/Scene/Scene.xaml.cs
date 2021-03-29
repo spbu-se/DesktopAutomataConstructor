@@ -22,16 +22,23 @@ namespace ControlsLibrary.Controls.Scene
     {
         public AttributesPanelViewModel AttributesPanel { get; } = new AttributesPanelViewModel();
 
-        public ToolbarViewModel toolbar;
+        private ToolbarViewModel toolBar;
 
-        public Scene(ToolbarViewModel toolbar)
+        public ToolbarViewModel Toolbar {
+            get => toolBar; 
+            set
+            {
+                toolBar = value;
+                toolBar.SelectedToolChanged += Toolbar_ToolSelected;
+            }
+        }
+
+        public Scene()
         {
             InitializeComponent();
             SetZoomControlProperties();
             SetGraphAreaProperties();
             editor = new EditorObjectManager(graphArea, zoomControl);
-            this.toolbar = toolbar;
-            toolbar.SelectedToolChanged += ToolbarButton_Checked;
         }
 
         private void SetZoomControlProperties()
@@ -61,7 +68,7 @@ namespace ControlsLibrary.Controls.Scene
 
         private void graphArea_EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
-            if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && toolbar.SelectedTool == SelectedTool.Delete)
+            if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Delete)
             {
                 graphArea.RemoveEdge(args.EdgeControl.Edge as EdgeViewModel, true);
                 return;
@@ -75,7 +82,7 @@ namespace ControlsLibrary.Controls.Scene
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if(toolbar.SelectedTool == SelectedTool.Edit)
+                if(Toolbar.SelectedTool == SelectedTool.Edit)
                 {
                     var pos = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
                     pos.Offset(-22.5, -22.5);
@@ -83,7 +90,7 @@ namespace ControlsLibrary.Controls.Scene
                     if (selectedVertex != null)
                         CreateEdgeControl(vc);
                 }
-                else if (toolbar.SelectedTool == SelectedTool.Select)
+                else if (Toolbar.SelectedTool == SelectedTool.Select)
                 {
                     ClearSelectMode(true);
                 }
@@ -118,16 +125,16 @@ namespace ControlsLibrary.Controls.Scene
             return vc;
         }
 
-        void ToolbarButton_Checked(object sender, EventArgs e)
+        void Toolbar_ToolSelected(object sender, EventArgs e)
         {
-            if (toolbar.SelectedTool == SelectedTool.EditAttributes)
+            if (Toolbar.SelectedTool == SelectedTool.EditAttributes)
             {
                 zoomControl.Cursor = Cursors.Pen;
                 ClearEditMode();
                 ClearSelectMode();
                 return;
             }
-            if (toolbar.SelectedTool == SelectedTool.Delete)
+            if (Toolbar.SelectedTool == SelectedTool.Delete)
             {
                 zoomControl.Cursor = Cursors.Help;
                 ClearEditMode();
@@ -135,14 +142,14 @@ namespace ControlsLibrary.Controls.Scene
                 ClearEditPropertiesMode();
                 return;
             }
-            if (toolbar.SelectedTool == SelectedTool.Edit)
+            if (Toolbar.SelectedTool == SelectedTool.Edit)
             {
                 zoomControl.Cursor = Cursors.Pen;
                 ClearSelectMode();
                 ClearEditPropertiesMode();
                 return;
             }
-            if (toolbar.SelectedTool == SelectedTool.Select)
+            if (Toolbar.SelectedTool == SelectedTool.Select)
             {
                 zoomControl.Cursor = Cursors.Hand;
                 ClearEditMode();
@@ -181,7 +188,7 @@ namespace ControlsLibrary.Controls.Scene
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
             {
-                switch (toolbar.SelectedTool)
+                switch (Toolbar.SelectedTool)
                 {
                     case SelectedTool.Edit:
                         CreateEdgeControl(args.VertexControl);
@@ -195,7 +202,7 @@ namespace ControlsLibrary.Controls.Scene
                         //properties.Items.Add(tb);
                         break;
                     default:
-                        if (toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
+                        if (Toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
                             SelectVertex(args.VertexControl);
                         break;
                 }

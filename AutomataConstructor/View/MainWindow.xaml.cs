@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using ControlsLibrary.Controls.Scene;
+using ControlsLibrary.Controls.Toolbar;
+using System.Windows;
 
 namespace AutomataConstructor
 {
@@ -10,7 +12,7 @@ namespace AutomataConstructor
        public MainWindow()
        {
             InitializeComponent();
-
+            scene.Toolbar = (ToolbarViewModel)toolbar.DataContext;
        }
     }
 }
