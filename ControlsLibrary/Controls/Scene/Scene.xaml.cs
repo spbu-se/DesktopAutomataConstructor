@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ControlsLibrary.Controls.Toolbar;
+using System;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -30,10 +31,7 @@ namespace ControlsLibrary.Controls.Scene
             SetGraphAreaProperties();
             editor = new EditorObjectManager(graphArea, zoomControl);
             this.toolbar = toolbar;
-            /*butDelete.Checked += ToolbarButton_Checked;
-            butSelect.Checked += ToolbarButton_Checked;
-            butEdit.Checked += ToolbarButton_Checked;
-            butProps.Checked += ToolbarButton_Checked;*/
+            toolbar.SelectedToolChanged += ToolbarButton_Checked;
         }
 
         private void SetZoomControlProperties()
@@ -121,56 +119,40 @@ namespace ControlsLibrary.Controls.Scene
             return vc;
         }
 
-        /*void ToolbarButton_Checked(object sender, RoutedEventArgs e)
+        void ToolbarButton_Checked(object sender, EventArgs e)
         {
-            if (butProps.IsChecked == true && sender == butProps)
+            if (toolbar.SelectedTool == SelectedTool.EditAttributes)
             {
-                butEdit.IsChecked = false;
-                butSelect.IsChecked = false;
-                butDelete.IsChecked = false;
                 zoomControl.Cursor = Cursors.Pen;
-                selectedTool = SelectedTool.EditProperties;
                 ClearEditMode();
                 ClearSelectMode();
                 return;
             }
-            if (butDelete.IsChecked == true && sender == butDelete)
+            if (toolbar.SelectedTool == SelectedTool.Delete)
             {
-                butEdit.IsChecked = false;
-                butSelect.IsChecked = false;
-                butProps.IsChecked = false;
                 zoomControl.Cursor = Cursors.Help;
-                selectedTool = SelectedTool.Delete;
                 ClearEditMode();
                 ClearSelectMode();
                 ClearEditPropertiesMode();
                 return;
             }
-            if (butEdit.IsChecked == true && sender == butEdit)
+            if (toolbar.SelectedTool == SelectedTool.Edit)
             {
-                butDelete.IsChecked = false;
-                butSelect.IsChecked = false;
-                butProps.IsChecked = false;
                 zoomControl.Cursor = Cursors.Pen;
-                selectedTool = SelectedTool.Edit;
                 ClearSelectMode();
                 ClearEditPropertiesMode();
                 return;
             }
-            if (butSelect.IsChecked == true && sender == butSelect)
+            if (toolbar.SelectedTool == SelectedTool.Select)
             {
-                butEdit.IsChecked = false;
-                butDelete.IsChecked = false;
-                butProps.IsChecked = false;
                 zoomControl.Cursor = Cursors.Hand;
-                selectedTool = SelectedTool.Select;
                 ClearEditMode();
                 ClearEditPropertiesMode();
                 graphArea.SetVerticesDrag(true, true);
                 graphArea.SetEdgesDrag(true);
                 return;
             }
-        }*/
+        }
 
         private void ClearSelectMode(bool soft = false)
         {

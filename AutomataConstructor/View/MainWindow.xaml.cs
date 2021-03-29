@@ -1,6 +1,4 @@
-﻿
-
-using System.Windows;
+﻿using System.Windows;
 
 namespace AutomataConstructor
 {
@@ -12,6 +10,7 @@ namespace AutomataConstructor
        public MainWindow()
        {
             InitializeComponent();
+
        }
     }
 }
