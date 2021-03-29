@@ -32,6 +32,7 @@ namespace ControlsLibrary.Controls.Toolbar
                     DeleteToolSelected = false;
                     EditAttributesToolSelected = false;
                 }
+                SelectedToolChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -48,6 +49,7 @@ namespace ControlsLibrary.Controls.Toolbar
                     DeleteToolSelected = false;
                     EditAttributesToolSelected = false;
                 }
+                SelectedToolChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -64,6 +66,7 @@ namespace ControlsLibrary.Controls.Toolbar
                     EditToolSelected = false;
                     EditAttributesToolSelected = false;
                 }
+                SelectedToolChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -80,6 +83,7 @@ namespace ControlsLibrary.Controls.Toolbar
                     EditToolSelected = false;
                     DeleteToolSelected = false;
                 }
+                SelectedToolChanged?.Invoke(this, EventArgs.Empty);
             }
         }
     }
