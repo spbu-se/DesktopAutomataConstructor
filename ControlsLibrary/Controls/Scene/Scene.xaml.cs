@@ -61,7 +61,7 @@ namespace ControlsLibrary.Controls.Scene
 
         private void graphArea_EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
-            if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && selectedTool == SelectedTool.Delete)
+            if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && toolbar.SelectedTool == SelectedTool.Delete)
             {
                 graphArea.RemoveEdge(args.EdgeControl.Edge as EdgeViewModel, true);
                 return;
@@ -69,14 +69,13 @@ namespace ControlsLibrary.Controls.Scene
         }
 
         private VertexControl selectedVertex;
-        private SelectedTool selectedTool;
         private readonly EditorObjectManager editor;
 
         private void zoomControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (selectedTool == SelectedTool.Edit)
+                if(toolbar.SelectedTool == SelectedTool.Edit)
                 {
                     var pos = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
                     pos.Offset(-22.5, -22.5);
@@ -84,7 +83,7 @@ namespace ControlsLibrary.Controls.Scene
                     if (selectedVertex != null)
                         CreateEdgeControl(vc);
                 }
-                else if (selectedTool == SelectedTool.Select)
+                else if (toolbar.SelectedTool == SelectedTool.Select)
                 {
                     ClearSelectMode(true);
                 }
@@ -182,7 +181,7 @@ namespace ControlsLibrary.Controls.Scene
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
             {
-                switch (selectedTool)
+                switch (toolbar.SelectedTool)
                 {
                     case SelectedTool.Edit:
                         CreateEdgeControl(args.VertexControl);
@@ -196,7 +195,7 @@ namespace ControlsLibrary.Controls.Scene
                         //properties.Items.Add(tb);
                         break;
                     default:
-                        if (selectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
+                        if (toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
                             SelectVertex(args.VertexControl);
                         break;
                 }
