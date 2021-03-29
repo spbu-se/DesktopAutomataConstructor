@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ControlsLibrary.Controls.Toolbox
+namespace ControlsLibrary.Controls.Toolbar
 {
     /// <summary>
     /// Interaction logic for Toolbox.xaml
     /// </summary>
-    public partial class Toolbox : UserControl
+    public partial class Toolbar : UserControl
     {
-        public Toolbox()
+        public Toolbar()
         {
             InitializeComponent();
         }
