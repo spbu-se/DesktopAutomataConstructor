@@ -16,11 +16,8 @@ namespace AutomataConstructor
         {
             InitializeComponent();
             scene.Toolbar = (ToolbarViewModel)toolbar.DataContext;
-            //scene.NodeSelected += (sender, args) => AttributesPanel.Attributes = args.Node.Attributes;
             attributes.DataContext = AttributesPanel;
-            var list = new List<AttributeViewModel>();
-            list.Add(new AttributeViewModel("length", ControlsLibrary.Model.TypeEnum.Int));
-            AttributesPanel.Attributes = list;
+            scene.NodeSelected += (sender, args) => AttributesPanel.Attributes = args.Node.Attributes;
         }
 
         public AttributesPanelViewModel AttributesPanel { get; } = new AttributesPanelViewModel();

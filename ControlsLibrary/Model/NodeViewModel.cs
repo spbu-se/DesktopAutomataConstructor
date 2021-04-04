@@ -8,6 +8,12 @@ namespace ControlsLibrary.Model
 {
     public class NodeViewModel : VertexBase, INotifyPropertyChanged
     {
+        public NodeViewModel()
+        {
+            Attributes = new List<AttributeViewModel>();
+            Attributes.Add(new AttributeViewModel("name", TypeEnum.String));
+        }
+
         private string name;
         private bool isInitial;
         private bool isFinal;
