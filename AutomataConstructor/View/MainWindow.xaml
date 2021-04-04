@@ -45,7 +45,7 @@
                 </Grid.RowDefinitions>
                 <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
                 <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" Background="White" CornerRadius="5">
-                    <attributes:AttributesPanel/>
+                    <attributes:AttributesPanel x:Name="attributes"/>
                 </Border>
             </Grid>
         </Border>

@@ -186,16 +186,14 @@ namespace ControlsLibrary.Controls.Scene
 
         private void ClearEditPropertiesMode() => AttributesPanel.Attributes.Clear();
 
-        private void SelectNode(string name)
-        {
-            this.Gra
-        }
+        private NodeViewModel SelectNode(VertexControl vertexControl)
+            => graphArea.VertexList.FirstOrDefault(x => x.Value == vertexControl).Key;
 
         private void graphArea_VertexSelected(object sender, VertexSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
             {
-                NodeSelected?.Invoke(this, );
+                NodeSelected?.Invoke(this, new NodeSelectedEventArgs() { Node = SelectNode(args.VertexControl) });
                 switch (Toolbar.SelectedTool)
                 {
                     case SelectedTool.Edit:
