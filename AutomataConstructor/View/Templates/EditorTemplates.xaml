@@ -33,7 +33,7 @@
                 <ControlTemplate TargetType="{x:Type controls:VertexControl}">
                     <Grid>
                         <controls:VertexLabelControl x:Name="PART_vertexLabel" 
-                            Content="{Binding Vertex.Text, RelativeSource={RelativeSource TemplatedParent}}" 
+                            Content="{Binding Vertex.Name, RelativeSource={RelativeSource TemplatedParent}}" 
                             LabelPositionSide="Bottom" 
                             FontFamily="Comic Sans MS" />
                     </Grid>
