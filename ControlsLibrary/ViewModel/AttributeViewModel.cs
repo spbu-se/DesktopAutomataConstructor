@@ -8,18 +8,37 @@ namespace ControlsLibrary.ViewModel
         public AttributeViewModel(string name, TypeEnum type)
         {
             Name = name;
-            Type = type;
+            this.type = type;
         }
 
         private string value;
         public string Value
         {
             get => value;
-            set => Set(ref this.value, value);
+            set
+            {
+                Set(ref this.value, value);
+            }
         }
 
         public string Name { get; }
 
-        public TypeEnum Type { get; }
+        private TypeEnum type;
+        public string Type 
+        { 
+            get
+            {
+                switch (type)
+                {
+                    case TypeEnum.Bool:
+                        return "Boolean";
+                    case TypeEnum.Int:
+                        return "Int";
+                    case TypeEnum.String:
+                        return "String";
+                }
+                return "Missed";
+            }
+        }
     }
 }

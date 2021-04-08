@@ -1,8 +1,11 @@
 ﻿using ControlsLibrary.ViewModel;
 using GraphX.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Data;
 
 namespace ControlsLibrary.Model
 {
@@ -11,8 +14,26 @@ namespace ControlsLibrary.Model
         public NodeViewModel()
         {
             Attributes = new List<AttributeViewModel>();
-            Attributes.Add(new AttributeViewModel("name", TypeEnum.String));
+            setAttributes();
         }
+
+        private AttributeViewModel nameAttribute;
+        private void setAttributes()
+        {
+            nameAttribute = new AttributeViewModel("Name", TypeEnum.String);
+            Attributes.Add(nameAttribute);
+            nameAttribute.PropertyChanged += (object sender, PropertyChangedEventArgs e) => Name = nameAttribute.Value;
+
+            var isIinitialAttribute = new AttributeViewModel("IsInitial", TypeEnum.Bool);
+            Attributes.Add(isIinitialAttribute);
+            isIinitialAttribute.PropertyChanged += (object sender, PropertyChangedEventArgs e) => IsInitial = isIinitialAttribute.Value == "true";
+
+            var isFinalAttribute = new AttributeViewModel("IsFinal", TypeEnum.Bool);
+            Attributes.Add(isFinalAttribute);
+            isFinalAttribute.PropertyChanged += (object sender, PropertyChangedEventArgs e) => IsInitial = isFinalAttribute.Value == "true";
+        }
+
+        private void nameChanged(object sender, PropertyChangedEventArgs e) => Name = nameAttribute.Value;
 
         private string name;
         private bool isInitial;
