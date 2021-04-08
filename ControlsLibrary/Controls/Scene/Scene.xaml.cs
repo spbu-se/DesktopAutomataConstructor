@@ -127,7 +127,7 @@ namespace ControlsLibrary.Controls.Scene
             return vc;
         }
 
-        void Toolbar_ToolSelected(object sender, EventArgs e)
+        private void Toolbar_ToolSelected(object sender, EventArgs e)
         {
             if (Toolbar.SelectedTool == SelectedTool.EditAttributes)
             {
@@ -174,12 +174,17 @@ namespace ControlsLibrary.Controls.Scene
                 });
 
             if (!soft)
+            {
                 graphArea.SetVerticesDrag(false);
+            }
         }
 
         private void ClearEditMode()
         {
-            if (selectedVertex != null) HighlightBehaviour.SetHighlighted(selectedVertex, false);
+            if (selectedVertex != null)
+            {
+                HighlightBehaviour.SetHighlighted(selectedVertex, false);
+            }
             editor.DestroyVirtualEdge();
             selectedVertex = null;
         }
@@ -237,9 +242,13 @@ namespace ControlsLibrary.Controls.Scene
         public void Dispose()
         {
             if (editor != null)
+            {
                 editor.Dispose();
+            }
             if (graphArea != null)
+            {
                 graphArea.Dispose();
+            }
         }
     }
 }
