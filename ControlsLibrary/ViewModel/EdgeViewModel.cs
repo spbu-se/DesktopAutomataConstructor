@@ -1,11 +1,13 @@
 ﻿using GraphX.Common.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace ControlsLibrary.Model
 {
-    public class EdgeViewModel : EdgeBase<NodeViewModel>
+    public class EdgeViewModel : EdgeBase<NodeViewModel>, INotifyPropertyChanged
     {
         /// <summary>
         /// Constructor which gets two vertices and symbols of transition
@@ -13,20 +15,31 @@ namespace ControlsLibrary.Model
         /// <param name="source">Source vertex</param>
         /// <param name="target">Target vertex</param>
         /// <param name="availableSymbols">Symbols of transition</param>
-        public EdgeViewModel(NodeViewModel source, NodeViewModel target, string name, List<char> transitionTokens)
+        public EdgeViewModel(NodeViewModel source, NodeViewModel target)
             : base(source, target, 1)
         {
-            Name = name;
-            if (transitionTokens == null)
-            {
-                throw new ArgumentNullException(nameof(transitionTokens));
-            }
-            TransitionTokens = transitionTokens;
         }
 
-        public List<char> TransitionTokens { get; }
+        private string transitionTokensString;
 
-        public string Name { get; set; }
+        public string TransitionTokensString
+        {
+            get => transitionTokensString;
+            set
+            {
+                transitionTokensString = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<char> TransitionTokens { get => transitionTokensString.ToList(); }
+
+        public void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Overriding of the base method
