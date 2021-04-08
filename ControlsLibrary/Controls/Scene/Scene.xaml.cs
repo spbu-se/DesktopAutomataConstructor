@@ -60,11 +60,12 @@ namespace ControlsLibrary.Controls.Scene
             graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
             graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
             graphLogic.EdgeCurvingEnabled = true;
-            //graphLogic.EnableParallelEdges = true;
-            //graphLogic.ParallelEdgeDistance = 50;
+            graphLogic.EnableParallelEdges = true;
             graphArea.VertexSelected += graphArea_VertexSelected;
             graphArea.EdgeSelected += graphArea_EdgeSelected;
         }
+
+        public event EventHandler<NodeSelectedEventArgs> NodeSelected;
 
         private void graphArea_EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
@@ -88,7 +89,9 @@ namespace ControlsLibrary.Controls.Scene
                     pos.Offset(-22.5, -22.5);
                     var vc = CreateVertexControl(pos);
                     if (selectedVertex != null)
+                    {
                         CreateEdgeControl(vc);
+                    }
                 }
                 else if (Toolbar.SelectedTool == SelectedTool.Select)
                 {
@@ -107,7 +110,8 @@ namespace ControlsLibrary.Controls.Scene
                 return;
             }
 
-            var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex, "", new List<char>() { 'a' });
+            var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex);
+            data.TransitionTokensString = "a";
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
@@ -125,7 +129,7 @@ namespace ControlsLibrary.Controls.Scene
             return vc;
         }
 
-        void Toolbar_ToolSelected(object sender, EventArgs e)
+        private void Toolbar_ToolSelected(object sender, EventArgs e)
         {
             if (Toolbar.SelectedTool == SelectedTool.EditAttributes)
             {
@@ -172,22 +176,31 @@ namespace ControlsLibrary.Controls.Scene
                 });
 
             if (!soft)
+            {
                 graphArea.SetVerticesDrag(false);
+            }
         }
 
         private void ClearEditMode()
         {
-            if (selectedVertex != null) HighlightBehaviour.SetHighlighted(selectedVertex, false);
+            if (selectedVertex != null)
+            {
+                HighlightBehaviour.SetHighlighted(selectedVertex, false);
+            }
             editor.DestroyVirtualEdge();
             selectedVertex = null;
         }
 
         private void ClearEditPropertiesMode() => AttributesPanel.Attributes.Clear();
 
-        void graphArea_VertexSelected(object sender, VertexSelectedEventArgs args)
+        private NodeViewModel SelectNode(VertexControl vertexControl)
+            => graphArea.VertexList.FirstOrDefault(x => x.Value == vertexControl).Key;
+
+        private void graphArea_VertexSelected(object sender, VertexSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
             {
+                NodeSelected?.Invoke(this, new NodeSelectedEventArgs() { Node = SelectNode(args.VertexControl) });
                 switch (Toolbar.SelectedTool)
                 {
                     case SelectedTool.Edit:
@@ -197,7 +210,7 @@ namespace ControlsLibrary.Controls.Scene
                         SafeRemoveVertex(args.VertexControl);
                         break;
                     case SelectedTool.EditAttributes:
-                        var tb = new TextBox();
+                        //var tb = new TextBox();
                         //properties.Items.Clear();
                         //properties.Items.Add(tb);
                         break;
@@ -231,9 +244,13 @@ namespace ControlsLibrary.Controls.Scene
         public void Dispose()
         {
             if (editor != null)
+            {
                 editor.Dispose();
+            }
             if (graphArea != null)
+            {
                 graphArea.Dispose();
+            }
         }
     }
 }

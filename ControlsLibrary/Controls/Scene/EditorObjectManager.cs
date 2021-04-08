@@ -21,7 +21,7 @@ namespace ControlsLibrary.Controls.Scene
             zoomControl.MouseMove += zoomControl_MouseMove;
             resourceDictionary = new ResourceDictionary
             {
-                Source = new Uri("pack://application:,,,/View/Templates/EditorTemplate.xaml", UriKind.RelativeOrAbsolute)
+                Source = new Uri("pack://application:,,,/View/Templates/EditorTemplates.xaml", UriKind.RelativeOrAbsolute)
             };
         }
 
