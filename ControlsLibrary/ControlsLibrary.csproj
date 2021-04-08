@@ -9,4 +9,10 @@
     <PackageReference Include="GraphX" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="View\Templates\EditorTemplates.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>

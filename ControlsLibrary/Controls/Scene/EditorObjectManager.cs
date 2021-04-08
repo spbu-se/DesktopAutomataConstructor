@@ -7,6 +7,10 @@ using System.Windows.Input;
 
 namespace ControlsLibrary.Controls.Scene
 {
+    /// <summary>
+    /// Creates, holds and controls various auxiliary objects on a scene, like virtual edge used to draw future edge
+    /// position when user draws a new edge.
+    /// </summary>
     internal class EditorObjectManager : IDisposable
     {
         private EdgeBlueprint edgeBlueprint;
