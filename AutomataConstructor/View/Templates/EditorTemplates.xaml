@@ -26,13 +26,30 @@
 
     <!-- VERTEX CONTROL -->
     <Style TargetType="{x:Type controls:VertexControl}">
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="ShowLabel" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource NormalBrush}"/>
+        <Setter Property="Padding" Value="10,5,10,5"/>
+        <Setter Property="BorderBrush" Value="{StaticResource NormalBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VertexControl}">
+
                     <Grid>
-                        <TextBox Text="fwef"/>
+                        <Border x:Name="BackgroundNorm" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"/>
+                        <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="0" Margin="3" MinWidth="120">
+                                <Label Content="Name:"/>
+                                <TextBox Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black"/>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
