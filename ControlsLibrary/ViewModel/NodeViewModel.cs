@@ -10,32 +10,11 @@ namespace ControlsLibrary.Model
     {
         public NodeViewModel()
         {
-            Attributes = new List<AttributeViewModel>();
-            setAttributes();
         }
-
-        private AttributeViewModel nameAttribute;
-        private void setAttributes()
-        {
-            nameAttribute = new AttributeViewModel("Name", TypeEnum.String);
-            Attributes.Add(nameAttribute);
-            nameAttribute.PropertyChanged += (object sender, PropertyChangedEventArgs e) => Name = nameAttribute.Value;
-
-            var isIinitialAttribute = new AttributeViewModel("IsInitial", TypeEnum.Bool);
-            Attributes.Add(isIinitialAttribute);
-            isIinitialAttribute.PropertyChanged += (object sender, PropertyChangedEventArgs e) => IsInitial = isIinitialAttribute.Value == "true";
-
-            var isFinalAttribute = new AttributeViewModel("IsFinal", TypeEnum.Bool);
-            Attributes.Add(isFinalAttribute);
-            isFinalAttribute.PropertyChanged += (object sender, PropertyChangedEventArgs e) => IsInitial = isFinalAttribute.Value == "true";
-        }
-
-        private void nameChanged(object sender, PropertyChangedEventArgs e) => Name = nameAttribute.Value;
 
         private string name;
         private bool isInitial;
         private bool isFinal;
-        private IList<AttributeViewModel> attributes;
 
         /// <summary>
         /// Name of the state
@@ -72,16 +51,6 @@ namespace ControlsLibrary.Model
             set
             {
                 isFinal = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public IList<AttributeViewModel> Attributes
-        {
-            get => attributes;
-            set
-            {
-                attributes = value;
                 OnPropertyChanged();
             }
         }

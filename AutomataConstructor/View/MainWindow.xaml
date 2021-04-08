@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:AutomataConstructor"
         xmlns:scene="clr-namespace:ControlsLibrary.Controls.Scene;assembly=ControlsLibrary"
         xmlns:toolbar="clr-namespace:ControlsLibrary.Controls.Toolbar;assembly=ControlsLibrary"
-        xmlns:attributes="clr-namespace:ControlsLibrary.Controls.AttributesPanel;assembly=ControlsLibrary"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -44,9 +43,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" Background="White" CornerRadius="5">
-                    <attributes:AttributesPanel x:Name="attributes"/>
-                </Border>
             </Grid>
         </Border>
     </Grid>

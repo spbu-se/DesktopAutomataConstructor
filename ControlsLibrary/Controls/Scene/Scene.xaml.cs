@@ -1,11 +1,9 @@
-﻿using ControlsLibrary.Controls.AttributesPanel;
-using ControlsLibrary.Model;
+﻿using ControlsLibrary.Model;
 using GraphX.Common.Enums;
 using GraphX.Controls;
 using GraphX.Controls.Models;
 using GraphX.Logic.Models;
 using QuickGraph;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,8 +18,6 @@ namespace ControlsLibrary.Controls.Scene
     /// </summary>
     public partial class Scene : UserControl
     {
-        public AttributesPanelViewModel AttributesPanel { get; } = new AttributesPanelViewModel();
-
         private ToolbarViewModel toolBar;
 
         public ToolbarViewModel Toolbar {
@@ -143,21 +139,18 @@ namespace ControlsLibrary.Controls.Scene
                 zoomControl.Cursor = Cursors.Help;
                 ClearEditMode();
                 ClearSelectMode();
-                ClearEditPropertiesMode();
                 return;
             }
             if (Toolbar.SelectedTool == SelectedTool.Edit)
             {
                 zoomControl.Cursor = Cursors.Pen;
                 ClearSelectMode();
-                ClearEditPropertiesMode();
                 return;
             }
             if (Toolbar.SelectedTool == SelectedTool.Select)
             {
                 zoomControl.Cursor = Cursors.Hand;
                 ClearEditMode();
-                ClearEditPropertiesMode();
                 graphArea.SetVerticesDrag(true, true);
                 graphArea.SetEdgesDrag(true);
                 return;
@@ -190,8 +183,6 @@ namespace ControlsLibrary.Controls.Scene
             editor.DestroyVirtualEdge();
             selectedVertex = null;
         }
-
-        private void ClearEditPropertiesMode() => AttributesPanel.Attributes.Clear();
 
         private NodeViewModel SelectNode(VertexControl vertexControl)
             => graphArea.VertexList.FirstOrDefault(x => x.Value == vertexControl).Key;

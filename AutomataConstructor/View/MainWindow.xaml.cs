@@ -1,8 +1,5 @@
-﻿using ControlsLibrary.Controls.AttributesPanel;
-using ControlsLibrary.Controls.Scene;
+﻿using ControlsLibrary.Controls.Scene;
 using ControlsLibrary.Controls.Toolbar;
-using ControlsLibrary.ViewModel;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace AutomataConstructor
@@ -16,12 +13,7 @@ namespace AutomataConstructor
         {
             InitializeComponent();
             scene.Toolbar = (ToolbarViewModel)toolbar.DataContext;
-            attributes.DataContext = AttributesPanel;
-            scene.NodeSelected += selectedHandler;
         }
 
-        private void selectedHandler(object sender, NodeSelectedEventArgs args) => AttributesPanel.Attributes = args.Node.Attributes;
-
-        public AttributesPanelViewModel AttributesPanel { get; } = new AttributesPanelViewModel();
     }
 }
