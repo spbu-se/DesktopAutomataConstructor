@@ -14,14 +14,14 @@ using System;
 namespace ControlsLibrary.Controls.Scene
 {
     /// <summary>
-    /// Interaction logic for Scene.xaml
+    /// Visuzlizes a graph and provides editing of a graph
     /// </summary>
     public partial class Scene : UserControl
     {
         private ToolbarViewModel toolBar;
 
         public ToolbarViewModel Toolbar {
-            get => toolBar; 
+            get => toolBar;
             set
             {
                 toolBar = value;
