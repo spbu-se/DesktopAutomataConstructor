@@ -66,6 +66,12 @@
                 <Setter Property="BorderBrush" Value="Gold"/>
                 <Setter Property="BorderThickness" Value="3"/>
             </Trigger>
+            <DataTrigger Binding="{Binding IsInitial}" Value="True">
+                <Setter Property="BorderBrush" Value="Green"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFinal}" Value="True">
+                <Setter Property="BorderBrush" Value="Red"/>
+            </DataTrigger>
         </Style.Triggers>
 
     </Style>
