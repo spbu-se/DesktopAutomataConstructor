@@ -15,6 +15,20 @@ namespace ControlsLibrary.Model
         private string name;
         private bool isInitial;
         private bool isFinal;
+        private bool isExpanded;
+
+        /// <summary>
+        /// Is node expanded to edit attributes
+        /// </summary>
+        public bool IsExpanded
+        {
+            get => isExpanded;
+            set
+            {
+                isExpanded = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Name of the state

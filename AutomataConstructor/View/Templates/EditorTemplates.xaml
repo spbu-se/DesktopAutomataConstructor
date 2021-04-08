@@ -72,6 +72,19 @@
             <DataTrigger Binding="{Binding IsFinal}" Value="True">
                 <Setter Property="BorderBrush" Value="Red"/>
             </DataTrigger>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type controls:VertexControl}">
+                            <Border x:Name="BackgroundNorm" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" 
+                                    Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                <TextBlock Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" TextAlignment="Center"
+                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
         </Style.Triggers>
 
     </Style>

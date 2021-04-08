@@ -118,7 +118,7 @@ namespace ControlsLibrary.Controls.Scene
 
         private VertexControl CreateVertexControl(Point position)
         {
-            var data = new NodeViewModel() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false };
+            var data = new NodeViewModel() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = false };
             var vc = new VertexControl(data);
             vc.SetPosition(position);
             graphArea.AddVertexAndData(data, vc, true);
@@ -195,8 +195,18 @@ namespace ControlsLibrary.Controls.Scene
                         break;
                     default:
                         if (Toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
+                        {
                             SelectVertex(args.VertexControl);
+                        }
                         break;
+                }
+            }
+
+            if (args.MouseArgs.ClickCount == 2)
+            {
+                if (Toolbar.SelectedTool == SelectedTool.Select)
+                {
+                    SelectNode(args.VertexControl).IsExpanded = !SelectNode(args.VertexControl).IsExpanded;
                 }
             }
         }
