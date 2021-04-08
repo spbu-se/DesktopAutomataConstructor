@@ -109,4 +109,26 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="controls:AttachableEdgeLabelControl">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+
+        <!-- Custom label template body -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:AttachableEdgeLabelControl">
+                    <Grid>
+                        <Border Background="White" BorderThickness="3" BorderBrush="Black">
+                            <StackPanel Orientation="Horizontal" MinWidth="60">
+                                <Label Content="Transition tokens:"/>
+                                <TextBox Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" TextAlignment="Center"
+                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
