@@ -14,15 +14,15 @@ namespace ControlsLibrary.Controls.Scene
     internal class EditorObjectManager : IDisposable
     {
         private EdgeBlueprint edgeBlueprint;
-        private readonly ZoomControl zoomControl;
-        private readonly GraphArea graphArea;
-        private readonly ResourceDictionary resourceDictionary;
+        private ZoomControl zoomControl;
+        private GraphArea graphArea;
+        private ResourceDictionary resourceDictionary;
 
         public EditorObjectManager(GraphArea graphArea, ZoomControl zoomControl)
         {
             this.graphArea = graphArea;
             this.zoomControl = zoomControl;
-            zoomControl.MouseMove += zoomControl_MouseMove;
+            zoomControl.MouseMove += ZoomControlMouseMove;
             resourceDictionary = new ResourceDictionary
             {
                 Source = new Uri("pack://application:,,,/View/Templates/EditorTemplates.xaml", UriKind.RelativeOrAbsolute)
@@ -35,7 +35,7 @@ namespace ControlsLibrary.Controls.Scene
             graphArea.InsertCustomChildControl(0, edgeBlueprint.EdgePath);
         }
 
-        void zoomControl_MouseMove(object sender, MouseEventArgs e)
+        void ZoomControlMouseMove(object sender, MouseEventArgs e)
         {
             if (edgeBlueprint == null)
             {
@@ -46,7 +46,7 @@ namespace ControlsLibrary.Controls.Scene
             edgeBlueprint.UpdateTargetPosition(position);
         }
 
-        private void ClearEdgeBp()
+        private void ClearEdgeBluePrint()
         {
             if (edgeBlueprint == null)
             {
@@ -57,11 +57,18 @@ namespace ControlsLibrary.Controls.Scene
             edgeBlueprint = null;
         }
 
-        public void DestroyVirtualEdge() => ClearEdgeBp();
+        public void DestroyVirtualEdge() => ClearEdgeBluePrint();
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            ClearEdgeBluePrint();
+            graphArea = null;
+            if (zoomControl != null)
+            {
+                zoomControl.MouseMove -= ZoomControlMouseMove;
+            }
+            zoomControl = null;
+            resourceDictionary = null;
         }
     }
 }
