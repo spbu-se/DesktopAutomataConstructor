@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="http://schemas.panthernet.ru/graphx/"
+                    xmlns:model="clr-namespace:ControlsLibrary.Model;assembly=ControlsLibrary"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
     <LinearGradientBrush x:Key="NormalBrush" EndPoint="0.5,1" StartPoint="0.5,0" po:Freeze="true">
@@ -33,27 +34,28 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VertexControl}">
-
                     <Grid>
                         <Border x:Name="BackgroundNorm" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"/>
-                        <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="0" Margin="3" MinWidth="120">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3" MinWidth="120">
                                 <Label Content="Name:"/>
-                                <TextBox Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black"/>
+                                <TextBox Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" TextAlignment="Center"
+                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
                             </StackPanel>
-                        </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="3" MinWidth="120">
+                                <Label Content="Is final:"/>
+                                <CheckBox IsChecked="{Binding IsFinal, Mode=TwoWay}" VerticalAlignment="Center"
+                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="3" MinWidth="120">
+                                <Label Content="Is initital:"/>
+                                <CheckBox IsChecked="{Binding IsInitial, Mode=TwoWay}" VerticalAlignment="Center"
+                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
+                            </StackPanel>
+                        </StackPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
-
         </Setter>
 
         <!-- VERTEX DRAGGING CONTROL -->
