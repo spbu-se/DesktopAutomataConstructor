@@ -19,6 +19,21 @@ namespace ControlsLibrary.Model
         {
         }
 
+        private bool isExpanded;
+
+        /// <summary>
+        /// Is edge label expanded to edit attributes
+        /// </summary>
+        public bool IsExpanded
+        {
+            get => isExpanded;
+            set
+            {
+                isExpanded = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string transitionTokensString;
 
         public string TransitionTokensString

@@ -70,6 +70,10 @@ namespace ControlsLibrary.Controls.Scene
                 graphArea.RemoveEdge(args.EdgeControl.Edge as EdgeViewModel, true);
                 return;
             }
+            if (args.MouseArgs.RightButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Select)
+            {
+                (args.EdgeControl.Edge as EdgeViewModel).IsExpanded = !(args.EdgeControl.Edge as EdgeViewModel).IsExpanded;
+            }
         }
 
         private VertexControl selectedVertex;
@@ -106,8 +110,7 @@ namespace ControlsLibrary.Controls.Scene
                 return;
             }
 
-            var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex);
-            data.TransitionTokensString = "a";
+            var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex) { IsExpanded = false };
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
