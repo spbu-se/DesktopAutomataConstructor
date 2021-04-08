@@ -110,7 +110,8 @@ namespace ControlsLibrary.Controls.Scene
                 return;
             }
 
-            var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex, "", new List<char>() { 'a' });
+            var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex);
+            data.TransitionTokensString = "a";
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
