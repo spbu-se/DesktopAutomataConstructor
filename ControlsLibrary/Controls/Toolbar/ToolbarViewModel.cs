@@ -29,7 +29,6 @@ namespace ControlsLibrary.Controls.Toolbar
                 {
                     EditToolSelected = false;
                     DeleteToolSelected = false;
-                    EditAttributesToolSelected = false;
                     selectedTool = SelectedTool.Select;
                     SelectedToolChanged?.Invoke(this, EventArgs.Empty);
                 }
@@ -46,7 +45,6 @@ namespace ControlsLibrary.Controls.Toolbar
                 {
                     SelectToolSelected = false;
                     DeleteToolSelected = false;
-                    EditAttributesToolSelected = false;
                     selectedTool = SelectedTool.Edit;
                     SelectedToolChanged?.Invoke(this, EventArgs.Empty);
                 }
@@ -63,25 +61,7 @@ namespace ControlsLibrary.Controls.Toolbar
                 {
                     SelectToolSelected = false;
                     EditToolSelected = false;
-                    EditAttributesToolSelected = false;
                     selectedTool = SelectedTool.Delete;
-                    SelectedToolChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-
-        public bool EditAttributesToolSelected
-        {
-            get => editAttributesToolSelected;
-            set
-            {
-                Set(ref editAttributesToolSelected, value);
-                if (value)
-                {
-                    SelectToolSelected = false;
-                    EditToolSelected = false;
-                    DeleteToolSelected = false;
-                    selectedTool = SelectedTool.EditAttributes;
                     SelectedToolChanged?.Invoke(this, EventArgs.Empty);
                 }
             }

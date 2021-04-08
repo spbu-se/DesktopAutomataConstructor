@@ -127,13 +127,6 @@ namespace ControlsLibrary.Controls.Scene
 
         private void Toolbar_ToolSelected(object sender, EventArgs e)
         {
-            if (Toolbar.SelectedTool == SelectedTool.EditAttributes)
-            {
-                zoomControl.Cursor = Cursors.Pen;
-                ClearEditMode();
-                ClearSelectMode();
-                return;
-            }
             if (Toolbar.SelectedTool == SelectedTool.Delete)
             {
                 zoomControl.Cursor = Cursors.Help;
@@ -199,11 +192,6 @@ namespace ControlsLibrary.Controls.Scene
                         break;
                     case SelectedTool.Delete:
                         SafeRemoveVertex(args.VertexControl);
-                        break;
-                    case SelectedTool.EditAttributes:
-                        //var tb = new TextBox();
-                        //properties.Items.Clear();
-                        //properties.Items.Add(tb);
                         break;
                     default:
                         if (Toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
