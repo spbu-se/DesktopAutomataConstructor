@@ -26,7 +26,7 @@ namespace ControlsLibrary.Controls.Scene
             set
             {
                 toolBar = value;
-                toolBar.SelectedToolChanged += Toolbar_ToolSelected;
+                toolBar.SelectedToolChanged += ToolSelected;
             }
         }
 
@@ -46,7 +46,7 @@ namespace ControlsLibrary.Controls.Scene
             zoomControl.ZoomSensitivity = 25;
             zoomControl.IsAnimationEnabled = false;
             ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Hidden);
-            zoomControl.MouseDown += zoomControl_MouseDown;
+            zoomControl.MouseDown += OnSceneMouseDown;
         }
 
         private void SetGraphAreaProperties()
@@ -59,12 +59,12 @@ namespace ControlsLibrary.Controls.Scene
             graphLogic.EdgeCurvingEnabled = false;
             graphLogic.EnableParallelEdges = true;
             graphArea.VertexSelected += graphArea_VertexSelected;
-            graphArea.EdgeSelected += graphArea_EdgeSelected;
+            graphArea.EdgeSelected += EdgeSelected;
         }
 
         public event EventHandler<NodeSelectedEventArgs> NodeSelected;
 
-        private void graphArea_EdgeSelected(object sender, EdgeSelectedEventArgs args)
+        private void EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Delete)
             {
@@ -76,7 +76,7 @@ namespace ControlsLibrary.Controls.Scene
         private VertexControl selectedVertex;
         private readonly EditorObjectManager editor;
 
-        private void zoomControl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void OnSceneMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -125,7 +125,7 @@ namespace ControlsLibrary.Controls.Scene
             return vc;
         }
 
-        private void Toolbar_ToolSelected(object sender, EventArgs e)
+        private void ToolSelected(object sender, EventArgs e)
         {
             if (Toolbar.SelectedTool == SelectedTool.Delete)
             {
