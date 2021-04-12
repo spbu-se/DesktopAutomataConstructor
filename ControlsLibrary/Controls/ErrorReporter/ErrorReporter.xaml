@@ -24,8 +24,7 @@
     <Grid>
         <StackPanel Orientation="Horizontal" MaxHeight="25" Margin="10" ToolTip="Ok">
             <Image ToolTip="Allright" Stretch="Fill"/>
-            <Label Content="Count:"/>
-            <TextBlock Text="{Binding HasError}" FontSize="15"/>
+            <TextBlock Text="{Binding ErrorMessage}" FontSize="15"/>
         </StackPanel>
     </Grid>
 </UserControl>

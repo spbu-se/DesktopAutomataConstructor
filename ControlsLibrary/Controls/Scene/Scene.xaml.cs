@@ -140,6 +140,7 @@ namespace ControlsLibrary.Controls.Scene
         {
             var data = new NodeViewModel() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = false };
             var vc = new VertexControl(data);
+            data.PropertyChanged += errorReporter.GraphEdited;
             vc.SetPosition(position);
             graphArea.AddVertexAndData(data, vc, true);
             GraphEdited?.Invoke(this, EventArgs.Empty);

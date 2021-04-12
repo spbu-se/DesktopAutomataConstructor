@@ -25,12 +25,37 @@ namespace ControlsLibrary.Controls.ErrorReporter
             OnPropertyChanged("HasError");
         }
 
+        private string errorMessage;
+
+        public string ErrorMessage
+        {
+            get => errorMessage;
+            set
+            {
+                errorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public bool HasError
         {
             get
             {
-                return Graph.VertexCount % 2 == 1;
+                if (!Graph.Vertices.Any(v => v.IsInitial == true))
+                {
+                    ErrorMessage = "Set initial state";
+                    return true;
+                }
+                var initials = Graph.Vertices.Where(v => v.IsInitial == true);
+                var initialsCount = initials.Count();
+                if (initialsCount > 1)
+                {
+                    ErrorMessage = "Initial state should be only one";
+                    return true;
+                }
+                ErrorMessage = "No issues found";
+                return false;
             }
         }
 
