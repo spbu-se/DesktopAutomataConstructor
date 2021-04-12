@@ -10,6 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ControlsLibrary.Controls.Toolbar;
 using System;
+using ControlsLibrary.Controls.ErrorReporter;
+
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -20,12 +22,25 @@ namespace ControlsLibrary.Controls.Scene
     {
         private ToolbarViewModel toolBar;
 
+        private ErrorReporterViewModel errorReporter;
+
         public ToolbarViewModel Toolbar {
             get => toolBar;
             set
             {
                 toolBar = value;
                 toolBar.SelectedToolChanged += Toolbar_ToolSelected;
+            }
+        }
+
+        public ErrorReporterViewModel ErrorReporter
+        {
+            get => errorReporter;
+            set
+            {
+                errorReporter = value;
+                errorReporter.Graph = graphArea.LogicCore.Graph;
+                GraphEdited += errorReporter.GraphEdited;
             }
         }
 
@@ -62,6 +77,8 @@ namespace ControlsLibrary.Controls.Scene
         }
 
         public event EventHandler<NodeSelectedEventArgs> NodeSelected;
+
+        public event EventHandler<EventArgs> GraphEdited;
 
         private void graphArea_EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
@@ -125,6 +142,7 @@ namespace ControlsLibrary.Controls.Scene
             var vc = new VertexControl(data);
             vc.SetPosition(position);
             graphArea.AddVertexAndData(data, vc, true);
+            GraphEdited?.Invoke(this, EventArgs.Empty);
             return vc;
         }
 

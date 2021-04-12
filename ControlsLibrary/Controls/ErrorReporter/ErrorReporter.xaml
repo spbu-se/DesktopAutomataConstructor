@@ -9,10 +9,23 @@
     <UserControl.DataContext>
         <local:ErrorReporterViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="Image">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HasError}" Value="True">
+                    <Setter Property="Source" Value="/ControlsLibrary;component/Controls/ErrorReporter/Icons/red_mark.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding HasError}" Value="False">
+                    <Setter Property="Source" Value="/ControlsLibrary;component/Controls/ErrorReporter/Icons/green_mark.png"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal" MaxHeight="25" Margin="10" ToolTip="Ok">
-            <Image ToolTip="Allright" Stretch="Fill" Source="/ControlsLibrary;component/Controls/ErrorReporter/Icons/red_mark.png"/>
-            <TextBlock Text="Error" FontSize="15"/>
+            <Image ToolTip="Allright" Stretch="Fill"/>
+            <Label Content="Count:"/>
+            <TextBlock Text="{Binding HasError}" FontSize="15"/>
         </StackPanel>
     </Grid>
 </UserControl>
