@@ -1,15 +1,15 @@
-﻿using ControlsLibrary.Model;
+﻿using ControlsLibrary.Controls.Toolbar;
+using ControlsLibrary.Model;
 using GraphX.Common.Enums;
 using GraphX.Controls;
 using GraphX.Controls.Models;
 using GraphX.Logic.Models;
 using QuickGraph;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ControlsLibrary.Controls.Toolbar;
-using System;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -20,7 +20,8 @@ namespace ControlsLibrary.Controls.Scene
     {
         private ToolbarViewModel toolBar;
 
-        public ToolbarViewModel Toolbar {
+        public ToolbarViewModel Toolbar
+        {
             get => toolBar;
             set
             {
@@ -70,10 +71,6 @@ namespace ControlsLibrary.Controls.Scene
                 graphArea.RemoveEdge(args.EdgeControl.Edge as EdgeViewModel, true);
                 return;
             }
-            if (args.MouseArgs.RightButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Select)
-            {
-                (args.EdgeControl.Edge as EdgeViewModel).IsExpanded = !(args.EdgeControl.Edge as EdgeViewModel).IsExpanded;
-            }
         }
 
         private VertexControl selectedVertex;
@@ -83,7 +80,7 @@ namespace ControlsLibrary.Controls.Scene
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if(Toolbar.SelectedTool == SelectedTool.Edit)
+                if (Toolbar.SelectedTool == SelectedTool.Edit)
                 {
                     var pos = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
                     pos.Offset(-22.5, -22.5);
@@ -110,7 +107,7 @@ namespace ControlsLibrary.Controls.Scene
                 return;
             }
 
-            var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex) { IsExpanded = false };
+            var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex);
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 

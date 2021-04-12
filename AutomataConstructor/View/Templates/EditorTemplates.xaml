@@ -141,30 +141,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:AttachableEdgeLabelControl}">
                     <Border Background="White" BorderThickness="3" BorderBrush="Black">
-                        <StackPanel Orientation="Horizontal" MinWidth="60">
-                            <Label Content="Transition tokens:"/>
-                            <TextBox Text="{Binding AttachNode.Edge.TransitionTokensString, Mode=TwoWay}" VerticalAlignment="Center" TextAlignment="Center"
-                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
-                        </StackPanel>
+                        <TextBox Text="{Binding AttachNode.Edge.TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
+                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" Width="50"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding AttachNode.Edge.IsExpanded}" Value="False">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type controls:AttachableEdgeLabelControl}">
-                            <Border Background="White" CornerRadius="5" BorderThickness="3" BorderBrush="Black" MinWidth="20">
-                                <TextBlock Text="{Binding AttachNode.Edge.TransitionTokensString, Mode=TwoWay}" VerticalAlignment="Center" TextAlignment="Center"
-                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

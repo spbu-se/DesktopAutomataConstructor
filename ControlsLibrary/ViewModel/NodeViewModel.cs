@@ -1,6 +1,4 @@
-﻿using ControlsLibrary.ViewModel;
-using GraphX.Common.Models;
-using System.Collections.Generic;
+﻿using GraphX.Common.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -33,7 +31,7 @@ namespace ControlsLibrary.Model
         /// <summary>
         /// Name of the state
         /// </summary>
-        public string Name 
+        public string Name
         {
             get => name;
             set
@@ -46,9 +44,9 @@ namespace ControlsLibrary.Model
         /// <summary>
         /// Is state initial
         /// </summary>
-        public bool IsInitial 
-        { 
-            get => isInitial; 
+        public bool IsInitial
+        {
+            get => isInitial;
             set
             {
                 isInitial = value;
@@ -59,9 +57,9 @@ namespace ControlsLibrary.Model
         /// <summary>
         /// Is state final
         /// </summary>
-        public bool IsFinal 
-        { 
-            get => isFinal; 
+        public bool IsFinal
+        {
+            get => isFinal;
             set
             {
                 isFinal = value;

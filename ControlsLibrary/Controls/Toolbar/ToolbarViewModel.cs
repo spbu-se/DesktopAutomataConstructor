@@ -1,5 +1,5 @@
-﻿using ControlsLibrary.ViewModel.Base;
-using ControlsLibrary.Model;
+﻿using ControlsLibrary.Model;
+using ControlsLibrary.ViewModel.Base;
 using System;
 
 namespace ControlsLibrary.Controls.Toolbar
