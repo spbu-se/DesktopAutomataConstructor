@@ -55,7 +55,7 @@ namespace ControlsLibrary.Controls.Scene
             graphLogic.DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.Custom;
             graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
             graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
-            graphLogic.EdgeCurvingEnabled = true;
+            graphLogic.EdgeCurvingEnabled = false;
             graphLogic.EnableParallelEdges = true;
             graphArea.VertexSelected += graphArea_VertexSelected;
             graphArea.EdgeSelected += graphArea_EdgeSelected;
