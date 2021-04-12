@@ -6,7 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controls\ErrorReporter\Icons\green_mark.png" />
+    <None Remove="Controls\ErrorReporter\Icons\red_mark.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GraphX" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Controls\ErrorReporter\Icons\green_mark.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Controls\ErrorReporter\Icons\red_mark.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
