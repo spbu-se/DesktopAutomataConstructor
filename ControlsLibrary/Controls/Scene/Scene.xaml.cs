@@ -3,6 +3,7 @@ using ControlsLibrary.Model;
 using GraphX.Common.Enums;
 using GraphX.Controls;
 using GraphX.Controls.Models;
+using GraphX.Logic.Algorithms.OverlapRemoval;
 using GraphX.Logic.Models;
 using QuickGraph;
 using System;
@@ -51,15 +52,30 @@ namespace ControlsLibrary.Controls.Scene
 
         private void SetGraphAreaProperties()
         {
-            var graphLogic = new GXLogicCore<NodeViewModel, EdgeViewModel, BidirectionalGraph<NodeViewModel, EdgeViewModel>>();
+            var graphLogic = new GXLogicCore<NodeViewModel, EdgeViewModel, BidirectionalGraph<NodeViewModel, EdgeViewModel>>()
+            {
+                DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.LinLog
+            };
             graphArea.LogicCore = graphLogic;
             graphLogic.DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.Custom;
             graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
             graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
-            graphLogic.EdgeCurvingEnabled = false;
+            graphLogic.EdgeCurvingEnabled = true;
             graphLogic.EnableParallelEdges = true;
+            graphLogic.ParallelEdgeDistance = 50;
             graphArea.VertexSelected += OnSceneVertexSelected;
             graphArea.EdgeSelected += EdgeSelected;
+
+           /* graphLogic.DefaultLayoutAlgorithmParams =
+                graphLogic.AlgorithmFactory.CreateLayoutParameters(LayoutAlgorithmTypeEnum.LinLog);
+            graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
+            graphLogic.DefaultOverlapRemovalAlgorithmParams =
+                graphLogic.AlgorithmFactory.CreateOverlapRemovalParameters(OverlapRemovalAlgorithmTypeEnum.FSA);
+            ((OverlapRemovalParameters)graphLogic.DefaultOverlapRemovalAlgorithmParams).HorizontalGap = 50;
+            ((OverlapRemovalParameters)graphLogic.DefaultOverlapRemovalAlgorithmParams).VerticalGap = 50;
+            graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
+            graphLogic.AsyncAlgorithmCompute = false;
+            graphLogic.EdgeCurvingEnabled = false;*/
         }
 
         public event EventHandler<NodeSelectedEventArgs> NodeSelected;
