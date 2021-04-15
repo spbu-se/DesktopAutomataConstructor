@@ -58,7 +58,7 @@ namespace ControlsLibrary.Controls.Scene
             graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
             graphLogic.EdgeCurvingEnabled = false;
             graphLogic.EnableParallelEdges = true;
-            graphArea.VertexSelected += graphArea_VertexSelected;
+            graphArea.VertexSelected += OnSceneVertexSelected;
             graphArea.EdgeSelected += EdgeSelected;
         }
 
@@ -180,7 +180,7 @@ namespace ControlsLibrary.Controls.Scene
         private NodeViewModel SelectNode(VertexControl vertexControl)
             => graphArea.VertexList.FirstOrDefault(x => x.Value == vertexControl).Key;
 
-        private void graphArea_VertexSelected(object sender, VertexSelectedEventArgs args)
+        private void OnSceneVertexSelected(object sender, VertexSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
             {
