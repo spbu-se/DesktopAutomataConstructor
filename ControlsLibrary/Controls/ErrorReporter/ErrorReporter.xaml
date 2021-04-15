@@ -52,12 +52,18 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid>
-        <StackPanel Orientation="Horizontal" Margin="10" MinWidth="75">
-            <Image Height="20" Width="20" ToolTip="Allright" Stretch="Uniform" MaxHeight="50"/>
-            <Expander Background="Transparent"  HorizontalAlignment="Left" Header="{Binding ErrorMessage}"  ExpandDirection="Up" >
-                <ListView ItemsSource="{Binding Errors}" Background="Transparent" BorderBrush="Transparent" SelectionMode="Extended"/>
-            </Expander>
-        </StackPanel>
+    <Grid Width="150">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Image Height="20" Width="20" ToolTip="Allright" Stretch="Uniform" Grid.Row="1" Grid.Column="0"/>
+        <Expander Background="Transparent"  HorizontalAlignment="Left" Header="{Binding ErrorMessage}"  ExpandDirection="Up" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <ListView ItemsSource="{Binding Errors}" Background="Transparent" BorderBrush="Transparent" SelectionMode="Extended"/>
+        </Expander>
     </Grid>
 </UserControl>
