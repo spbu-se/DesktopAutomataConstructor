@@ -22,9 +22,11 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <StackPanel Orientation="Horizontal" MaxHeight="25" Margin="10" ToolTip="Ok">
-            <Image ToolTip="Allright" Stretch="Fill"/>
-            <TextBlock Text="{Binding ErrorMessage}" FontSize="15"/>
+        <StackPanel Orientation="Horizontal" Margin="10" MinWidth="75">
+            <Image ToolTip="Allright" Stretch="Fill" MaxHeight="50"/>
+            <Expander Background="Transparent"  HorizontalAlignment="Left" Header="{Binding ErrorMessage}"  ExpandDirection="Up" >
+                <ListView ItemsSource="{Binding Errors}" Background="Transparent" BorderBrush="Transparent" SelectionMode="Extended"/>
+            </Expander>
         </StackPanel>
     </Grid>
 </UserControl>

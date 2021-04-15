@@ -43,8 +43,8 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="1" Grid.Column="1" />
                 <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="1" Grid.Column="1"/>
             </Grid>
         </Border>
     </Grid>
