@@ -124,6 +124,16 @@ namespace ControlsLibrary.Controls.Scene
             }
 
             var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex);
+            
+            // Doesn't create new edges with the same direction
+            // TODO: should somehow notice user that edge wasn't created
+            if (graphArea.LogicCore.Graph.Edges.Any(e => e.Source == (NodeViewModel)selectedVertex.Vertex && e.Target == (NodeViewModel)vc.Vertex))
+            {
+                HighlightBehaviour.SetHighlighted(selectedVertex, false);
+                selectedVertex = null;
+                editor.DestroyVirtualEdge();
+                return;
+            }
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
