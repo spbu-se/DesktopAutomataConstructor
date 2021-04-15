@@ -227,6 +227,13 @@ namespace ControlsLibrary.Controls.Scene
 
         private void SafeRemoveVertex(VertexControl vc)
         {
+            foreach (var edge in graphArea.LogicCore.Graph.Edges)
+            {
+                if (edge.IsSelfLoop && edge.Source == SelectNode(vc))
+                {
+                    graphArea.RemoveEdge(edge);
+                }
+            }
             graphArea.RemoveVertexAndEdges(vc.Vertex as NodeViewModel);
         }
 
