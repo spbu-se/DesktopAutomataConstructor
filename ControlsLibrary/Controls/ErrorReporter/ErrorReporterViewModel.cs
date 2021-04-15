@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using System;
+using System.Collections.ObjectModel;
 
 namespace ControlsLibrary.Controls.ErrorReporter
 {
@@ -22,40 +23,41 @@ namespace ControlsLibrary.Controls.ErrorReporter
 
         public void GraphEdited(object sender, EventArgs e)
         {
-            OnPropertyChanged("HasError");
-        }
+            Errors.Clear();
+            if (!Graph.Vertices.Any(v => v.IsInitial == true) && Graph.VertexCount != 0)
+            {
+                Errors.Add("Set initial state");
+            }
 
-        private string errorMessage;
+            if (Graph.Vertices.Where(v => v.IsInitial == true).Count() > 1)
+            {
+                Errors.Add("Initital state should be only one");
+            }
+
+            OnPropertyChanged("Errors");
+            OnPropertyChanged("HasError");
+            OnPropertyChanged("ErrorMessage");
+        }
 
         public string ErrorMessage
         {
-            get => errorMessage;
-            set
+            get
             {
-                errorMessage = value;
-                OnPropertyChanged();
+                if (!HasError)
+                {
+                    return "No issues found";
+                }
+                return Errors.Count.ToString();
             }
         }
 
+        public ObservableCollection<string> Errors { get; } = new ObservableCollection<string>();
 
         public bool HasError
         {
             get
             {
-                if (!Graph.Vertices.Any(v => v.IsInitial == true) && Graph.VertexCount != 0)
-                {
-                    ErrorMessage = "Set initial state";
-                    return true;
-                }
-                var initials = Graph.Vertices.Where(v => v.IsInitial == true);
-                var initialsCount = initials.Count();
-                if (initialsCount > 1)
-                {
-                    ErrorMessage = "Initial state should be only one";
-                    return true;
-                }
-                ErrorMessage = "No issues found";
-                return false;
+                return Errors.Count != 0;
             }
         }
 
