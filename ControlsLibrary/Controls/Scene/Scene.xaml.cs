@@ -52,30 +52,25 @@ namespace ControlsLibrary.Controls.Scene
 
         private void SetGraphAreaProperties()
         {
-            var graphLogic = new GXLogicCore<NodeViewModel, EdgeViewModel, BidirectionalGraph<NodeViewModel, EdgeViewModel>>()
-            {
-                DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.LinLog
-            };
-            graphArea.LogicCore = graphLogic;
-            graphLogic.DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.Custom;
-            graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
-            graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
-            graphLogic.EdgeCurvingEnabled = true;
-            graphLogic.EnableParallelEdges = true;
-            graphLogic.ParallelEdgeDistance = 50;
+            var logic =
+                new GXLogicCore<NodeViewModel, EdgeViewModel, BidirectionalGraph<NodeViewModel, EdgeViewModel>>
+                {
+                    DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.LinLog,
+                };
+
+            graphArea.LogicCore = logic;
+
+            logic.DefaultLayoutAlgorithmParams = logic.AlgorithmFactory.CreateLayoutParameters(LayoutAlgorithmTypeEnum.LinLog);
+            logic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
+            logic.DefaultOverlapRemovalAlgorithmParams = logic.AlgorithmFactory.CreateOverlapRemovalParameters(OverlapRemovalAlgorithmTypeEnum.FSA);
+            ((OverlapRemovalParameters)logic.DefaultOverlapRemovalAlgorithmParams).HorizontalGap = 50;
+            ((OverlapRemovalParameters)logic.DefaultOverlapRemovalAlgorithmParams).VerticalGap = 50;
+            logic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
+            logic.AsyncAlgorithmCompute = false;
+            logic.EdgeCurvingEnabled = false;
+
             graphArea.VertexSelected += OnSceneVertexSelected;
             graphArea.EdgeSelected += EdgeSelected;
-
-           /* graphLogic.DefaultLayoutAlgorithmParams =
-                graphLogic.AlgorithmFactory.CreateLayoutParameters(LayoutAlgorithmTypeEnum.LinLog);
-            graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
-            graphLogic.DefaultOverlapRemovalAlgorithmParams =
-                graphLogic.AlgorithmFactory.CreateOverlapRemovalParameters(OverlapRemovalAlgorithmTypeEnum.FSA);
-            ((OverlapRemovalParameters)graphLogic.DefaultOverlapRemovalAlgorithmParams).HorizontalGap = 50;
-            ((OverlapRemovalParameters)graphLogic.DefaultOverlapRemovalAlgorithmParams).VerticalGap = 50;
-            graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
-            graphLogic.AsyncAlgorithmCompute = false;
-            graphLogic.EdgeCurvingEnabled = false;*/
         }
 
         public event EventHandler<NodeSelectedEventArgs> NodeSelected;
@@ -144,7 +139,7 @@ namespace ControlsLibrary.Controls.Scene
 
         private VertexControl CreateVertexControl(Point position)
         {
-            var data = new NodeViewModel() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = true };
+            var data = new NodeViewModel() { Name = "S" + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = true };
             var vc = new VertexControl(data);
             vc.SetPosition(position);
             graphArea.AddVertexAndData(data, vc, true);
