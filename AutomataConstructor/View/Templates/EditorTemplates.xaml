@@ -27,9 +27,9 @@
 
     <!-- VERTEX CONTROL -->
     <Style TargetType="{x:Type controls:VertexControl}">
-        <Setter Property="Background" Value="{StaticResource NormalBrush}"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="Padding" Value="10,5,10,5"/>
-        <Setter Property="BorderBrush" Value="{StaticResource NormalBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -144,7 +144,7 @@
 
     <!-- EDGE LABEL -->
     <Style TargetType="controls:AttachableEdgeLabelControl">
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="Black"/>
 
         <!-- Custom label template body -->
