@@ -38,8 +38,9 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="3" MinWidth="120">
                                 <Label Content="Name:"/>
-                                <TextBox Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" TextAlignment="Center"
-                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
+                                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
+                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" Width="50"/>
+                                <Button Content="Hide" Command="{Binding ChangeHidingCommand}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="3" MinWidth="120">
                                 <Label Content="Is final:"/>
@@ -78,8 +79,11 @@
                         <ControlTemplate TargetType="{x:Type controls:VertexControl}">
                             <Border x:Name="BackgroundNorm" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" 
                                     Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
-                                <TextBlock Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" TextAlignment="Center"
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" TextAlignment="Center"
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
+                                    <Button Content="Hide" Command="{Binding ChangeHidingCommand}"/>
+                                </StackPanel>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>

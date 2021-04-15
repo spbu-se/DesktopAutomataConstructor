@@ -1,6 +1,8 @@
-﻿using GraphX.Common.Models;
+﻿using ControlsLibrary.Infrastructure.Command;
+using GraphX.Common.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace ControlsLibrary.Model
 {
@@ -8,7 +10,14 @@ namespace ControlsLibrary.Model
     {
         public NodeViewModel()
         {
+            ChangeHidingCommand = new RelayCommand(OnChangeHigingCommandExecuted, CanChangeHigingCommandExecute);
         }
+
+        public ICommand ChangeHidingCommand { get; set; }
+
+        private bool CanChangeHigingCommandExecute(object p) => true;
+
+        private void OnChangeHigingCommandExecuted(object p) => IsExpanded = !IsExpanded;
 
         private string name;
         private bool isInitial;
