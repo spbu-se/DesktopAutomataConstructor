@@ -1,5 +1,4 @@
-﻿using ControlsLibrary.Controls.Scene;
-using ControlsLibrary.Controls.Toolbar;
+﻿using ControlsLibrary.Controls.Toolbar;
 using System.Windows;
 
 namespace AutomataConstructor

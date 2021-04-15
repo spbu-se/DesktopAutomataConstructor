@@ -1,15 +1,15 @@
-﻿using ControlsLibrary.Model;
+﻿using ControlsLibrary.Controls.Toolbar;
+using ControlsLibrary.Model;
 using GraphX.Common.Enums;
 using GraphX.Controls;
 using GraphX.Controls.Models;
 using GraphX.Logic.Models;
 using QuickGraph;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ControlsLibrary.Controls.Toolbar;
-using System;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -20,12 +20,13 @@ namespace ControlsLibrary.Controls.Scene
     {
         private ToolbarViewModel toolBar;
 
-        public ToolbarViewModel Toolbar {
+        public ToolbarViewModel Toolbar
+        {
             get => toolBar;
             set
             {
                 toolBar = value;
-                toolBar.SelectedToolChanged += Toolbar_ToolSelected;
+                toolBar.SelectedToolChanged += ToolSelected;
             }
         }
 
@@ -45,7 +46,7 @@ namespace ControlsLibrary.Controls.Scene
             zoomControl.ZoomSensitivity = 25;
             zoomControl.IsAnimationEnabled = false;
             ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Hidden);
-            zoomControl.MouseDown += zoomControl_MouseDown;
+            zoomControl.MouseDown += OnSceneMouseDown;
         }
 
         private void SetGraphAreaProperties()
@@ -55,15 +56,15 @@ namespace ControlsLibrary.Controls.Scene
             graphLogic.DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.Custom;
             graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
             graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
-            graphLogic.EdgeCurvingEnabled = true;
+            graphLogic.EdgeCurvingEnabled = false;
             graphLogic.EnableParallelEdges = true;
-            graphArea.VertexSelected += graphArea_VertexSelected;
-            graphArea.EdgeSelected += graphArea_EdgeSelected;
+            graphArea.VertexSelected += OnSceneVertexSelected;
+            graphArea.EdgeSelected += EdgeSelected;
         }
 
         public event EventHandler<NodeSelectedEventArgs> NodeSelected;
 
-        private void graphArea_EdgeSelected(object sender, EdgeSelectedEventArgs args)
+        private void EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Delete)
             {
@@ -75,11 +76,11 @@ namespace ControlsLibrary.Controls.Scene
         private VertexControl selectedVertex;
         private readonly EditorObjectManager editor;
 
-        private void zoomControl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void OnSceneMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if(Toolbar.SelectedTool == SelectedTool.Edit)
+                if (Toolbar.SelectedTool == SelectedTool.Edit)
                 {
                     var pos = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
                     pos.Offset(-22.5, -22.5);
@@ -107,7 +108,6 @@ namespace ControlsLibrary.Controls.Scene
             }
 
             var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex);
-            data.TransitionTokensString = "a";
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
@@ -118,14 +118,14 @@ namespace ControlsLibrary.Controls.Scene
 
         private VertexControl CreateVertexControl(Point position)
         {
-            var data = new NodeViewModel() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false };
+            var data = new NodeViewModel() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = true };
             var vc = new VertexControl(data);
             vc.SetPosition(position);
             graphArea.AddVertexAndData(data, vc, true);
             return vc;
         }
 
-        private void Toolbar_ToolSelected(object sender, EventArgs e)
+        private void ToolSelected(object sender, EventArgs e)
         {
             if (Toolbar.SelectedTool == SelectedTool.Delete)
             {
@@ -180,7 +180,7 @@ namespace ControlsLibrary.Controls.Scene
         private NodeViewModel SelectNode(VertexControl vertexControl)
             => graphArea.VertexList.FirstOrDefault(x => x.Value == vertexControl).Key;
 
-        private void graphArea_VertexSelected(object sender, VertexSelectedEventArgs args)
+        private void OnSceneVertexSelected(object sender, VertexSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
             {
@@ -195,8 +195,18 @@ namespace ControlsLibrary.Controls.Scene
                         break;
                     default:
                         if (Toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
+                        {
                             SelectVertex(args.VertexControl);
+                        }
                         break;
+                }
+            }
+
+            if (args.MouseArgs.ClickCount == 2)
+            {
+                if (Toolbar.SelectedTool == SelectedTool.Select)
+                {
+                    SelectNode(args.VertexControl).IsExpanded = !SelectNode(args.VertexControl).IsExpanded;
                 }
             }
         }

@@ -1,5 +1,4 @@
 ﻿using GraphX.Common.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -40,10 +39,5 @@ namespace ControlsLibrary.Model
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Overriding of the base method
-        /// </summary>
-        public override string ToString() => TransitionTokens.Aggregate("", (str, acc) => acc + str);
     }
 }

@@ -1,8 +1,8 @@
-﻿using ControlsLibrary.ViewModel;
+﻿using ControlsLibrary.Infrastructure.Command;
 using GraphX.Common.Models;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace ControlsLibrary.Model
 {
@@ -10,16 +10,37 @@ namespace ControlsLibrary.Model
     {
         public NodeViewModel()
         {
+            ChangeHidingCommand = new RelayCommand(OnChangeHigingCommandExecuted, CanChangeHigingCommandExecute);
         }
+
+        public ICommand ChangeHidingCommand { get; set; }
+
+        private bool CanChangeHigingCommandExecute(object p) => true;
+
+        private void OnChangeHigingCommandExecuted(object p) => IsExpanded = !IsExpanded;
 
         private string name;
         private bool isInitial;
         private bool isFinal;
+        private bool isExpanded;
+
+        /// <summary>
+        /// Is node expanded to edit attributes
+        /// </summary>
+        public bool IsExpanded
+        {
+            get => isExpanded;
+            set
+            {
+                isExpanded = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Name of the state
         /// </summary>
-        public string Name 
+        public string Name
         {
             get => name;
             set
@@ -32,9 +53,9 @@ namespace ControlsLibrary.Model
         /// <summary>
         /// Is state initial
         /// </summary>
-        public bool IsInitial 
-        { 
-            get => isInitial; 
+        public bool IsInitial
+        {
+            get => isInitial;
             set
             {
                 isInitial = value;
@@ -45,9 +66,9 @@ namespace ControlsLibrary.Model
         /// <summary>
         /// Is state final
         /// </summary>
-        public bool IsFinal 
-        { 
-            get => isFinal; 
+        public bool IsFinal
+        {
+            get => isFinal;
             set
             {
                 isFinal = value;
