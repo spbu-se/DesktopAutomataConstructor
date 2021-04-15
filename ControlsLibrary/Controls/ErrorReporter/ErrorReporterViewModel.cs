@@ -42,7 +42,7 @@ namespace ControlsLibrary.Controls.ErrorReporter
         {
             get
             {
-                if (!Graph.Vertices.Any(v => v.IsInitial == true))
+                if (!Graph.Vertices.Any(v => v.IsInitial == true) && Graph.VertexCount != 0)
                 {
                     ErrorMessage = "Set initial state";
                     return true;
