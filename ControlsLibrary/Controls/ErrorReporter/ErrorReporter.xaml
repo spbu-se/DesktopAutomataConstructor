@@ -13,17 +13,48 @@
         <Style TargetType="Image">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding HasError}" Value="True">
-                    <Setter Property="Source" Value="/ControlsLibrary;component/Controls/ErrorReporter/Icons/red_mark.png"/>
+                    <Setter Property="Source">
+                        <Setter.Value>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <DrawingGroup ClipGeometry="M0,0 V32 H32 V0 H0 Z">
+                                        <DrawingGroup Opacity="1">
+                                            <DrawingGroup Opacity="1">
+                                                <DrawingGroup Opacity="1">
+                                                    <GeometryDrawing Brush="#FFD72828">
+                                                        <GeometryDrawing.Geometry>
+                                                            <EllipseGeometry RadiusX="16" RadiusY="16" Center="16,16" />
+                                                        </GeometryDrawing.Geometry>
+                                                    </GeometryDrawing>
+                                                    <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M32,32z M0,0z M14.5,25L17.5,25 17.5,22 14.5,22 14.5,25z M14.5,6L14.5,19 17.5,19 17.5,6 14.5,6z" />
+                                                </DrawingGroup>
+                                            </DrawingGroup>
+                                        </DrawingGroup>
+                                    </DrawingGroup>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding HasError}" Value="False">
-                    <Setter Property="Source" Value="/ControlsLibrary;component/Controls/ErrorReporter/Icons/green_mark.png"/>
+                    <Setter Property="Source">
+                        <Setter.Value>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <DrawingGroup ClipGeometry="M0,0 V64 H64 V0 H0 Z">
+                                        <GeometryDrawing Brush="#FF43A047" Geometry="F1 M64,64z M0,0z M32,2C15.431,2 2,15.432 2,32 2,48.568 15.432,62 32,62 48.568,62 62,48.568 62,32 62,15.432 48.568,2 32,2z M25.025,50L25.005,49.98 24.988,50 11,35.6 18.029,28.436 25.006,35.62 46.006,14.001 53,21.199 25.025,50z" />
+                                    </DrawingGroup>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal" Margin="10" MinWidth="75">
-            <Image ToolTip="Allright" Stretch="Fill" MaxHeight="50"/>
+            <Image Height="20" Width="20" ToolTip="Allright" Stretch="Uniform" MaxHeight="50"/>
             <Expander Background="Transparent"  HorizontalAlignment="Left" Header="{Binding ErrorMessage}"  ExpandDirection="Up" >
                 <ListView ItemsSource="{Binding Errors}" Background="Transparent" BorderBrush="Transparent" SelectionMode="Extended"/>
             </Expander>
