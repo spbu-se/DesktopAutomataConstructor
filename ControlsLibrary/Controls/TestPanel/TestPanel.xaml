@@ -13,23 +13,20 @@
         <Border BorderBrush="Black" BorderThickness="3">
             <StackPanel>
                 <Label Content="TestPanel"/>
-                <DataGrid ItemsSource="{Binding Tests}">
+                <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" Height="200">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString}"/>
                         <DataGridCheckBoxColumn Header="Reject" IsReadOnly="False" Binding="{Binding ShouldReject}"/>
-                        <DataGridTemplateColumn Header="Result">
+                        <DataGridTemplateColumn Header="Remove">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <DataTemplate.Triggers>
-                                        <DataTrigger Binding="{Binding Result}" Value="Passed">
-                                            
-                                        </DataTrigger>
-                                    </DataTemplate.Triggers>
+                                    <Button Content="x" Command="{Binding RemoveFromStorageCommand}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
+                <Button Content="Add new" Command="{Binding AddTestCommand}"/>
             </StackPanel>
         </Border>
     </Grid>

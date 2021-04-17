@@ -1,13 +1,27 @@
-﻿using ControlsLibrary.ViewModel.Base;
-using System;
+﻿using ControlsLibrary.Infrastructure.Command;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace ControlsLibrary.Controls.TestPanel
 {
     internal class TestViewModel : INotifyPropertyChanged
     {
+        private ICollection<TestViewModel> storage;
+
+        public TestViewModel(ICollection<TestViewModel> storage)
+        {
+            this.storage = storage;
+            RemoveFromStorageCommand = new RelayCommand(OnRemoveFromStorageCommandExecuted, CanRemoveFromStorageCommandExecute);
+        }
+
+        public ICommand RemoveFromStorageCommand { get; set; }
+
+        private void OnRemoveFromStorageCommandExecuted(object p) => storage.Remove(this);
+
+        private bool CanRemoveFromStorageCommandExecute(object p) => storage.Contains(this);
+
         private string testString;
 
         public string TestString

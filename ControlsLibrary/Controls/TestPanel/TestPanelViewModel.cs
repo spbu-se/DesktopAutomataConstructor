@@ -9,14 +9,15 @@ namespace ControlsLibrary.Controls.TestPanel
         public TestPanelViewModel()
         {
             AddTestCommand = new RelayCommand(OnAddTestCommandExecuted, CanAddTestCommandExecute);
+            Tests = new ObservableCollection<TestViewModel>();
         }
 
         public ObservableCollection<TestViewModel> Tests { get; set; }
 
-        public ICommand AddTestCommand;
+        public ICommand AddTestCommand { get; set; }
 
         private bool CanAddTestCommandExecute(object p) => true;
 
-        private void OnAddTestCommandExecuted(object p) => Tests.Add(new TestViewModel());
+        private void OnAddTestCommandExecuted(object p) => Tests.Add(new TestViewModel(Tests));
     }
 }
