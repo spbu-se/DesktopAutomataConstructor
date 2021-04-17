@@ -1,17 +1,18 @@
-﻿using ControlsLibrary.Model;
+﻿using ControlsLibrary.Controls.Toolbar;
+using ControlsLibrary.Model;
 using GraphX.Common.Enums;
 using GraphX.Controls;
 using GraphX.Controls.Models;
+using GraphX.Logic.Algorithms.OverlapRemoval;
 using GraphX.Logic.Models;
 using QuickGraph;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ControlsLibrary.Controls.Toolbar;
-using System;
 using ControlsLibrary.Controls.ErrorReporter;
-
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -23,13 +24,13 @@ namespace ControlsLibrary.Controls.Scene
         private ToolbarViewModel toolBar;
 
         private ErrorReporterViewModel errorReporter;
-
-        public ToolbarViewModel Toolbar {
+        public ToolbarViewModel Toolbar
+        {
             get => toolBar;
             set
             {
                 toolBar = value;
-                toolBar.SelectedToolChanged += Toolbar_ToolSelected;
+                toolBar.SelectedToolChanged += ToolSelected;
             }
         }
 
@@ -60,47 +61,53 @@ namespace ControlsLibrary.Controls.Scene
             zoomControl.ZoomSensitivity = 25;
             zoomControl.IsAnimationEnabled = false;
             ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Hidden);
-            zoomControl.MouseDown += zoomControl_MouseDown;
+            zoomControl.MouseDown += OnSceneMouseDown;
         }
 
         private void SetGraphAreaProperties()
         {
-            var graphLogic = new GXLogicCore<NodeViewModel, EdgeViewModel, BidirectionalGraph<NodeViewModel, EdgeViewModel>>();
-            graphArea.LogicCore = graphLogic;
-            graphLogic.DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.Custom;
-            graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
-            graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
-            graphLogic.EdgeCurvingEnabled = false;
-            graphLogic.EnableParallelEdges = true;
-            graphArea.VertexSelected += graphArea_VertexSelected;
-            graphArea.EdgeSelected += graphArea_EdgeSelected;
+            var logic =
+                new GXLogicCore<NodeViewModel, EdgeViewModel, BidirectionalGraph<NodeViewModel, EdgeViewModel>>
+                {
+                    DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.LinLog,
+                };
+
+            graphArea.LogicCore = logic;
+
+            logic.DefaultLayoutAlgorithmParams = logic.AlgorithmFactory.CreateLayoutParameters(LayoutAlgorithmTypeEnum.LinLog);
+            logic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
+            logic.DefaultOverlapRemovalAlgorithmParams = logic.AlgorithmFactory.CreateOverlapRemovalParameters(OverlapRemovalAlgorithmTypeEnum.FSA);
+            ((OverlapRemovalParameters)logic.DefaultOverlapRemovalAlgorithmParams).HorizontalGap = 50;
+            ((OverlapRemovalParameters)logic.DefaultOverlapRemovalAlgorithmParams).VerticalGap = 50;
+            logic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
+            logic.AsyncAlgorithmCompute = false;
+            logic.EdgeCurvingEnabled = false;
+
+            graphArea.VertexSelected += OnSceneVertexSelected;
+            graphArea.EdgeSelected += EdgeSelected;
         }
 
         public event EventHandler<NodeSelectedEventArgs> NodeSelected;
 
         public event EventHandler<EventArgs> GraphEdited;
-
-        private void graphArea_EdgeSelected(object sender, EdgeSelectedEventArgs args)
+        
+        private void EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Delete)
             {
                 graphArea.RemoveEdge(args.EdgeControl.Edge as EdgeViewModel, true);
                 return;
             }
-            if (args.MouseArgs.RightButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Select)
-            {
-                (args.EdgeControl.Edge as EdgeViewModel).IsExpanded = !(args.EdgeControl.Edge as EdgeViewModel).IsExpanded;
-            }
         }
 
         private VertexControl selectedVertex;
         private readonly EditorObjectManager editor;
 
-        private void zoomControl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void OnSceneMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if(Toolbar.SelectedTool == SelectedTool.Edit)
+                if (Toolbar.SelectedTool == SelectedTool.Edit)
                 {
                     var pos = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
                     pos.Offset(-22.5, -22.5);
@@ -127,7 +134,17 @@ namespace ControlsLibrary.Controls.Scene
                 return;
             }
 
-            var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex) { IsExpanded = false };
+            var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex);
+            
+            // Doesn't create new edges with the same direction
+            // TODO: should somehow notice user that edge wasn't created
+            if (graphArea.LogicCore.Graph.Edges.Any(e => e.Source == (NodeViewModel)selectedVertex.Vertex && e.Target == (NodeViewModel)vc.Vertex))
+            {
+                HighlightBehaviour.SetHighlighted(selectedVertex, false);
+                selectedVertex = null;
+                editor.DestroyVirtualEdge();
+                return;
+            }
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
@@ -138,7 +155,7 @@ namespace ControlsLibrary.Controls.Scene
 
         private VertexControl CreateVertexControl(Point position)
         {
-            var data = new NodeViewModel() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = false };
+            var data = new NodeViewModel() { Name = "S" + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = true };
             var vc = new VertexControl(data);
             data.PropertyChanged += errorReporter.GraphEdited;
             vc.SetPosition(position);
@@ -147,7 +164,7 @@ namespace ControlsLibrary.Controls.Scene
             return vc;
         }
 
-        private void Toolbar_ToolSelected(object sender, EventArgs e)
+        private void ToolSelected(object sender, EventArgs e)
         {
             if (Toolbar.SelectedTool == SelectedTool.Delete)
             {
@@ -202,7 +219,7 @@ namespace ControlsLibrary.Controls.Scene
         private NodeViewModel SelectNode(VertexControl vertexControl)
             => graphArea.VertexList.FirstOrDefault(x => x.Value == vertexControl).Key;
 
-        private void graphArea_VertexSelected(object sender, VertexSelectedEventArgs args)
+        private void OnSceneVertexSelected(object sender, VertexSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
             {
@@ -249,6 +266,13 @@ namespace ControlsLibrary.Controls.Scene
 
         private void SafeRemoveVertex(VertexControl vc)
         {
+            foreach (var edge in graphArea.LogicCore.Graph.Edges)
+            {
+                if (edge.IsSelfLoop && edge.Source == SelectNode(vc))
+                {
+                    graphArea.RemoveEdge(edge);
+                }
+            }
             graphArea.RemoveVertexAndEdges(vc.Vertex as NodeViewModel);
         }
 

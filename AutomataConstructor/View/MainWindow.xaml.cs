@@ -1,4 +1,4 @@
-﻿using ControlsLibrary.Controls.ErrorReporter;
+using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Toolbar;
 using System.Windows;
 

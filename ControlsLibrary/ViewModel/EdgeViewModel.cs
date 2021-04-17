@@ -19,21 +19,6 @@ namespace ControlsLibrary.Model
         {
         }
 
-        private bool isExpanded;
-
-        /// <summary>
-        /// Is edge label expanded to edit attributes
-        /// </summary>
-        public bool IsExpanded
-        {
-            get => isExpanded;
-            set
-            {
-                isExpanded = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string transitionTokensString;
 
         public string TransitionTokensString
@@ -54,10 +39,5 @@ namespace ControlsLibrary.Model
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Overriding of the base method
-        /// </summary>
-        public override string ToString() => TransitionTokens.Aggregate("", (str, acc) => acc + str);
     }
 }

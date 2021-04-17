@@ -4,6 +4,5 @@
              xmlns:local="clr-namespace:AutomataConstructor"
              StartupUri="/View/MainWindow.xaml">
     <Application.Resources>
-         
     </Application.Resources>
 </Application>
