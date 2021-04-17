@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomataConstructor"
+        xmlns:test="clr-namespace:ControlsLibrary.Controls.TestPanel;assembly=ControlsLibrary"
         xmlns:scene="clr-namespace:ControlsLibrary.Controls.Scene;assembly=ControlsLibrary"
         xmlns:toolbar="clr-namespace:ControlsLibrary.Controls.Toolbar;assembly=ControlsLibrary"
         xmlns:errorReporter="clr-namespace:ControlsLibrary.Controls.ErrorReporter;assembly=ControlsLibrary"
@@ -11,6 +12,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
@@ -18,15 +20,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <toolbar:Toolbar x:Name="toolbar" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="3"/>
 
-        <Border CornerRadius="2" BorderBrush="Aqua" Background="AliceBlue" Margin="2" BorderThickness="1">
-            <TextBlock Margin="1" TextWrapping="Wrap" TextAlignment="Center" Text="Draw your DFA graph here"/>
-        </Border>
+        <test:TestPanel/>
 
+        <toolbar:Toolbar x:Name="toolbar" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Margin="3"/>
 
-        <Border  Grid.Row="1" Grid.Column="0" BorderBrush="Aqua" BorderThickness="1"  Margin="2" >
+        <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BorderBrush="Aqua" BorderThickness="1"  Margin="2" >
             <Border.Background>
                 <VisualBrush TileMode="Tile"  Viewport="0,0,0.09,0.095">
                     <VisualBrush.Visual>
