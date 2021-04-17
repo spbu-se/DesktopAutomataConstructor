@@ -6,15 +6,16 @@
              xmlns:local="clr-namespace:ControlsLibrary.Controls.TestPanel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <local:TestPanelViewModel/>
+    </UserControl.DataContext>
     <Grid>
         <Border BorderBrush="Black" BorderThickness="3">
             <StackPanel>
                 <Label Content="TestPanel"/>
-                <ListBox>
-                    <ListBoxItem>
-                        <TextBlock Text="Test1"/>
-                    </ListBoxItem>
-                </ListBox>
+                <DataGrid>
+                    
+                </DataGrid>
             </StackPanel>
         </Border>
     </Grid>
