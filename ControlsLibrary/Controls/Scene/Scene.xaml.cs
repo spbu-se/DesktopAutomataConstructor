@@ -11,7 +11,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.ErrorReporter;
 
 namespace ControlsLibrary.Controls.Scene
