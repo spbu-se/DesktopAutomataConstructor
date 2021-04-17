@@ -13,7 +13,8 @@
         <Border BorderBrush="Black" BorderThickness="3">
             <StackPanel>
                 <Label Content="TestPanel"/>
-                <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" Height="200" RowHeight="20">
+                <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" Height="200" RowHeight="20" 
+                          CanUserSortColumns="False" CanUserAddRows="True" CanUserResizeColumns="False" CanUserReorderColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString}"/>
                         <DataGridCheckBoxColumn Header="Reject" IsReadOnly="False" Binding="{Binding ShouldReject}"/>
@@ -77,24 +78,69 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Remove">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="x" Command="{Binding RemoveFromStorageCommand}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Run">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="x" Command="{Binding RemoveFromStorageCommand}"/>
+                                    <Button Command="{Binding RemoveFromStorageCommand}" Background="Transparent" BorderThickness="0">
+                                        <Image Stretch="Uniform">
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V494.148 H494.148 V0 H0 Z">
+                                                            <DrawingGroup Opacity="1">
+                                                                <DrawingGroup Opacity="1">
+                                                                    <GeometryDrawing Brush="Green" Geometry="F1 M494.148,494.148z M0,0z M405.284,201.188L130.804,13.28C118.128,4.596 105.356,0 94.74,0 74.216,0 61.52,16.472 61.52,44.044L61.52,450.168C61.52,477.708 74.2,494.148 94.676,494.148 105.308,494.148 117.876,489.548 130.58,480.84L405.188,292.936C422.848,280.832 432.628,264.544 432.628,247.052 432.632,229.572 422.964,213.288 405.284,201.188z" />
+                                                                </DrawingGroup>
+                                                            </DrawingGroup>
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Debug">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="x" Command="{Binding RemoveFromStorageCommand}"/>
+                                    <Button Command="{Binding RemoveFromStorageCommand}" Background="Transparent" BorderThickness="0">
+                                        <Image Stretch="Uniform">
+                                            <Image.Source>
+                                                <DrawingImage >
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V18.909 H18.909 V0 H0 Z">
+                                                            <DrawingGroup Opacity="1">
+                                                                <GeometryDrawing Brush="Green" Geometry="F1 M18.909,18.909z M0,0z M10.193,8.311L1.887,1.714C1.484,1.511 1.003,1.533 0.619,1.766 0.233,1.998 0,2.412 0,2.856L0,16.054C0,16.497 0.233,16.91 0.619,17.143 0.827,17.269 1.063,17.333 1.302,17.333 1.503,17.333 1.703,17.287 1.888,17.195L10.194,10.596C10.594,10.22 10.91,9.938 10.91,9.453 10.91,8.968 10.641,8.707 10.193,8.311z" />
+                                                                <GeometryDrawing Brush="Green" Geometry="F1 M18.909,18.909z M0,0z M18.193,8.311L9.887,1.714C9.484,1.511 9.002,1.533 8.618,1.766 8.232,1.998 7.999,2.412 7.999,2.856L7.999,16.054C7.999,16.497 8.232,16.91 8.618,17.143 8.826,17.269 9.062,17.333 9.301,17.333 9.502,17.333 9.702,17.287 9.887,17.195L18.193,10.596C18.593,10.22 18.909,9.938 18.909,9.453 18.909,8.968 18.641,8.707 18.193,8.311z" />
+                                                            </DrawingGroup>
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Remove">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding RemoveFromStorageCommand}" Background="Transparent" BorderThickness="0">
+                                        <Image Stretch="Uniform">
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                                            <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M256,512C114.835938,512 0,397.164062 0,256 0,114.835938 114.835938,0 256,0 397.164062,0 512,114.835938 512,256 512,397.164062 397.164062,512 256,512z M256,32C132.480469,32 32,132.480469 32,256 32,379.519531 132.480469,480 256,480 379.519531,480 480,379.519531 480,256 480,132.480469 379.519531,32 256,32z M256,32" />
+                                                            <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M176.8125,351.1875C172.714844,351.1875 168.617188,349.632812 165.503906,346.496094 159.253906,340.246094 159.253906,330.113281 165.503906,323.863281L323.902344,165.460938C330.15625,159.210938 340.289062,159.210938 346.539062,165.460938 352.789062,171.710938 352.789062,181.84375 346.539062,188.097656L188.136719,346.496094C184.980469,349.632812,180.886719,351.1875,176.8125,351.1875z M176.8125,351.1875" />
+                                                            <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M335.1875,351.1875C331.09375,351.1875,326.996094,349.632812,323.882812,346.496094L165.484375,188.117188C159.230469,181.867188 159.230469,171.734375 165.484375,165.484375 171.734375,159.230469 181.867188,159.230469 188.117188,165.484375L346.515625,323.882812C352.769531,330.132812 352.769531,340.265625 346.515625,346.515625 343.382812,349.632812 339.285156,351.1875 335.1875,351.1875z M335.1875,351.1875" />
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
