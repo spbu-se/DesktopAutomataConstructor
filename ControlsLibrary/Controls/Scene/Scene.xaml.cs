@@ -3,6 +3,7 @@ using ControlsLibrary.Model;
 using GraphX.Common.Enums;
 using GraphX.Controls;
 using GraphX.Controls.Models;
+using GraphX.Logic.Algorithms.OverlapRemoval;
 using GraphX.Logic.Models;
 using QuickGraph;
 using System;
@@ -51,13 +52,23 @@ namespace ControlsLibrary.Controls.Scene
 
         private void SetGraphAreaProperties()
         {
-            var graphLogic = new GXLogicCore<NodeViewModel, EdgeViewModel, BidirectionalGraph<NodeViewModel, EdgeViewModel>>();
-            graphArea.LogicCore = graphLogic;
-            graphLogic.DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.Custom;
-            graphLogic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
-            graphLogic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
-            graphLogic.EdgeCurvingEnabled = false;
-            graphLogic.EnableParallelEdges = true;
+            var logic =
+                new GXLogicCore<NodeViewModel, EdgeViewModel, BidirectionalGraph<NodeViewModel, EdgeViewModel>>
+                {
+                    DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.LinLog,
+                };
+
+            graphArea.LogicCore = logic;
+
+            logic.DefaultLayoutAlgorithmParams = logic.AlgorithmFactory.CreateLayoutParameters(LayoutAlgorithmTypeEnum.LinLog);
+            logic.DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA;
+            logic.DefaultOverlapRemovalAlgorithmParams = logic.AlgorithmFactory.CreateOverlapRemovalParameters(OverlapRemovalAlgorithmTypeEnum.FSA);
+            ((OverlapRemovalParameters)logic.DefaultOverlapRemovalAlgorithmParams).HorizontalGap = 50;
+            ((OverlapRemovalParameters)logic.DefaultOverlapRemovalAlgorithmParams).VerticalGap = 50;
+            logic.DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None;
+            logic.AsyncAlgorithmCompute = false;
+            logic.EdgeCurvingEnabled = false;
+
             graphArea.VertexSelected += OnSceneVertexSelected;
             graphArea.EdgeSelected += EdgeSelected;
         }
@@ -108,6 +119,16 @@ namespace ControlsLibrary.Controls.Scene
             }
 
             var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex);
+            
+            // Doesn't create new edges with the same direction
+            // TODO: should somehow notice user that edge wasn't created
+            if (graphArea.LogicCore.Graph.Edges.Any(e => e.Source == (NodeViewModel)selectedVertex.Vertex && e.Target == (NodeViewModel)vc.Vertex))
+            {
+                HighlightBehaviour.SetHighlighted(selectedVertex, false);
+                selectedVertex = null;
+                editor.DestroyVirtualEdge();
+                return;
+            }
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
@@ -118,7 +139,7 @@ namespace ControlsLibrary.Controls.Scene
 
         private VertexControl CreateVertexControl(Point position)
         {
-            var data = new NodeViewModel() { Name = "Vertex " + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = true };
+            var data = new NodeViewModel() { Name = "S" + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = true };
             var vc = new VertexControl(data);
             vc.SetPosition(position);
             graphArea.AddVertexAndData(data, vc, true);
@@ -227,6 +248,13 @@ namespace ControlsLibrary.Controls.Scene
 
         private void SafeRemoveVertex(VertexControl vc)
         {
+            foreach (var edge in graphArea.LogicCore.Graph.Edges)
+            {
+                if (edge.IsSelfLoop && edge.Source == SelectNode(vc))
+                {
+                    graphArea.RemoveEdge(edge);
+                }
+            }
             graphArea.RemoveVertexAndEdges(vc.Vertex as NodeViewModel);
         }
 
