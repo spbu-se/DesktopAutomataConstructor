@@ -11,6 +11,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ControlsLibrary.Controls.Toolbar;
+using ControlsLibrary.Controls.ErrorReporter;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -21,6 +23,7 @@ namespace ControlsLibrary.Controls.Scene
     {
         private ToolbarViewModel toolBar;
 
+        private ErrorReporterViewModel errorReporter;
         public ToolbarViewModel Toolbar
         {
             get => toolBar;
@@ -28,6 +31,17 @@ namespace ControlsLibrary.Controls.Scene
             {
                 toolBar = value;
                 toolBar.SelectedToolChanged += ToolSelected;
+            }
+        }
+
+        public ErrorReporterViewModel ErrorReporter
+        {
+            get => errorReporter;
+            set
+            {
+                errorReporter = value;
+                errorReporter.Graph = graphArea.LogicCore.Graph;
+                GraphEdited += errorReporter.GraphEdited;
             }
         }
 
@@ -75,6 +89,8 @@ namespace ControlsLibrary.Controls.Scene
 
         public event EventHandler<NodeSelectedEventArgs> NodeSelected;
 
+        public event EventHandler<EventArgs> GraphEdited;
+        
         private void EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Delete)
@@ -141,8 +157,10 @@ namespace ControlsLibrary.Controls.Scene
         {
             var data = new NodeViewModel() { Name = "S" + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = true };
             var vc = new VertexControl(data);
+            data.PropertyChanged += errorReporter.GraphEdited;
             vc.SetPosition(position);
             graphArea.AddVertexAndData(data, vc, true);
+            GraphEdited?.Invoke(this, EventArgs.Empty);
             return vc;
         }
 

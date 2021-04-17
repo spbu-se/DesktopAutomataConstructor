@@ -1,4 +1,5 @@
-﻿using ControlsLibrary.Controls.Toolbar;
+using ControlsLibrary.Controls.ErrorReporter;
+using ControlsLibrary.Controls.Toolbar;
 using System.Windows;
 
 namespace AutomataConstructor
@@ -12,6 +13,7 @@ namespace AutomataConstructor
         {
             InitializeComponent();
             scene.Toolbar = (ToolbarViewModel)toolbar.DataContext;
+            scene.ErrorReporter = (ErrorReporterViewModel)errorReporter.DataContext;
         }
 
     }

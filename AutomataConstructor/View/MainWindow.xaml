@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AutomataConstructor"
         xmlns:scene="clr-namespace:ControlsLibrary.Controls.Scene;assembly=ControlsLibrary"
         xmlns:toolbar="clr-namespace:ControlsLibrary.Controls.Toolbar;assembly=ControlsLibrary"
+        xmlns:errorReporter="clr-namespace:ControlsLibrary.Controls.ErrorReporter;assembly=ControlsLibrary"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -17,7 +18,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
         <toolbar:Toolbar x:Name="toolbar" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="3"/>
 
         <Border CornerRadius="2" BorderBrush="Aqua" Background="AliceBlue" Margin="2" BorderThickness="1">
@@ -43,6 +44,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="1" Grid.Column="1"/>
             </Grid>
         </Border>
     </Grid>
