@@ -13,8 +13,22 @@
         <Border BorderBrush="Black" BorderThickness="3">
             <StackPanel>
                 <Label Content="TestPanel"/>
-                <DataGrid>
-                    
+                <DataGrid ItemsSource="{Binding Tests}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString}"/>
+                        <DataGridCheckBoxColumn Header="Reject" IsReadOnly="False" Binding="{Binding ShouldReject}"/>
+                        <DataGridTemplateColumn Header="Result">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding Result}" Value="Passed">
+                                            
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
         </Border>
