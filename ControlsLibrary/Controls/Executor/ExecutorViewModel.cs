@@ -70,8 +70,6 @@ namespace ControlsLibrary.Controls.Executor
             return (FA != null);
         }
 
-
-
         private string _InputStr;
         public string InputStr
         {
@@ -83,7 +81,22 @@ namespace ControlsLibrary.Controls.Executor
         public List<int> ActualStates
         {
             get => _ActualStates;
-            set => Set(ref _ActualStates, value);
+            set
+            {
+                Set(ref _ActualStates, value);
+                string x = "";
+                foreach (int state in _ActualStates)
+                {
+                    x += state.ToString();
+                }
+                States = x;
+            }
+        }
+        private string _States;
+        public string States
+        {
+            get => _States;
+            set => Set(ref _States, value);
         }
         private bool _Result;
         public bool Result

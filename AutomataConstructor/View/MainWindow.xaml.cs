@@ -15,7 +15,7 @@ namespace AutomataConstructor
             InitializeComponent();
             scene.Toolbar = (ToolbarViewModel)toolbar.DataContext;
             scene.ErrorReporter = (ErrorReporterViewModel)errorReporter.DataContext;
-            scene.Executor = (ExecutorViewModel)executor.DataContext;
+            scene.ExecutorViewModel = (ExecutorViewModel)executor.DataContext; 
         }
 
     }

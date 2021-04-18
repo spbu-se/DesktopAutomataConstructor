@@ -43,7 +43,7 @@ namespace ControlsLibrary.Model
             List<int> result_list = new List<int>() { };
             foreach (int state in states)
             {
-                result_list = (List<int>)result_list.Union(GetNewStatesFromSingleState(state, x));
+                result_list = result_list.Union(GetNewStatesFromSingleState(state, x)).ToList();
             }
             return result_list;
         }
