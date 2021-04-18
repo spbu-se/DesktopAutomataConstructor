@@ -6,18 +6,31 @@ using ControlsLibrary.ViewModel.Base;
 using ControlsLibrary.Model;
 using System.Windows.Input;
 using ControlsLibrary.Infrastructure.Command;
+using QuickGraph;
+using System.Linq;
 
 namespace ControlsLibrary.Controls.Executor
 {
-    class ExecutorViewModel : BaseViewModel
+    public class ExecutorViewModel : BaseViewModel
     {
 
         private FiniteAutomata FA;
+        private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
+        public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
+        {
+            get => graph;
+            set
+            {
+                graph = value;
+                //OnPropertyChanged();
+            }
+        }
+        
 
         public ICommand SetAutomataCommand { get; }
         private void OnSetAutomataCommandExecuted(object p)
         {
-            //FA = FiniteAutomata.ConvertGraphToAutomata(...);
+            FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
             ActualStates = FA.GetCurrentStates();
         }
         private bool CanSetAutomataCommandExecute(object p) => true;
@@ -40,6 +53,10 @@ namespace ControlsLibrary.Controls.Executor
         }
         private bool CanStepInCommandExecute(object p)
         {
+            if (FA == null)
+            {
+                return false;
+            }
             return FA.CanDoStep();
         }
         public ICommand IsAcceptCommand { get; }

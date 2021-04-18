@@ -7,6 +7,7 @@
         xmlns:scene="clr-namespace:ControlsLibrary.Controls.Scene;assembly=ControlsLibrary"
         xmlns:toolbar="clr-namespace:ControlsLibrary.Controls.Toolbar;assembly=ControlsLibrary"
         xmlns:errorReporter="clr-namespace:ControlsLibrary.Controls.ErrorReporter;assembly=ControlsLibrary"
+        xmlns:executor="clr-namespace:ControlsLibrary.Controls.Executor;assembly=ControlsLibrary"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -45,6 +46,7 @@
                 </Grid.RowDefinitions>
                 <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
                 <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="1" Grid.Column="1"/>
+                <executor:Executor x:Name="executor"/>
             </Grid>
         </Border>
     </Grid>

@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.ErrorReporter;
+using ControlsLibrary.Controls.Executor;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -42,6 +43,17 @@ namespace ControlsLibrary.Controls.Scene
                 errorReporter = value;
                 errorReporter.Graph = graphArea.LogicCore.Graph;
                 GraphEdited += errorReporter.GraphEdited;
+            }
+        }
+
+        private ExecutorViewModel executorViewModel;
+        public ExecutorViewModel ExecutorViewModel
+        {
+            get => executorViewModel;
+            set
+            {
+                executorViewModel = value;
+                executorViewModel.Graph = graphArea.LogicCore.Graph;
             }
         }
 
