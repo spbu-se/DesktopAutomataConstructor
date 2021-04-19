@@ -19,7 +19,7 @@ namespace ControlsLibrary.Model
         {
         }
 
-        private string transitionTokensString;
+        private string transitionTokensString = "";
 
         public string TransitionTokensString
         {
