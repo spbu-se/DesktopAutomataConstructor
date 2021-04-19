@@ -10,13 +10,13 @@
         <local:TestPanelViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <Border BorderBrush="Black" BorderThickness="3">
+        <Border BorderBrush="Black" BorderThickness="3" Background="White" Height="300">
             <StackPanel>
                 <Label Content="TestPanel"/>
-                <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" Height="200" RowHeight="20" 
+                <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" RowHeight="20" 
                           CanUserSortColumns="False" CanUserAddRows="True" CanUserResizeColumns="False" CanUserReorderColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString}"/>
+                        <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString}" MaxWidth="50"/>
                         <DataGridCheckBoxColumn Header="Reject" IsReadOnly="False" Binding="{Binding ShouldReject}"/>
                         <DataGridTemplateColumn Header="Result">
                             <DataGridTemplateColumn.CellTemplate>
@@ -104,7 +104,7 @@
                         <DataGridTemplateColumn Header="Debug">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Command="{Binding RemoveFromStorageCommand}" Background="Transparent" BorderThickness="0">
+                                    <Button Command="{Binding RemoveFromStorageCommand}" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom">
                                         <Image Stretch="Uniform">
                                             <Image.Source>
                                                 <DrawingImage >
