@@ -23,15 +23,55 @@ namespace ControlsLibrary.Controls.Executor
             }
         }
 
+        private bool inSimulation;
+
+        private void DropSimulation()
+        {
+            inSimulation = false;
+            ActualStates.Clear();
+        }
+
+        private void StartSimulation()
+        {
+            inSimulation = true;
+            FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
+            FA.SetStr(InputString);
+            inSimulation = true;
+            ActualStates = FA.GetCurrentStates();
+        }
+
+        public ICommand StartOrDropDebugCommand { get; }
+        private void OnStartOrDropDebugCommandExecuted(object p)
+        {
+            if (inSimulation)
+            {
+                DropSimulation();
+            }
+
+            StartSimulation();
+        }
+
+        private bool CanStartOrDropDebugExecute(object p)
+        {
+            return true;
+        }
+
         public ICommand StepInCommand { get; }
+
+        //TODO: Make in the FA methods which returns result in 
         private void OnStepInCommandExecuted(object p)
         {
             FA.SingleStep();
             ActualStates = FA.GetCurrentStates();
+            if (!FA.CanDoStep())
+            {
+                
+                inSimulation = false;
+            }
         }
         private bool CanStepInCommandExecute(object p)
         {
-            if (FA == null)
+            if (!inSimulation || FA == null)
             {
                 return false;
             }
@@ -47,7 +87,7 @@ namespace ControlsLibrary.Controls.Executor
         }
         private bool CanRunCommandExecute(object p)
         {
-            return true;
+            return !inSimulation;
         }
 
         private string _InputStr;
@@ -88,6 +128,7 @@ namespace ControlsLibrary.Controls.Executor
         public ExecutorViewModel()
         {
             #region Commands
+            StartOrDropDebugCommand = new RelayCommand(OnStartOrDropDebugCommandExecuted, CanStartOrDropDebugExecute);
             StepInCommand = new RelayCommand(OnStepInCommandExecuted, CanStepInCommandExecute);
             RunCommand = new RelayCommand(OnRunCommandExecuted, CanRunCommandExecute);
             #endregion

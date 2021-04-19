@@ -14,8 +14,8 @@
             <Label Content="Debug:"/>
             <TextBox Width="100" Text="{Binding InputString, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Content="Run" Command="{Binding RunCommand}"/>
-            <Button Content="Stop debug"/>
-            <Button Content="Step"/>
+            <Button Content="Stop debug" Command="{Binding StartOrDropDebugCommand}"/>
+            <Button Content="Step" Command="{Binding StepInCommand}"/>
             <Label Content="Result:"/>
             <Label Content="{Binding Result}"/>
         </StackPanel>

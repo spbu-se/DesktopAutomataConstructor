@@ -1,4 +1,5 @@
 ﻿using ControlsLibrary.Infrastructure.Command;
+using ControlsLibrary.Model;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -34,9 +35,9 @@ namespace ControlsLibrary.Controls.TestPanel
             }
         }
 
-        private TestResultEnum result;
+        private ResultEnum result;
 
-        public TestResultEnum Result
+        public ResultEnum Result
         {
             get => result;
             set
@@ -47,31 +48,7 @@ namespace ControlsLibrary.Controls.TestPanel
             }
         }
 
-        public string StringResult
-        {
-            get
-            {
-                switch (Result)
-                {
-                    case TestResultEnum.NotRunned:
-                        {
-                            return "NotRunned";
-                        }
-                    case TestResultEnum.Failed:
-                        {
-                            return "Failed";
-                        }
-                    case TestResultEnum.Passed:
-                        {
-                            return "Passed";
-                        }
-                    default:
-                        {
-                            return "NotDefined";
-                        }
-                }
-            }
-        }
+        public string StringResult { get => ResultPrinter.PrintResult(Result); }
 
         private bool shouldReject;
 
