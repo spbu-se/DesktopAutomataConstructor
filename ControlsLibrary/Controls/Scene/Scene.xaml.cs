@@ -14,6 +14,8 @@ using System.Windows.Input;
 using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Executor;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -54,6 +56,22 @@ namespace ControlsLibrary.Controls.Scene
             {
                 executorViewModel = value;
                 executorViewModel.Graph = graphArea.LogicCore.Graph;
+                executorViewModel.PropertyChanged += UpdateActualStates;
+            }
+        }
+
+        private void UpdateActualStates(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ActualStates")
+            {
+                foreach (var node in graphArea.LogicCore.Graph.Vertices)
+                {
+                    node.IsActual = false;
+                }
+                foreach (var stateId in executorViewModel.ActualStates)
+                {
+                    graphArea.LogicCore.Graph.Vertices.Where(v => v.ID == stateId).FirstOrDefault().IsActual = true;
+                }
             }
         }
 
