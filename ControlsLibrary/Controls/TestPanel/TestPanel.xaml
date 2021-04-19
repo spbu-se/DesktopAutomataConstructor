@@ -8,8 +8,8 @@
     <UserControl.DataContext>
         <local:TestPanelViewModel/>
     </UserControl.DataContext>
-    <Grid>
-        <ContentControl>
+    <UserControl.Resources>
+        <DataTemplate x:Key="DefaultContent">
             <Border BorderBrush="Black" BorderThickness="3" Background="White" Height="300">
                 <StackPanel>
                     <Grid>
@@ -156,6 +156,20 @@
                     <Button Content="Add new" Command="{Binding AddTestCommand}"/>
                 </StackPanel>
             </Border>
-        </ContentControl>
+        </DataTemplate>
+        <DataTemplate x:Key="HiddenContent">
+            <Button Content="Hidden" Command="{Binding HideCommand}"/>
+        </DataTemplate>
+        <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
+            <Setter Property="ContentTemplate" Value="{StaticResource DefaultContent}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsHidden}" Value="True">
+                    <Setter Property="ContentTemplate" Value="{StaticResource HiddenContent}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <ContentPresenter Grid.Row ="0" Style="{StaticResource MyContentStyle}" Content="{Binding}"/>
     </Grid>
 </UserControl>

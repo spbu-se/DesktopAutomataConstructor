@@ -17,11 +17,11 @@ namespace ControlsLibrary.Controls.TestPanel
 
         public ICommand HideCommand { get; }
 
-        private void OnHideCommandExecuted(object p) => isHidden = !isHidden;
+        private void OnHideCommandExecuted(object p) => IsHidden = !IsHidden;
 
         private bool CanHideCommandExecute(object p) => true;
 
-        private bool isHidden = true;
+        private bool isHidden = false;
 
         public bool IsHidden { get => isHidden; set => Set(ref isHidden, value); }
 
