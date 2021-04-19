@@ -109,7 +109,7 @@
                         <StackPanel Orientation="Horizontal" x:Name="PART_SelfLoopedEdge">
                             <Path  Width="20" Height="20" Stretch="Uniform" Fill="Black" Opacity="1" Clip="M0,0 V528.915 H528.915 V0 H0 Z"
                               Data="F1 M528.915,528.915z M0,0z M232.327,5.055L232.327,46.757C232.327,51.827 228.254,56.472 223.26,57.347 111.818,76.916 26.851,174.347 26.851,291.309 26.851,422.326 133.44,528.914 264.456,528.914 395.474,528.914 502.062,422.325 502.062,291.309 502.062,278.634 491.787,268.359 479.112,268.359 466.437,268.359 456.162,278.634 456.162,291.309 456.162,397.016 370.164,483.015 264.456,483.015 158.748,483.015 72.75,397.016 72.75,291.309 72.75,199.726 137.319,122.981 223.314,104.101 228.265,103.015 232.326,106.46 232.326,111.528L232.326,148.251C232.326,153.321,235.509,154.83,239.434,151.623L324.055,82.461C327.981,79.251,327.981,74.052,324.055,70.842L239.436,1.686C235.51,-1.524,232.327,-0.012,232.327,5.055z"/>
-                            <TextBox Text="{Binding AttachNode.Edge.TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
+                            <TextBox Text="{Binding TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" Width="50"/>
                         </StackPanel>
                         
