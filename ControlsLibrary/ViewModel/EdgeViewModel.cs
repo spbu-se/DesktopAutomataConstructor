@@ -31,7 +31,17 @@ namespace ControlsLibrary.Model
             }
         }
 
-        public List<char> TransitionTokens { get => transitionTokensString.ToList(); }
+        public List<char> TransitionTokens 
+        {
+            get
+            {
+                if (transitionTokensString == "")
+                {
+                    return new List<char>();
+                }
+                return transitionTokensString.ToList();
+            }
+        }
 
         public void OnPropertyChanged([CallerMemberName] string name = null)
         {
