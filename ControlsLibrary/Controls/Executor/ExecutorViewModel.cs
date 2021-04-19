@@ -83,7 +83,7 @@ namespace ControlsLibrary.Controls.Executor
         {
             FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
             FA.SetStr(InputString);
-            Result = FA.DoAllTransitions(InputString);
+            Result = FA.DoAllTransitions(InputString) ? ResultEnum.Passed : ResultEnum.Failed;
         }
         private bool CanRunCommandExecute(object p)
         {
@@ -118,12 +118,18 @@ namespace ControlsLibrary.Controls.Executor
             get => _States;
             set => Set(ref _States, value);
         }
-        private bool _Result;
-        public bool Result
+        private ResultEnum _Result;
+        public ResultEnum Result
         {
             get => _Result;
-            set => Set(ref _Result, value);
+            set
+            {
+                Set(ref _Result, value);
+                OnPropertyChanged("StringResult");
+            }
         }
+
+        public string StringResult { get => ResultPrinter.PrintResult(Result); }
 
         public ExecutorViewModel()
         {

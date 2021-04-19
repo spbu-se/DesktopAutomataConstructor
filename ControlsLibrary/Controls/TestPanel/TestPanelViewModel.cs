@@ -1,6 +1,7 @@
 ﻿using ControlsLibrary.Infrastructure.Command;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using ControlsLibrary.Model;
 
 namespace ControlsLibrary.Controls.TestPanel
 {
