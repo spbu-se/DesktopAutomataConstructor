@@ -69,7 +69,11 @@ namespace ControlsLibrary.Controls.Scene
                 }
                 foreach (var stateId in executorViewModel.ActualStates)
                 {
-                    graphArea.LogicCore.Graph.Vertices.Where(v => v.ID == stateId).FirstOrDefault().IsActual = true;
+                    var node = graphArea.LogicCore.Graph.Vertices.FirstOrDefault(v => v.ID == stateId);
+                    if (node != null)
+                    {
+                        node.IsActual = true;
+                    }
                 }
             }
         }

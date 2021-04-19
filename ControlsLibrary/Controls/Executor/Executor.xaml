@@ -5,19 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControlsLibrary.Controls.Executor"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500">
+             >
     <UserControl.DataContext>
         <local:ExecutorViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <StackPanel>
-            <Button Content="setAutomata" Command="{Binding SetAutomataCommand}"/>
-            <Button Content="setString" Command="{Binding SetStringCommand}"/>
-            <Button Content="step" Command="{Binding StepInCommand}"/>
-            <Button Content="isAccept" Command="{Binding IsAcceptCommand}"/>
-            <TextBox Text="{Binding InputStr, UpdateSourceTrigger=PropertyChanged}"/>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Debug:"/>
+            <TextBox Width="100" Text="{Binding InputString, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Run" Command="{Binding RunCommand}"/>
+            <Button Content="Stop debug"/>
+            <Button Content="Step"/>
+            <Label Content="Result:"/>
             <Label Content="{Binding Result}"/>
-            <Label Content="{Binding States}"/>
         </StackPanel>
     </Grid>
 </UserControl>

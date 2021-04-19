@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using ControlsLibrary.ViewModel.Base;
 using ControlsLibrary.Model;
 using System.Windows.Input;
@@ -25,26 +22,7 @@ namespace ControlsLibrary.Controls.Executor
                 //OnPropertyChanged();
             }
         }
-        
 
-        public ICommand SetAutomataCommand { get; }
-        private void OnSetAutomataCommandExecuted(object p)
-        {
-            FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
-            ActualStates = FA.GetCurrentStates();
-        }
-        private bool CanSetAutomataCommandExecute(object p) => true;
-
-        public ICommand SetStringCommand { get; }
-        private void OnSetStringCommandExecuted(object p)
-        {
-            FA.SetStr(InputStr);
-            ActualStates = FA.GetCurrentStates();
-        }
-        private bool CanSetStringCommandExecute(object p)
-        {
-            return (InputStr != null);
-        }
         public ICommand StepInCommand { get; }
         private void OnStepInCommandExecuted(object p)
         {
@@ -59,19 +37,21 @@ namespace ControlsLibrary.Controls.Executor
             }
             return FA.CanDoStep();
         }
-        public ICommand IsAcceptCommand { get; }
-        private void OnIsAcceptCommandExecuted(object p)
+
+        public ICommand RunCommand { get; }
+        private void OnRunCommandExecuted(object p)
         {
-            Result = FA.DoAllTransitions(InputStr);
-            ActualStates = FA.GetCurrentStates();
+            FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
+            FA.SetStr(InputString);
+            Result = FA.DoAllTransitions(InputString);
         }
-        private bool CanIsAcceptCommandExecute(object p)
+        private bool CanRunCommandExecute(object p)
         {
-            return (FA != null);
+            return true;
         }
 
         private string _InputStr;
-        public string InputStr
+        public string InputString
         {
             get => _InputStr;
             set => Set(ref _InputStr, value);
@@ -108,10 +88,8 @@ namespace ControlsLibrary.Controls.Executor
         public ExecutorViewModel()
         {
             #region Commands
-            SetAutomataCommand = new RelayCommand(OnSetAutomataCommandExecuted, CanSetAutomataCommandExecute);
-            SetStringCommand = new RelayCommand(OnSetStringCommandExecuted, CanSetStringCommandExecute);
             StepInCommand = new RelayCommand(OnStepInCommandExecuted, CanStepInCommandExecute);
-            IsAcceptCommand = new RelayCommand(OnIsAcceptCommandExecuted, CanIsAcceptCommandExecute);
+            RunCommand = new RelayCommand(OnRunCommandExecuted, CanRunCommandExecute);
             #endregion
         }
 
