@@ -26,9 +26,10 @@ namespace ControlsLibrary.Model
             get => isEpsilon;
             set
             {
-                isEpsilon = true;
+                isEpsilon = value;
                 OnPropertyChanged();
                 OnPropertyChanged("TransitionTokens");
+                OnPropertyChanged("TransitionTokensString");
             }
         }
 
