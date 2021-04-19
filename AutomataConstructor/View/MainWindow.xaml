@@ -35,15 +35,18 @@
             </Border.Background>
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
                 <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="1" Grid.Column="1"/>
+                <test:TestPanel Grid.Row="0" Grid.Column="0"/>
             </Grid>
         </Border>
         <executor:Executor  x:Name="executor" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"/>
