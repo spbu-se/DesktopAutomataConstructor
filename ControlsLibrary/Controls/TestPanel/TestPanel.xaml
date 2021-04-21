@@ -11,16 +11,20 @@
     <UserControl.Resources>
         <DataTemplate x:Key="DefaultContent">
             <Border BorderBrush="Black" BorderThickness="3" Background="White" Height="300">
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="TestPanel"/>
-                        <Button Grid.Column="1" HorizontalAlignment="Right" Content="Hide" Command="{Binding HideCommand}"/>
-                    </Grid>
-                    <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" RowHeight="20" 
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="TestPanel"/>
+                    <Button Grid.Row="0" Grid.Column="1" Content="Hide" Command="{Binding HideCommand}"/>
+                    <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" RowHeight="20" Grid.Row="1" Grid.ColumnSpan="2"
                           CanUserSortColumns="False" CanUserAddRows="True" CanUserResizeColumns="False" CanUserReorderColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString, UpdateSourceTrigger=PropertyChanged}" MaxWidth="50"/>
@@ -153,8 +157,8 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="Add new" Command="{Binding AddTestCommand}"/>
-                </StackPanel>
+                    <Button Content="Add new" Command="{Binding AddTestCommand}" Grid.Row="2" Grid.ColumnSpan="2"/>
+                </Grid>
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="HiddenContent">
