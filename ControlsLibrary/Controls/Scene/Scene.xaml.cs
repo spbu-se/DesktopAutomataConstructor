@@ -11,8 +11,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.ErrorReporter;
+using ControlsLibrary.Controls.Executor;
+using System.Collections.Generic;
+using System.ComponentModel;
+using ControlsLibrary.Controls.TestPanel;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -42,6 +45,49 @@ namespace ControlsLibrary.Controls.Scene
                 errorReporter = value;
                 errorReporter.Graph = graphArea.LogicCore.Graph;
                 GraphEdited += errorReporter.GraphEdited;
+            }
+        }
+
+        private ExecutorViewModel executorViewModel;
+        public ExecutorViewModel ExecutorViewModel
+        {
+            get => executorViewModel;
+            set
+            {
+                executorViewModel = value;
+                executorViewModel.Graph = graphArea.LogicCore.Graph;
+                executorViewModel.PropertyChanged += UpdateActualStates;
+            }
+        }
+
+        private TestPanelViewModel testPanel;
+
+        public TestPanelViewModel TestPanel
+        {
+            get => testPanel;
+            set
+            {
+                testPanel = value;
+                testPanel.Graph = graphArea.LogicCore.Graph;
+            }
+        }
+
+        private void UpdateActualStates(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ActualStates")
+            {
+                foreach (var node in graphArea.LogicCore.Graph.Vertices)
+                {
+                    node.IsActual = false;
+                }
+                foreach (var stateId in executorViewModel.ActualStates)
+                {
+                    var node = graphArea.LogicCore.Graph.Vertices.FirstOrDefault(v => v.ID == stateId);
+                    if (node != null)
+                    {
+                        node.IsActual = true;
+                    }
+                }
             }
         }
 

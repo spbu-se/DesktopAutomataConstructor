@@ -23,6 +23,7 @@ namespace ControlsLibrary.Model
         private bool isInitial;
         private bool isFinal;
         private bool isExpanded;
+        private bool isActual;
 
         /// <summary>
         /// Is node expanded to edit attributes
@@ -33,6 +34,16 @@ namespace ControlsLibrary.Model
             set
             {
                 isExpanded = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsActual
+        {
+            get => isActual;
+            set
+            {
+                isActual = value;
                 OnPropertyChanged();
             }
         }
