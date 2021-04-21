@@ -15,6 +15,7 @@ using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Executor;
 using System.Collections.Generic;
 using System.ComponentModel;
+using ControlsLibrary.Controls.TestPanel;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -56,6 +57,18 @@ namespace ControlsLibrary.Controls.Scene
                 executorViewModel = value;
                 executorViewModel.Graph = graphArea.LogicCore.Graph;
                 executorViewModel.PropertyChanged += UpdateActualStates;
+            }
+        }
+
+        private TestPanelViewModel testPanel;
+
+        public TestPanelViewModel TestPanel
+        {
+            get => testPanel;
+            set
+            {
+                testPanel = value;
+                testPanel.Graph = graphArea.LogicCore.Graph;
             }
         }
 

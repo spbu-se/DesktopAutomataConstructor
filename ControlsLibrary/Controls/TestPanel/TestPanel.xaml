@@ -23,8 +23,8 @@
                     <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" RowHeight="20" 
                           CanUserSortColumns="False" CanUserAddRows="True" CanUserResizeColumns="False" CanUserReorderColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString}" MaxWidth="50"/>
-                            <DataGridCheckBoxColumn Header="Reject" IsReadOnly="False" Binding="{Binding ShouldReject}"/>
+                            <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString, UpdateSourceTrigger=PropertyChanged}" MaxWidth="50"/>
+                            <DataGridCheckBoxColumn Header="Reject" IsReadOnly="False" Binding="{Binding ShouldReject, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTemplateColumn Header="Result">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -88,7 +88,7 @@
                             <DataGridTemplateColumn Header="Run">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Command="{Binding RemoveFromStorageCommand}" Background="Transparent" BorderThickness="0">
+                                        <Button Command="{Binding ExecuteCommand}" Background="Transparent" BorderThickness="0">
                                             <Image Stretch="Uniform">
                                                 <Image.Source>
                                                     <DrawingImage>
