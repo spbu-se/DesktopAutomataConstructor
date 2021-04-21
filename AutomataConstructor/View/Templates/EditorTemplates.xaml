@@ -77,6 +77,9 @@
             <DataTrigger Binding="{Binding IsFinal}" Value="True">
                 <Setter Property="BorderBrush" Value="Red"/>
             </DataTrigger>
+            <DataTrigger Binding="{Binding IsActual}" Value="True">
+                <Setter Property="Background" Value="PaleVioletRed"/>
+            </DataTrigger>
             <DataTrigger Binding="{Binding IsExpanded}" Value="False">
                 <Setter Property="Template">
                     <Setter.Value>
