@@ -19,31 +19,36 @@ namespace ControlsLibrary.Controls.Executor
             set
             {
                 graph = value;
-                //OnPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
-        private bool inSimulation;
+        private bool inSimulation = false;
+
+        public bool InSimulation { get => inSimulation; set => Set(ref inSimulation, value); }
 
         private void DropSimulation()
         {
-            inSimulation = false;
+            InSimulation = false;
             ActualStates.Clear();
         }
 
         private void StartSimulation()
         {
-            inSimulation = true;
             FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
             FA.SetStr(InputString);
-            inSimulation = true;
+            InSimulation = true;
+            currentToken = inputString[0].ToString();
+            OnPropertyChanged("CurrentToken");
+            notPassedString = inputString.Remove(0, 1);
+            OnPropertyChanged("NotPassedString");
             ActualStates = FA.GetCurrentStates();
         }
 
         public ICommand StartOrDropDebugCommand { get; }
         private void OnStartOrDropDebugCommandExecuted(object p)
         {
-            if (inSimulation)
+            if (InSimulation)
             {
                 DropSimulation();
             }
@@ -63,15 +68,24 @@ namespace ControlsLibrary.Controls.Executor
         {
             FA.SingleStep();
             ActualStates = FA.GetCurrentStates();
+            passedString += currentToken;
+            OnPropertyChanged("PassedString");
+            if (notPassedString.Length != 0)
+            {
+                currentToken = notPassedString[0].ToString();
+                OnPropertyChanged("CurrentToken");
+                notPassedString = notPassedString.Remove(0, 1);
+                OnPropertyChanged("NotPassedString");
+            }
             if (!FA.CanDoStep())
             {
                 
-                inSimulation = false;
+                InSimulation = false;
             }
         }
         private bool CanStepInCommandExecute(object p)
         {
-            if (!inSimulation || FA == null)
+            if (!InSimulation || FA == null)
             {
                 return false;
             }
@@ -90,12 +104,17 @@ namespace ControlsLibrary.Controls.Executor
             return !inSimulation;
         }
 
-        private string _InputStr;
-        public string InputString
-        {
-            get => _InputStr;
-            set => Set(ref _InputStr, value);
-        }
+        private string inputString;
+        public string InputString { get => inputString; set => Set(ref inputString, value); }
+
+        private string passedString;
+        public string PassedString { get => passedString; set => passedString = value; }
+
+        private string currentToken;
+        public string CurrentToken { get => currentToken; set => currentToken = value; }
+
+        private string notPassedString;
+        public string NotPassedString { get => notPassedString; set => notPassedString = value; }
 
         private List<int> _ActualStates;
         public List<int> ActualStates

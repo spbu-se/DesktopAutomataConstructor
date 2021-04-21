@@ -37,7 +37,7 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private bool CanHideCommandExecute(object p) => true;
 
-        private bool isHidden = false;
+        private bool isHidden = true;
 
         public bool IsHidden { get => isHidden; set => Set(ref isHidden, value); }
 

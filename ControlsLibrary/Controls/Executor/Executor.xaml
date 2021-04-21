@@ -9,10 +9,30 @@
     <UserControl.DataContext>
         <local:ExecutorViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <DataTemplate x:Key="InSimulation">
+            <TextBlock Width="100">
+                <Run Text="{Binding PassedString}" TextDecorations="Strikethrough"/>
+                <Run Text="{Binding CurrentToken}" FontWeight="Bold"/>
+                <Run Text="{Binding NotPassedString}" FontSize="10"/>
+            </TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="NotInSimulation">
+            <TextBox Width="100" Text="{Binding InputString, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InSimulation}"/>
+        </DataTemplate>
+        <Style x:Key="TextEditorStyle" TargetType="ContentPresenter">
+            <Setter Property="ContentTemplate" Value="{StaticResource NotInSimulation}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding InSimulation}" Value="True">
+                    <Setter Property="ContentTemplate" Value="{StaticResource InSimulation}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
             <Label Content="Debug:"/>
-            <TextBox Width="100" Text="{Binding InputString, UpdateSourceTrigger=PropertyChanged}"/>
+            <ContentPresenter Style="{StaticResource TextEditorStyle}" Content="{Binding}"/>
             <Button Content="Run" Command="{Binding RunCommand}"/>
             <Button Content="Stop debug" Command="{Binding StartOrDropDebugCommand}"/>
             <Button Content="Step" Command="{Binding StepInCommand}"/>
