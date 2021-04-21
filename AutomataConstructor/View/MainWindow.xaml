@@ -44,8 +44,8 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="1" Grid.Column="2"/>
+                <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+                <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="2" Grid.Column="2"/>
                 <test:TestPanel Grid.Row="0" Grid.Column="0"/>
             </Grid>
         </Border>
