@@ -19,11 +19,32 @@ namespace ControlsLibrary.Model
         {
         }
 
+        private bool isEpsilon;
+
+        public bool IsEpsilon
+        {
+            get => isEpsilon;
+            set
+            {
+                isEpsilon = value;
+                OnPropertyChanged();
+                OnPropertyChanged("TransitionTokens");
+                OnPropertyChanged("TransitionTokensString");
+            }
+        }
+
         private string transitionTokensString = "";
 
         public string TransitionTokensString
         {
-            get => transitionTokensString;
+            get
+            {
+                if (isEpsilon)
+                {
+                    return "ε";
+                }
+                return transitionTokensString;
+            }
             set
             {
                 transitionTokensString = value;

@@ -158,8 +158,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:AttachableEdgeLabelControl}">
                     <Border Background="White" BorderThickness="3" BorderBrush="Black">
-                        <TextBox Text="{Binding AttachNode.Edge.TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="ε:"/>
+                            <CheckBox IsChecked="{Binding AttachNode.Edge.IsEpsilon}"/>
+                            <TextBox Text="{Binding AttachNode.Edge.TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" Width="50"/>
+                        </StackPanel>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
