@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutomataConstructor.View
+namespace ControlsLibrary.Controls.SaveManager
 {
     /// <summary>
     /// Interaction logic for SaveManager.xaml

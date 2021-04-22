@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using YAXLib;
 
-namespace AutomataConstructor.FileSerialization
+namespace ControlsLibrary.FileSerialization
 {
     /// <summary>
     /// WPF implementation of file serialization and deserialization

@@ -13,9 +13,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Executor;
-using System.Collections.Generic;
 using System.ComponentModel;
 using ControlsLibrary.Controls.TestPanel;
+using ControlsLibrary.Controls.SaveManager;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -69,6 +69,19 @@ namespace ControlsLibrary.Controls.Scene
             {
                 testPanel = value;
                 testPanel.Graph = graphArea.LogicCore.Graph;
+            }
+        }
+
+        private SaveManagerViewModel saveManager;
+
+        public SaveManagerViewModel SaveManager
+        {
+            get => saveManager;
+            set
+            {
+                saveManager = value;
+                saveManager.Graph = graphArea;
+                GraphEdited += saveManager.GraphEdited;
             }
         }
 

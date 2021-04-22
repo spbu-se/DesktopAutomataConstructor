@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using YAXLib;
 
-namespace AutomataConstructor.FileSerialization
+namespace ControlsLibrary.FileSerialization
 {
     public sealed class YAXPointArraySerializer : ICustomSerializer<Point[]>
     {

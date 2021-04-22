@@ -2,7 +2,7 @@
 using System;
 using YAXLib;
 
-namespace AutomataConstructor.FileSerialization
+namespace ControlsLibrary.FileSerialization
 {
     public sealed class YAXPointSerializer : ICustomSerializer<Point>
     {

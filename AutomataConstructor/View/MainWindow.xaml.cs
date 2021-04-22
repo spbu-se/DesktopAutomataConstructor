@@ -2,6 +2,7 @@ using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.Executor;
 using ControlsLibrary.Controls.TestPanel;
+using ControlsLibrary.Controls.SaveManager;
 using System.Windows;
 
 namespace AutomataConstructor
@@ -18,6 +19,7 @@ namespace AutomataConstructor
             scene.ErrorReporter = (ErrorReporterViewModel)errorReporter.DataContext;
             scene.ExecutorViewModel = (ExecutorViewModel)executor.DataContext;
             scene.TestPanel = (TestPanelViewModel)testPanel.DataContext;
+            scene.SaveManager = (SaveManagerViewModel)saveManager.DataContext;
         }
 
     }
