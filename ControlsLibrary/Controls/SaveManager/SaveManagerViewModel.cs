@@ -53,7 +53,7 @@ namespace ControlsLibrary.Controls.SaveManager
             var dlg = new SaveFileDialog { Filter = "All files|*.*", Title = "Select layout file name", FileName = "laytest.xml" };
             if (dlg.ShowDialog() == true)
             {
-                FileServiceProviderWpf.SerializeDataToFile(dlg.FileName, graph.ExtractSerializationData());
+                FileServiceProviderWpf.SerializeDataToFile(dlg.FileName + ".xml", graph.ExtractSerializationData());
             }
         }
 

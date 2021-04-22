@@ -36,6 +36,19 @@ namespace ControlsLibrary.Controls.Executor
             NotPassedString = "";
         }
 
+        private void VisualizeStep()
+        {
+            passedString += currentToken;
+            OnPropertyChanged("PassedString");
+            if (notPassedString.Length != 0)
+            {
+                currentToken = notPassedString[0].ToString();
+                OnPropertyChanged("CurrentToken");
+                notPassedString = notPassedString.Remove(0, 1);
+                OnPropertyChanged("NotPassedString");
+            }
+        }
+
         private void StartSimulation()
         {
             FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
@@ -106,16 +119,16 @@ namespace ControlsLibrary.Controls.Executor
             return !inSimulation;
         }
 
-        private string inputString;
+        private string inputString = "";
         public string InputString { get => inputString; set => Set(ref inputString, value); }
 
-        private string passedString;
+        private string passedString = "";
         public string PassedString { get => passedString; set => passedString = value; }
 
-        private string currentToken;
+        private string currentToken = "";
         public string CurrentToken { get => currentToken; set => currentToken = value; }
 
-        private string notPassedString;
+        private string notPassedString = "";
         public string NotPassedString { get => notPassedString; set => notPassedString = value; }
 
         private List<int> _ActualStates;
