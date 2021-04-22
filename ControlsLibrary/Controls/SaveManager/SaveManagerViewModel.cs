@@ -5,6 +5,7 @@ using ControlsLibrary.ViewModel.Base;
 using Microsoft.Win32;
 using System.Windows.Input;
 using System;
+using System.Windows;
 
 namespace ControlsLibrary.Controls.SaveManager
 {
@@ -13,6 +14,7 @@ namespace ControlsLibrary.Controls.SaveManager
         public SaveManagerViewModel()
         {
             SaveLayoutCommand = new RelayCommand(OnSaveLayoutCommandExecuted, CanSaveLayoutCommandExecute);
+            LoadLayoutCommand = new RelayCommand(OnLoadLayoutCommandExecuted, CanLoadLayoutCommandExecute);
         }
 
         public void GraphEdited(object sender, EventArgs e)
@@ -42,5 +44,27 @@ namespace ControlsLibrary.Controls.SaveManager
         }
 
         private bool CanSaveLayoutCommandExecute(object p) => graph != null && graph.LogicCore.Graph != null && graph.VertexList.Count > 0;
+
+
+        public ICommand LoadLayoutCommand { get; set; }
+
+        private void OnLoadLayoutCommandExecuted(object p)
+        {
+            var dlg = new OpenFileDialog { Filter = "All files|*.*", Title = "Select layout file", FileName = "laytest.xml" };
+            if (dlg.ShowDialog() != true) return;
+            try
+            {
+                graph.RebuildFromSerializationData(FileServiceProviderWpf.DeserializeDataFromFile(dlg.FileName));
+                graph.SetVerticesDrag(true, true);
+                graph.UpdateAllEdges();
+                //gg_zoomctrl.ZoomToFill();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Failed to load layout file:\n {0}", ex));
+            }
+        }
+
+        private bool CanLoadLayoutCommandExecute(object p) => true;
     }
 }
