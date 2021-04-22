@@ -18,8 +18,10 @@ namespace AutomataConstructor
             scene.Toolbar = (ToolbarViewModel)toolbar.DataContext;
             scene.ErrorReporter = (ErrorReporterViewModel)errorReporter.DataContext;
             scene.ExecutorViewModel = (ExecutorViewModel)executor.DataContext;
-            scene.TestPanel = (TestPanelViewModel)testPanel.DataContext;
+            var testPanelViewModel = (TestPanelViewModel)testPanel.DataContext;
+            scene.TestPanel = testPanelViewModel;
             scene.SaveManager = (SaveManagerViewModel)saveManager.DataContext;
+            scene.SaveManager.Tests = testPanelViewModel.Tests;
         }
 
     }

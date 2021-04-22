@@ -13,6 +13,8 @@
         <StackPanel>
             <Button Content="SAVE LAYOUT" Command="{Binding SaveLayoutCommand}"/>
             <Button Content="LOAD LAYOUT" Command="{Binding LoadLayoutCommand}"/>
+            <Button Content="SAVE TESTS" Command="{Binding SaveTestsCommand}"/>
+            <Button Content="LOAD TESTS" Command="{Binding LoadTestsCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

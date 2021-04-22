@@ -12,6 +12,15 @@ namespace ControlsLibrary.Controls.TestPanel
     public class TestViewModel : INotifyPropertyChanged
     {
         private ICollection<TestViewModel> storage;
+        public ICollection<TestViewModel> Storage
+        {
+            get => storage;
+            set
+            {
+                storage = value;
+                OnPropertyChanged();
+            }
+        }
 
         private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
         public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
@@ -20,15 +29,14 @@ namespace ControlsLibrary.Controls.TestPanel
             set
             {
                 graph = value;
+                OnPropertyChanged();
             }
         }
 
-        public TestViewModel(ICollection<TestViewModel> storage, BidirectionalGraph<NodeViewModel, EdgeViewModel> graph)
+        public TestViewModel()
         {
-            this.storage = storage;
             RemoveFromStorageCommand = new RelayCommand(OnRemoveFromStorageCommandExecuted, CanRemoveFromStorageCommandExecute);
             ExecuteCommand = new RelayCommand(OnExecuteCommandExecuted, CanExecuteCommandExecute);
-            Graph = graph;
         }
 
         public ICommand ExecuteCommand { get; set; }
@@ -56,7 +64,7 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private void OnRemoveFromStorageCommandExecuted(object p) => storage.Remove(this);
 
-        private bool CanRemoveFromStorageCommandExecute(object p) => storage.Contains(this);
+        private bool CanRemoveFromStorageCommandExecute(object p) => storage != null && storage.Contains(this);
 
         private string testString;
 
