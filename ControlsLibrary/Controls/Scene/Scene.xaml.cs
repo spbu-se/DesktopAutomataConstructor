@@ -325,6 +325,7 @@ namespace ControlsLibrary.Controls.Scene
 
         private void SafeRemoveVertex(VertexControl vc)
         {
+            GraphEdited?.Invoke(this, EventArgs.Empty);
             foreach (var edge in graphArea.LogicCore.Graph.Edges)
             {
                 if (edge.IsSelfLoop && edge.Source == SelectNode(vc))
