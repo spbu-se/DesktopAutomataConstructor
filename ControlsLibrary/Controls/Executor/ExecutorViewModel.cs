@@ -31,6 +31,9 @@ namespace ControlsLibrary.Controls.Executor
         {
             InSimulation = false;
             ActualStates.Clear();
+            PassedString = "";
+            CurrentToken = "";
+            NotPassedString = "";
         }
 
         private void StartSimulation()
@@ -79,8 +82,7 @@ namespace ControlsLibrary.Controls.Executor
             }
             if (!FA.CanDoStep())
             {
-                
-                InSimulation = false;
+                DropSimulation();
             }
         }
         private bool CanStepInCommandExecute(object p)
