@@ -3,7 +3,6 @@ using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Controls.Scene;
 using ControlsLibrary.ViewModel.Base;
 using ControlsLibrary.Controls.TestPanel;
-using ControlsLibrary.Model;
 using Microsoft.Win32;
 using System.Windows.Input;
 using System;
