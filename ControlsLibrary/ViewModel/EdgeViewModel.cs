@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using YAXLib;
 
 namespace ControlsLibrary.Model
 {
     public class EdgeViewModel : EdgeBase<NodeViewModel>, INotifyPropertyChanged
     {
+        public EdgeViewModel()
+            : base(null, null, 1)
+        { 
+        }
         /// <summary>
         /// Constructor which gets two vertices and symbols of transition
         /// </summary>
@@ -52,6 +57,7 @@ namespace ControlsLibrary.Model
             }
         }
 
+        [YAXDontSerialize]
         public List<char> TransitionTokens 
         {
             get

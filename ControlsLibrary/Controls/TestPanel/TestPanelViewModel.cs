@@ -47,6 +47,6 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private bool CanAddTestCommandExecute(object p) => true;
 
-        private void OnAddTestCommandExecuted(object p) => Tests.Add(new TestViewModel(Tests, graph) { Result = ResultEnum.NotRunned });
+        private void OnAddTestCommandExecuted(object p) => Tests.Add(new TestViewModel() { Result = ResultEnum.NotRunned, Graph = graph, Storage = Tests });
     }
 }
