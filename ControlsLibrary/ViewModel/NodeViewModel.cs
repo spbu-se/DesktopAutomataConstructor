@@ -3,6 +3,7 @@ using GraphX.Common.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using YAXLib;
 
 namespace ControlsLibrary.Model
 {
@@ -13,6 +14,7 @@ namespace ControlsLibrary.Model
             ChangeHidingCommand = new RelayCommand(OnChangeHigingCommandExecuted, CanChangeHigingCommandExecute);
         }
 
+        [YAXDontSerialize]
         public ICommand ChangeHidingCommand { get; set; }
 
         private bool CanChangeHigingCommandExecute(object p) => true;

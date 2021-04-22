@@ -8,6 +8,10 @@ namespace ControlsLibrary.Model
 {
     public class EdgeViewModel : EdgeBase<NodeViewModel>, INotifyPropertyChanged
     {
+        public EdgeViewModel()
+            : base(null, null, 1)
+        { 
+        }
         /// <summary>
         /// Constructor which gets two vertices and symbols of transition
         /// </summary>
