@@ -36,19 +36,6 @@ namespace ControlsLibrary.Controls.Executor
             NotPassedString = "";
         }
 
-        private void VisualizeStep()
-        {
-            passedString += currentToken;
-            OnPropertyChanged("PassedString");
-            if (notPassedString.Length != 0)
-            {
-                currentToken = notPassedString[0].ToString();
-                OnPropertyChanged("CurrentToken");
-                notPassedString = notPassedString.Remove(0, 1);
-                OnPropertyChanged("NotPassedString");
-            }
-        }
-
         private void StartSimulation()
         {
             FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
