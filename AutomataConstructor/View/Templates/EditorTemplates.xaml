@@ -40,7 +40,7 @@
                                               Fill="Black" Stretch="Uniform"/>
                         </Button>
                         <Ellipse x:Name="BackgroundNorm" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="3" Width="100" Height="100"/>
-                        <Ellipse Stroke="Transparent" Fill="{TemplateBinding Background}" StrokeThickness="2" Height="90" Width="90"/>
+                        <Ellipse Visibility="{Binding FinalMarkVisibility}" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="2" Height="90" Width="90"/>
                         <StackPanel MaxWidth="68" MaxHeight="68" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <StackPanel Orientation="Horizontal" Height="25">
                                 <TextBlock Text="Name:" VerticalAlignment="Top"/>
@@ -75,9 +75,6 @@
             <DataTrigger Binding="{Binding IsInitial}" Value="True">
                 <Setter Property="BorderBrush" Value="Green"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsFinal}" Value="True">
-                <Setter Property="BorderBrush" Value="Red"/>
-            </DataTrigger>
             <DataTrigger Binding="{Binding IsActual}" Value="True">
                 <Setter Property="Background" Value="PaleVioletRed"/>
             </DataTrigger>
@@ -91,6 +88,7 @@
                                               Clip="M0,0 V16 H16 V0 H0 Z" Fill="Black" Stretch="Uniform"/>
                                 </Button>
                                 <Ellipse x:Name="BackgroundNorm" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="3" Width="100" Height="100"/>
+                                <Ellipse Visibility="{Binding FinalMarkVisibility}" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="2" Height="90" Width="90"/>
                                 <TextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Center"
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" FontSize="30"/>
                             </Grid>

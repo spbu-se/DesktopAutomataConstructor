@@ -2,6 +2,7 @@
 using GraphX.Common.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using YAXLib;
 
@@ -20,6 +21,8 @@ namespace ControlsLibrary.Model
         private bool CanChangeHigingCommandExecute(object p) => true;
 
         private void OnChangeHigingCommandExecuted(object p) => IsExpanded = !IsExpanded;
+
+        public Visibility FinalMarkVisibility { get => IsFinal ? Visibility.Visible : Visibility.Hidden; }
 
         private string name;
         private bool isInitial;
@@ -85,6 +88,7 @@ namespace ControlsLibrary.Model
             set
             {
                 isFinal = value;
+                OnPropertyChanged("FinalMarkVisibility");
                 OnPropertyChanged();
             }
         }
