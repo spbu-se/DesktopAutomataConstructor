@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="language" Type="System.String" Scope="User">
-      <Value Profile="(Default)">en-US</Value>
+      <Value Profile="(Default)">ru-RU</Value>
     </Setting>
   </Settings>
 </SettingsFile>

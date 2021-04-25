@@ -25,7 +25,7 @@ namespace AutomataConstructor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("en-US")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ru-RU")]
         public string language {
             get {
                 return ((string)(this["language"]));
