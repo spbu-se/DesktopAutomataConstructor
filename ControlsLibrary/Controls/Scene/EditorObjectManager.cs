@@ -30,7 +30,7 @@ namespace ControlsLibrary.Controls.Scene
 
         public void CreateVirtualEdge(VertexControl source, Point mousePosition)
         {
-            edgeBlueprint = new EdgeBlueprint(source, mousePosition, (LinearGradientBrush)resourceDictionary["EdgeBrush"]);
+            edgeBlueprint = new EdgeBlueprint(source, mousePosition, (SolidColorBrush)resourceDictionary["EdgeArrowBrush"]);
             graphArea.InsertCustomChildControl(0, edgeBlueprint.EdgePath);
         }
 
