@@ -9,6 +9,7 @@
         xmlns:toolbar="clr-namespace:ControlsLibrary.Controls.Toolbar;assembly=ControlsLibrary"
         xmlns:errorReporter="clr-namespace:ControlsLibrary.Controls.ErrorReporter;assembly=ControlsLibrary"
         xmlns:executor="clr-namespace:ControlsLibrary.Controls.Executor;assembly=ControlsLibrary"
+        xmlns:language="clr-namespace:AutomataConstructor.Properties.Languages"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.CommandBindings>
