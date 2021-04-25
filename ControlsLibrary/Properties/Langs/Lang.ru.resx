@@ -130,7 +130,7 @@
     <value>Скрыть</value>
   </data>
   <data name="isAccept" xml:space="preserve">
-    <value>Принимающее:</value>
+    <value>Финальное:</value>
   </data>
   <data name="isInitial" xml:space="preserve">
     <value>Начальное:</value>
