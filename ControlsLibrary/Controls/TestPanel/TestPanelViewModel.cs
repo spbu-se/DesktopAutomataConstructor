@@ -5,6 +5,8 @@ using System.Windows.Input;
 using ControlsLibrary.Model;
 using QuickGraph;
 using System.Threading.Tasks;
+using System.Linq;
+using System.ComponentModel;
 
 namespace ControlsLibrary.Controls.TestPanel
 {
@@ -33,6 +35,12 @@ namespace ControlsLibrary.Controls.TestPanel
             }
         }
 
+        public int NumberOfPassedTests { get => Tests.Count(test => test.Result == ResultEnum.Passed); }
+
+        public int NumberOfFailedTests { get => Tests.Count(test => test.Result == ResultEnum.Failed); }
+
+        public int NumberOfNotRunnedTests { get => Tests.Count(test => test.Result == ResultEnum.NotRunned); }
+
         public ICommand HideCommand { get; }
 
         private void OnHideCommandExecuted(object p) => IsHidden = !IsHidden;
@@ -59,6 +67,24 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private bool CanAddTestCommandExecute(object p) => true;
 
-        private void OnAddTestCommandExecuted(object p) => Tests.Add(new TestViewModel() { Result = ResultEnum.NotRunned, Graph = graph, Storage = Tests });
+        private void UpdateStorage(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Result")
+            {
+                OnPropertyChanged("NumberOfPassedTests");
+                OnPropertyChanged("NumberOfFailedTests");
+                OnPropertyChanged("NumberOfNotRunnedTests");
+            }
+        }
+
+        private void OnAddTestCommandExecuted(object p)
+        {
+            var newTest = new TestViewModel() { Result = ResultEnum.NotRunned, Graph = graph, Storage = Tests };
+            newTest.PropertyChanged += UpdateStorage;
+            Tests.Add(newTest);
+            OnPropertyChanged("NumberOfPassedTests");
+            OnPropertyChanged("NumberOfFailedTests");
+            OnPropertyChanged("NumberOfNotRunnedTests");
+        }
     }
 }
