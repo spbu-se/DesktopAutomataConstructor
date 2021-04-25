@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -34,16 +35,18 @@ namespace AutomataConstructor.View
                 case 0:
                     {
                         Properties.Settings.Default.language = "en-US";
-                        Properties.Settings.Default.Save();
                         break;
                     }
                 case 1:
                     {
                         Properties.Settings.Default.language = "ru-RU";
-                        Properties.Settings.Default.Save();
                         break;
                     }
             }
+
+            Properties.Settings.Default.Save();
+            var language = AutomataConstructor.Properties.Settings.Default.language;
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language);
         }
     }
 }
