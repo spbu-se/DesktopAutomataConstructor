@@ -117,7 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="addNewTest" xml:space="preserve">
+    <value>Добавить новый</value>
+  </data>
+  <data name="debugString" xml:space="preserve">
+    <value>Отладка</value>
+  </data>
+  <data name="debugTest" xml:space="preserve">
+    <value>Отладка</value>
+  </data>
+  <data name="hide" xml:space="preserve">
+    <value>Скрыть</value>
+  </data>
+  <data name="isAccept" xml:space="preserve">
+    <value>Принимающее:</value>
+  </data>
+  <data name="isInitial" xml:space="preserve">
+    <value>Начальное:</value>
+  </data>
+  <data name="noIssuesFound" xml:space="preserve">
+    <value>Нет ошибок</value>
+  </data>
+  <data name="openTestPanel" xml:space="preserve">
+    <value>Открыть тесты</value>
+  </data>
+  <data name="removeTest" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="resetDebugString" xml:space="preserve">
+    <value>Завершить отладку</value>
+  </data>
+  <data name="resultDebugString" xml:space="preserve">
+    <value>Результат</value>
+  </data>
+  <data name="resultFailed" xml:space="preserve">
+    <value>Не принята</value>
+  </data>
+  <data name="resultNotRunned" xml:space="preserve">
+    <value>Не запущен</value>
+  </data>
+  <data name="resultPassed" xml:space="preserve">
+    <value>Принята</value>
+  </data>
+  <data name="runAllTests" xml:space="preserve">
+    <value>Запустить все</value>
+  </data>
+  <data name="runString" xml:space="preserve">
+    <value>Запуск</value>
+  </data>
+  <data name="runTest" xml:space="preserve">
+    <value>Запуск</value>
+  </data>
   <data name="selectTool" xml:space="preserve">
     <value>Выберите инструмент:</value>
+  </data>
+  <data name="shouldReject" xml:space="preserve">
+    <value>Принимается</value>
+  </data>
+  <data name="startDebugString" xml:space="preserve">
+    <value>Начать отладку</value>
+  </data>
+  <data name="stateName" xml:space="preserve">
+    <value>Имя:</value>
+  </data>
+  <data name="stepDebugString" xml:space="preserve">
+    <value>Шаг</value>
+  </data>
+  <data name="string" xml:space="preserve">
+    <value>Строка</value>
+  </data>
+  <data name="testResult" xml:space="preserve">
+    <value>Результат</value>
   </data>
 </root>

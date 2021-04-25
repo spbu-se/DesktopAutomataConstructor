@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControlsLibrary.Controls.TestPanel"
+             xmlns:languages="clr-namespace:ControlsLibrary.Properties.Langs"
              mc:Ignorable="d" >
     <UserControl.DataContext>
         <local:TestPanelViewModel/>
@@ -29,7 +30,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="Run all" Command="{Binding RunAllTestsCommand}" Grid.Column="0"/>
+                        <Button Content="{x:Static languages:Lang.runAllTests}" Command="{Binding RunAllTestsCommand}" Grid.Column="0"/>
                         <Border Grid.Column="2" BorderThickness="1" BorderBrush="Black">
                             <DockPanel Margin="5">
                                 <Image Height="20" Stretch="Uniform">
@@ -85,14 +86,14 @@
                                 <Label Content="{Binding NumberOfFailedTests}"/>
                             </DockPanel>
                         </Border>
-                        <Button Content="Hide" Command="{Binding HideCommand}" Grid.Column="4"/>
+                        <Button Content="{x:Static languages:Lang.hide}" Command="{Binding HideCommand}" Grid.Column="4"/>
                     </Grid>
                     <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" RowHeight="20" Grid.Row="1"
                           CanUserSortColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString, UpdateSourceTrigger=PropertyChanged}" MaxWidth="50"/>
-                            <DataGridCheckBoxColumn Header="Reject" IsReadOnly="False" Binding="{Binding ShouldReject, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTemplateColumn Header="Result">
+                            <DataGridTextColumn Header="{x:Static languages:Lang._string}" IsReadOnly="False" Binding="{Binding TestString, UpdateSourceTrigger=PropertyChanged}" MaxWidth="50"/>
+                            <DataGridCheckBoxColumn Header="{x:Static languages:Lang.shouldReject}" IsReadOnly="False" Binding="{Binding ShouldReject, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTemplateColumn Header="{x:Static languages:Lang.testResult}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Image Stretch="Uniform">
@@ -220,12 +221,12 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="Add new" Command="{Binding AddTestCommand}" Grid.Row="2"/>
+                    <Button Content="{x:Static languages:Lang.addNewTest}" Command="{Binding AddTestCommand}" Grid.Row="2"/>
                 </Grid>
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="HiddenContent">
-            <Button Content="Open test panel" Command="{Binding HideCommand}"/>
+            <Button Content="{x:Static languages:Lang.openTestPanel}" Command="{Binding HideCommand}"/>
         </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource DefaultContent}"/>

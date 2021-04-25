@@ -61,11 +61,218 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to String.
+        /// </summary>
+        public static string _string {
+            get {
+                return ResourceManager.GetString("string", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new.
+        /// </summary>
+        public static string addNewTest {
+            get {
+                return ResourceManager.GetString("addNewTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debug.
+        /// </summary>
+        public static string debugString {
+            get {
+                return ResourceManager.GetString("debugString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debug.
+        /// </summary>
+        public static string debugTest {
+            get {
+                return ResourceManager.GetString("debugTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide.
+        /// </summary>
+        public static string hide {
+            get {
+                return ResourceManager.GetString("hide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is accept:.
+        /// </summary>
+        public static string isAccept {
+            get {
+                return ResourceManager.GetString("isAccept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is initial:.
+        /// </summary>
+        public static string isInitial {
+            get {
+                return ResourceManager.GetString("isInitial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No issues found.
+        /// </summary>
+        public static string noIssuesFound {
+            get {
+                return ResourceManager.GetString("noIssuesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open test panel.
+        /// </summary>
+        public static string openTestPanel {
+            get {
+                return ResourceManager.GetString("openTestPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string removeTest {
+            get {
+                return ResourceManager.GetString("removeTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset debug.
+        /// </summary>
+        public static string resetDebugString {
+            get {
+                return ResourceManager.GetString("resetDebugString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result:.
+        /// </summary>
+        public static string resultDebugString {
+            get {
+                return ResourceManager.GetString("resultDebugString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed.
+        /// </summary>
+        public static string resultFailed {
+            get {
+                return ResourceManager.GetString("resultFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not runned.
+        /// </summary>
+        public static string resultNotRunned {
+            get {
+                return ResourceManager.GetString("resultNotRunned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passed.
+        /// </summary>
+        public static string resultPassed {
+            get {
+                return ResourceManager.GetString("resultPassed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run all.
+        /// </summary>
+        public static string runAllTests {
+            get {
+                return ResourceManager.GetString("runAllTests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run.
+        /// </summary>
+        public static string runString {
+            get {
+                return ResourceManager.GetString("runString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run.
+        /// </summary>
+        public static string runTest {
+            get {
+                return ResourceManager.GetString("runTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select tool:.
         /// </summary>
         public static string selectTool {
             get {
                 return ResourceManager.GetString("selectTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reject.
+        /// </summary>
+        public static string shouldReject {
+            get {
+                return ResourceManager.GetString("shouldReject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start debug.
+        /// </summary>
+        public static string startDebugString {
+            get {
+                return ResourceManager.GetString("startDebugString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        public static string stateName {
+            get {
+                return ResourceManager.GetString("stateName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step.
+        /// </summary>
+        public static string stepDebugString {
+            get {
+                return ResourceManager.GetString("stepDebugString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        public static string testResult {
+            get {
+                return ResourceManager.GetString("testResult", resourceCulture);
             }
         }
     }

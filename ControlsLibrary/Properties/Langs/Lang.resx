@@ -117,7 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="addNewTest" xml:space="preserve">
+    <value>Add new</value>
+  </data>
+  <data name="debugString" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="debugTest" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="isAccept" xml:space="preserve">
+    <value>Is accept:</value>
+  </data>
+  <data name="isInitial" xml:space="preserve">
+    <value>Is initial:</value>
+  </data>
+  <data name="noIssuesFound" xml:space="preserve">
+    <value>No issues found</value>
+  </data>
+  <data name="openTestPanel" xml:space="preserve">
+    <value>Open test panel</value>
+  </data>
+  <data name="removeTest" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="resetDebugString" xml:space="preserve">
+    <value>Reset debug</value>
+  </data>
+  <data name="resultDebugString" xml:space="preserve">
+    <value>Result:</value>
+  </data>
+  <data name="resultFailed" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="resultNotRunned" xml:space="preserve">
+    <value>Not runned</value>
+  </data>
+  <data name="resultPassed" xml:space="preserve">
+    <value>Passed</value>
+  </data>
+  <data name="runAllTests" xml:space="preserve">
+    <value>Run all</value>
+  </data>
+  <data name="runString" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="runTest" xml:space="preserve">
+    <value>Run</value>
+  </data>
   <data name="selectTool" xml:space="preserve">
     <value>Select tool:</value>
+  </data>
+  <data name="shouldReject" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="startDebugString" xml:space="preserve">
+    <value>Start debug</value>
+  </data>
+  <data name="stateName" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="stepDebugString" xml:space="preserve">
+    <value>Step</value>
+  </data>
+  <data name="string" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="testResult" xml:space="preserve">
+    <value>Result</value>
   </data>
 </root>
