@@ -12,11 +12,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatCommand}" CanExecute="CanSaveAutomatAsCommandExecute" Executed="OnSaveAutomatAsCommandExecuted"/>
+        <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" CanExecute="CanSaveAutomatAsCommandExecute" Executed="OnSaveAutomatAsCommandExecuted"/>
         <CommandBinding Command="{x:Static local:MainWindow.OpenAutomatCommand}" CanExecute="CanOpenAutomatCommandExecute" Executed="OnOpenAutomatCommandExecuted"/>
         <CommandBinding Command="{x:Static local:MainWindow.SaveTestsAsCommand}" CanExecute="CanSaveTestsAsCommandExecute" Executed="OnSaveTestsAsCommandExecuted"/>
         <CommandBinding Command="{x:Static local:MainWindow.OpenTestsCommand}" CanExecute="CanOpenTestsCommandExecute" Executed="OnOpenTestsCommandExecuted"/>
     </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" Gesture="CTRL+SHIFT+S"/>
+        <KeyBinding Command="{x:Static local:MainWindow.OpenAutomatCommand}" Gesture="CTRL+O"/>
+    </Window.InputBindings>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -32,8 +38,8 @@
 
         <Menu Grid.Row="0" Grid.ColumnSpan="3">
             <MenuItem Header="File">
-                <MenuItem Header="Save automat as" Command="{x:Static local:MainWindow.SaveAutomatCommand}"/>
-                <MenuItem Header="Open automat" Command="{x:Static local:MainWindow.OpenAutomatCommand}"/>
+                <MenuItem Header="Save automat as" Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" InputGestureText="Ctrl+Shift+S"/>
+                <MenuItem Header="Open automat" Command="{x:Static local:MainWindow.OpenAutomatCommand}" InputGestureText="Ctrl+O"/>
                 <MenuItem Header="Save tests as" Command="{x:Static local:MainWindow.SaveTestsAsCommand}"/>
                 <MenuItem Header="Open tests" Command="{x:Static local:MainWindow.OpenTestsCommand}"/>
             </MenuItem>

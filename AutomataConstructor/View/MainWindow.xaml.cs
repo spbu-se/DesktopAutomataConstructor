@@ -33,7 +33,7 @@ namespace AutomataConstructor
         private TestPanelViewModel tests;
 
         #region SaveAutomatAsCommand
-        public static RoutedCommand SaveAutomatCommand { get; set; } = new RoutedCommand("SaveAutomatAs", typeof(MainWindow));
+        public static RoutedCommand SaveAutomatAsCommand { get; set; } = new RoutedCommand("SaveAutomatAs", typeof(MainWindow));
 
         private void OnSaveAutomatAsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
