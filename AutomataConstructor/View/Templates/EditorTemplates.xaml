@@ -4,26 +4,6 @@
                     xmlns:icons="Controls"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-
-    <LinearGradientBrush x:Key="NormalBrush" EndPoint="0.5,1" StartPoint="0.5,0" po:Freeze="true">
-        <GradientStop Color="#FFFFFFFF" Offset="0"/>
-        <GradientStop Color="#FFA4ADBB" Offset="0.521"/>
-        <GradientStop Color="#FFD7E0EA" Offset="0.194"/>
-        <GradientStop Color="#FFBAC1CF" Offset="0.811"/>
-        <GradientStop Color="#FFBCC5D5" Offset="0.507"/>
-        <GradientStop Color="#FFE3E4E6" Offset="1"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="NormalBorderBrush" EndPoint="0.5,0" StartPoint="0.5,1" po:Freeze="true">
-        <GradientStop Color="#FF8B8B8B"/>
-        <GradientStop Color="#FFADADAD" Offset="1"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="EdgeBrush" EndPoint="0.5,0" StartPoint="0.5,1" po:Freeze="true">
-        <GradientStop Color="#FF000000"/>
-        <GradientStop Color="#FF95EAE2" Offset="1"/>
-    </LinearGradientBrush>
-
     <SolidColorBrush x:Key="EdgeArrowBrush" Color="Black" po:Freeze="true" />
 
     <!-- VERTEX CONTROL -->
@@ -113,7 +93,7 @@
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" Width="50"/>
                         </StackPanel>
                         
-                        <Path Stroke="{StaticResource EdgeBrush}"
+                        <Path Stroke="Black"
                             StrokeThickness="2" MinWidth="1" MinHeight="1"
                             ToolTip="{TemplateBinding ToolTip}" 
                             x:Name="PART_edgePath"/>
