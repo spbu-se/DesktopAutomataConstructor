@@ -165,6 +165,22 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding AttachNode.Edge.IsEpsilon}" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type controls:AttachableEdgeLabelControl}">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="ε:"/>
+                                <CheckBox IsChecked="{Binding AttachNode.Edge.IsEpsilon}"/>
+                                <TextBlock Text="ε"/>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

@@ -44,10 +44,6 @@ namespace ControlsLibrary.Model
         {
             get
             {
-                if (isEpsilon)
-                {
-                    return "ε";
-                }
                 return transitionTokensString;
             }
             set
