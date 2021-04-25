@@ -21,10 +21,12 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="TestPanel"/>
-                    <Button Grid.Row="0" Grid.Column="1" Content="Hide" Command="{Binding HideCommand}"/>
-                    <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" RowHeight="20" Grid.Row="1" Grid.ColumnSpan="2"
+                    <Button Content="Run all" Grid.Column="1" Grid.Row="0" Command="{Binding RunAllTestsCommand}"/>
+                    <Button Grid.Row="0" Grid.Column="2" Content="Hide" Command="{Binding HideCommand}"/>
+                    <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" RowHeight="20" Grid.Row="1" Grid.ColumnSpan="3"
                           CanUserSortColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString, UpdateSourceTrigger=PropertyChanged}" MaxWidth="50"/>
@@ -157,7 +159,7 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="Add new" Command="{Binding AddTestCommand}" Grid.Row="2" Grid.ColumnSpan="2"/>
+                    <Button Content="Add new" Command="{Binding AddTestCommand}" Grid.Row="2" Grid.ColumnSpan="3"/>
                 </Grid>
             </Border>
         </DataTemplate>
