@@ -102,15 +102,15 @@ namespace ControlsLibrary.Controls.Scene
 
         public void OnSceneKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.LeftCtrl)
+            if (e.Key == Key.D)
             {
                 toolBar.SelectedTool = SelectedTool.Delete;
             }
-            if (e.Key == Key.LeftShift)
+            if (e.Key == Key.S)
             {
                 toolBar.SelectedTool = SelectedTool.Select;
             }
-            if (e.Key == Key.A)
+            if (e.Key == Key.E)
             {
                 toolBar.SelectedTool = SelectedTool.Edit;
             }
