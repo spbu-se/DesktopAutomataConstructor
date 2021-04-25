@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:saveManager="clr-namespace:ControlsLibrary.Controls.SaveManager;assembly=ControlsLibrary"
+        xmlns:local="clr-namespace:AutomataConstructor"
         xmlns:test="clr-namespace:ControlsLibrary.Controls.TestPanel;assembly=ControlsLibrary"
         xmlns:scene="clr-namespace:ControlsLibrary.Controls.Scene;assembly=ControlsLibrary"
         xmlns:toolbar="clr-namespace:ControlsLibrary.Controls.Toolbar;assembly=ControlsLibrary"
@@ -11,6 +11,12 @@
         xmlns:executor="clr-namespace:ControlsLibrary.Controls.Executor;assembly=ControlsLibrary"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatCommand}" CanExecute="CanSaveAutomatAsCommandExecute" Executed="OnSaveAutomatAsCommandExecuted"/>
+        <CommandBinding Command="{x:Static local:MainWindow.OpenAutomatCommand}" CanExecute="CanOpenAutomatCommandExecute" Executed="OnOpenAutomatCommandExecuted"/>
+        <CommandBinding Command="{x:Static local:MainWindow.SaveTestsAsCommand}" CanExecute="CanSaveTestsAsCommandExecute" Executed="OnSaveTestsAsCommandExecuted"/>
+        <CommandBinding Command="{x:Static local:MainWindow.OpenTestsCommand}" CanExecute="CanOpenTestsCommandExecute" Executed="OnOpenTestsCommandExecuted"/>
+    </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -24,8 +30,16 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <Menu Grid.Row="0" Grid.ColumnSpan="3">
+            <MenuItem Header="File">
+                <MenuItem Header="Save automat as" Command="{x:Static local:MainWindow.SaveAutomatCommand}"/>
+                <MenuItem Header="Open automat" Command="{x:Static local:MainWindow.OpenAutomatCommand}"/>
+                <MenuItem Header="Save tests as" Command="{x:Static local:MainWindow.SaveTestsAsCommand}"/>
+                <MenuItem Header="Open tests" Command="{x:Static local:MainWindow.OpenTestsCommand}"/>
+            </MenuItem>
+        </Menu>
+
         <toolbar:Toolbar x:Name="toolbar" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="3"/>
-        <saveManager:SaveManager x:Name="saveManager" Grid.Column="2" Grid.Row="3"/>
 
         <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderBrush="Aqua" BorderThickness="1"  Margin="2" >
             <Border.Background>

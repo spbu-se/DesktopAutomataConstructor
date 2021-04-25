@@ -15,7 +15,6 @@ using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Executor;
 using System.ComponentModel;
 using ControlsLibrary.Controls.TestPanel;
-using ControlsLibrary.Controls.SaveManager;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -72,19 +71,6 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
-        private SaveManagerViewModel saveManager;
-
-        public SaveManagerViewModel SaveManager
-        {
-            get => saveManager;
-            set
-            {
-                saveManager = value;
-                saveManager.Graph = graphArea;
-                GraphEdited += saveManager.GraphEdited;
-            }
-        }
-
         private void UpdateActualStates(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "ActualStates")
@@ -103,6 +89,8 @@ namespace ControlsLibrary.Controls.Scene
                 }
             }
         }
+
+        public GraphArea GraphArea { get => graphArea; }
 
         public Scene()
         {
