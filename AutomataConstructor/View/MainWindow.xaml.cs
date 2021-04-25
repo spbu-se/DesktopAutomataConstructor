@@ -32,6 +32,8 @@ namespace AutomataConstructor
 
         private TestPanelViewModel tests;
 
+        private string savePath = "";
+
         #region SaveAutomatAsCommand
         public static RoutedCommand SaveAutomatAsCommand { get; set; } = new RoutedCommand("SaveAutomatAs", typeof(MainWindow));
 
@@ -41,11 +43,22 @@ namespace AutomataConstructor
             if (dialog.ShowDialog() == true)
             {
                 FileServiceProviderWpf.SerializeDataToFile(dialog.FileName, scene.GraphArea.ExtractSerializationData());
+                savePath = dialog.FileName;
             }
         }
 
         private void CanSaveAutomatAsCommandExecute(object sender, CanExecuteRoutedEventArgs e)
             => e.CanExecute = scene.GraphArea != null && scene.GraphArea.LogicCore.Graph != null && scene.GraphArea.VertexList.Count > 0;
+        #endregion
+
+        #region SaveAutomatCommand
+        public static RoutedCommand SaveAutomatCommand { get; set; } = new RoutedCommand("SaveAutomat", typeof(MainWindow));
+
+        private void OnSaveAutomatCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+            => FileServiceProviderWpf.SerializeDataToFile(savePath, scene.GraphArea.ExtractSerializationData());
+
+        private void CanSaveAutomatCommand(object sender, CanExecuteRoutedEventArgs e)
+            => e.CanExecute = savePath != null && File.Exists(savePath) && scene.GraphArea != null && scene.GraphArea.LogicCore.Graph != null && scene.GraphArea.VertexList.Count > 0; 
         #endregion
 
         #region OpenAutomatCommand
@@ -64,6 +77,7 @@ namespace AutomataConstructor
                 scene.GraphArea.RebuildFromSerializationData(data);
                 scene.GraphArea.SetVerticesDrag(true, true);
                 scene.GraphArea.UpdateAllEdges();
+                savePath = dialog.FileName;
             }
             catch (Exception ex)
             {
