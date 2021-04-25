@@ -24,7 +24,7 @@ namespace AutomataConstructor.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().ShowDialog();
+            new MainWindow().Show();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -34,16 +34,16 @@ namespace AutomataConstructor.View
                 case 0:
                     {
                         Properties.Settings.Default.language = "en-US";
+                        Properties.Settings.Default.Save();
                         break;
                     }
                 case 1:
                     {
-                        Properties.Settings.Default.language = "ru-Ru";
+                        Properties.Settings.Default.language = "ru-RU";
+                        Properties.Settings.Default.Save();
                         break;
                     }
             }
-
-            Properties.Settings.Default.Save();
         }
     }
 }

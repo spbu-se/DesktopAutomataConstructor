@@ -9,7 +9,7 @@
         xmlns:toolbar="clr-namespace:ControlsLibrary.Controls.Toolbar;assembly=ControlsLibrary"
         xmlns:errorReporter="clr-namespace:ControlsLibrary.Controls.ErrorReporter;assembly=ControlsLibrary"
         xmlns:executor="clr-namespace:ControlsLibrary.Controls.Executor;assembly=ControlsLibrary"
-        xmlns:language="clr-namespace:AutomataConstructor.Properties.Languages"
+        xmlns:language="clr-namespace:AutomataConstructor.Properties.Langs"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.CommandBindings>
@@ -40,12 +40,12 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" Grid.ColumnSpan="3">
-            <MenuItem Header="File">
-                <MenuItem Header="Save automat as" Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" InputGestureText="Ctrl+Shift+S"/>
-                <MenuItem Header="Save automat" Command="{x:Static local:MainWindow.SaveAutomatCommand}" InputGestureText="Ctrl+S"/>
-                <MenuItem Header="Open automat" Command="{x:Static local:MainWindow.OpenAutomatCommand}" InputGestureText="Ctrl+O"/>
-                <MenuItem Header="Save tests as" Command="{x:Static local:MainWindow.SaveTestsAsCommand}"/>
-                <MenuItem Header="Open tests" Command="{x:Static local:MainWindow.OpenTestsCommand}"/>
+            <MenuItem Header="{x:Static language:Lang.file}">
+                <MenuItem Header="{x:Static language:Lang.saveAutomatAs}" Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" InputGestureText="Ctrl+Shift+S"/>
+                <MenuItem Header="{x:Static language:Lang.saveAutomat}" Command="{x:Static local:MainWindow.SaveAutomatCommand}" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="{x:Static language:Lang.openAutomat}" Command="{x:Static local:MainWindow.OpenAutomatCommand}" InputGestureText="Ctrl+O"/>
+                <MenuItem Header="{x:Static language:Lang.saveTestsAs}" Command="{x:Static local:MainWindow.SaveTestsAsCommand}"/>
+                <MenuItem Header="{x:Static language:Lang.openTests}" Command="{x:Static local:MainWindow.OpenTestsCommand}"/>
             </MenuItem>
         </Menu>
 

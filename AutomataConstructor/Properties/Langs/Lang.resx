@@ -120,4 +120,19 @@
   <data name="file" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="openAutomat" xml:space="preserve">
+    <value>Open automat</value>
+  </data>
+  <data name="openTests" xml:space="preserve">
+    <value>Open tests</value>
+  </data>
+  <data name="saveAutomat" xml:space="preserve">
+    <value>Save automat</value>
+  </data>
+  <data name="saveAutomatAs" xml:space="preserve">
+    <value>Save automat as...</value>
+  </data>
+  <data name="saveTestsAs" xml:space="preserve">
+    <value>Save tests as...</value>
+  </data>
 </root>

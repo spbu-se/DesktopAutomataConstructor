@@ -40,15 +40,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Languages\en-Us.Designer.cs">
+    <Compile Update="Properties\Langs\Lang.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>en-US.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Properties\Languages\ru-Ru.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ru-Ru.resx</DependentUpon>
+      <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -63,13 +58,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Languages\en-US.resx">
+    <EmbeddedResource Update="Properties\Langs\Lang.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>en-Us.Designer.cs</LastGenOutput>
+      <LastGenOutput>Lang.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Properties\Languages\ru-Ru.resx">
+    <EmbeddedResource Update="Properties\Langs\Lang.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ru-Ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

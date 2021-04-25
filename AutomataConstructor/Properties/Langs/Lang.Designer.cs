@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AutomataConstructor.Properties.Languages {
+namespace AutomataConstructor.Properties.Langs {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace AutomataConstructor.Properties.Languages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class en_US {
+    public class Lang {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal en_US() {
+        internal Lang() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AutomataConstructor.Properties.Languages {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AutomataConstructor.Properties.Languages.en-US", typeof(en_US).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AutomataConstructor.Properties.Langs.Lang", typeof(Lang).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,51 @@ namespace AutomataConstructor.Properties.Languages {
         public static string file {
             get {
                 return ResourceManager.GetString("file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open automat.
+        /// </summary>
+        public static string openAutomat {
+            get {
+                return ResourceManager.GetString("openAutomat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open tests.
+        /// </summary>
+        public static string openTests {
+            get {
+                return ResourceManager.GetString("openTests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save automat.
+        /// </summary>
+        public static string saveAutomat {
+            get {
+                return ResourceManager.GetString("saveAutomat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save automat as....
+        /// </summary>
+        public static string saveAutomatAs {
+            get {
+                return ResourceManager.GetString("saveAutomatAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save tests as....
+        /// </summary>
+        public static string saveTestsAs {
+            get {
+                return ResourceManager.GetString("saveTestsAs", resourceCulture);
             }
         }
     }
