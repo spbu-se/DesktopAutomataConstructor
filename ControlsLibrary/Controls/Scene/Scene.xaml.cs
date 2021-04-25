@@ -100,6 +100,22 @@ namespace ControlsLibrary.Controls.Scene
             editor = new EditorObjectManager(graphArea, zoomControl);
         }
 
+        public void OnSceneKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl)
+            {
+                toolBar.SelectedTool = SelectedTool.Delete;
+            }
+            if (e.Key == Key.LeftShift)
+            {
+                toolBar.SelectedTool = SelectedTool.Select;
+            }
+            if (e.Key == Key.A)
+            {
+                toolBar.SelectedTool = SelectedTool.Edit;
+            }
+        }
+
         private void SetZoomControlProperties()
         {
             zoomControl.Zoom = 2;

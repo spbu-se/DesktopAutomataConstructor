@@ -28,6 +28,7 @@ namespace AutomataConstructor
             scene.ExecutorViewModel = (ExecutorViewModel)executor.DataContext;
             tests = (TestPanelViewModel)testPanel.DataContext;
             scene.TestPanel = tests;
+            this.KeyDown += scene.OnSceneKeyDown;
         }
 
         private TestPanelViewModel tests;
