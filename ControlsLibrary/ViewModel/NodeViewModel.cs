@@ -43,6 +43,7 @@ namespace ControlsLibrary.Model
             }
         }
 
+        [YAXDontSerialize]
         public bool IsActual
         {
             get => isActual;
