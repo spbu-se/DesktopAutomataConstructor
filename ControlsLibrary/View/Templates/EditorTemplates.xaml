@@ -104,7 +104,12 @@
                                 <RowDefinition Height="20"/>
                                 <RowDefinition Height="50"/>
                             </Grid.RowDefinitions>
-                            <Image Stretch="Uniform" Height="70" Grid.RowSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Stretch="Uniform" Height="70" Grid.RowSpan="2" Grid.ColumnSpan="3">
                                 <Image.Source>
                                     <DrawingImage >
                                         <DrawingImage.Drawing>
@@ -126,37 +131,31 @@
                                     </DrawingImage>
                                 </Image.Source>
                             </Image>
-                            <Border Background="White" BorderThickness="3" BorderBrush="Black" Grid.Row="0">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Label Content="ε:"/>
-                                    <CheckBox IsChecked="{Binding IsEpsilon}"/>
-                                    <ContentControl>
-                                        <ContentControl.Style>
-                                            <Style TargetType="ContentControl">
+                            <TextBlock Text="ε:" Grid.Row="0" Grid.Column="0" Foreground="Black"/>
+                            <CheckBox IsChecked="{Binding IsEpsilon}" Grid.Row="0" Grid.Column="1"/>
+                            <ContentControl Grid.Row="0" Grid.Column="2">
+                                <ContentControl.Style>
+                                    <Style TargetType="ContentControl">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBox Text="{Binding TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" TextAlignment="Left"
+                                                             HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="White" Width="30"/>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsEpsilon}" Value="True">
                                                 <Setter Property="Template">
                                                     <Setter.Value>
-                                                        <ControlTemplate>
-                                                            <TextBox Text="{Binding TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
-                                                             HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" Width="30"/>
-                                                        </ControlTemplate>
+                                                        <ControlTemplate/>
                                                     </Setter.Value>
                                                 </Setter>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsEpsilon}" Value="True">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate>
-                                                                    <TextBlock Text="ε"/>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ContentControl.Style>
-                                    </ContentControl>
-                                </StackPanel>
-                            </Border>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+                            </ContentControl>
                         </Grid>
                         <Path Stroke="Black"
                             StrokeThickness="2" MinWidth="1" MinHeight="1"
@@ -199,14 +198,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:AttachableEdgeLabelControl}">
-                    <Border Background="White" BorderThickness="3" BorderBrush="Black">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="ε:"/>
-                            <CheckBox IsChecked="{Binding AttachNode.Edge.IsEpsilon}"/>
-                            <TextBox Text="{Binding AttachNode.Edge.TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
-                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" Width="50"/>
-                        </StackPanel>
-                    </Border>
+                    <StackPanel Orientation="Horizontal" Background="Transparent">
+                        <Label Content="ε:"/>
+                        <CheckBox IsChecked="{Binding AttachNode.Edge.IsEpsilon}" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding AttachNode.Edge.TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
+                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="White" Width="50"/>
+                    </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -218,8 +215,7 @@
                         <ControlTemplate TargetType="{x:Type controls:AttachableEdgeLabelControl}">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="ε:"/>
-                                <CheckBox IsChecked="{Binding AttachNode.Edge.IsEpsilon}"/>
-                                <TextBlock Text="ε"/>
+                                <CheckBox IsChecked="{Binding AttachNode.Edge.IsEpsilon}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </ControlTemplate>
                     </Setter.Value>
