@@ -1,10 +1,10 @@
 image: Visual Studio 2019
 
 before_build:
-  - nuget restore AutomataConstructor/AutomataConstructor.sln
+  - nuget restore AutomataConstructor.sln
 
 build_script:
-  - dotnet build AutomataConstructor/AutomataConstructor.sln
+  - dotnet build AutomataConstructor.sln
 
 test_script:
-  - dotnet test AutomataConstructor/AutomataConstructor.sln
+  - dotnet test AutomataConstructor.sln
