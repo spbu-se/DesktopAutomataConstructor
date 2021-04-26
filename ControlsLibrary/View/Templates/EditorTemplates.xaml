@@ -83,17 +83,70 @@
 
     <!-- EDGE CONTROL -->
     <Style TargetType="{x:Type controls:EdgeControl}">
+        <Setter Property="SelfLoopIndicatorOffset" Value="80, 6"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:EdgeControl}">
                     <Grid>
-                        <StackPanel Orientation="Horizontal" x:Name="PART_SelfLoopedEdge">
-                            <Path  Width="20" Height="20" Stretch="Uniform" Fill="Black" Opacity="1" Clip="M0,0 V528.915 H528.915 V0 H0 Z"
-                              Data="F1 M528.915,528.915z M0,0z M232.327,5.055L232.327,46.757C232.327,51.827 228.254,56.472 223.26,57.347 111.818,76.916 26.851,174.347 26.851,291.309 26.851,422.326 133.44,528.914 264.456,528.914 395.474,528.914 502.062,422.325 502.062,291.309 502.062,278.634 491.787,268.359 479.112,268.359 466.437,268.359 456.162,278.634 456.162,291.309 456.162,397.016 370.164,483.015 264.456,483.015 158.748,483.015 72.75,397.016 72.75,291.309 72.75,199.726 137.319,122.981 223.314,104.101 228.265,103.015 232.326,106.46 232.326,111.528L232.326,148.251C232.326,153.321,235.509,154.83,239.434,151.623L324.055,82.461C327.981,79.251,327.981,74.052,324.055,70.842L239.436,1.686C235.51,-1.524,232.327,-0.012,232.327,5.055z"/>
-                            <TextBox Text="{Binding TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
-                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" Width="50"/>
-                        </StackPanel>
-                        
+                        <Grid x:Name="PART_SelfLoopedEdge">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Image Stretch="Uniform" Height="70" Grid.RowSpan="2">
+                                <Image.Source>
+                                    <DrawingImage >
+                                        <DrawingImage.Drawing>
+                                            <DrawingGroup ClipGeometry="M0,0 V5.2916667 H5.2916667 V0 H0 Z">
+                                                <DrawingGroup Opacity="1">
+                                                    <DrawingGroup Opacity="1" Transform="1,0,0,1,-1.984375,-1.1103051">
+                                                        <GeometryDrawing Geometry="F0 M5.2916667,5.2916667z M0,0z M3.8616831,5.9747834A1.1191912,2.2049735,0,0,1,4.1902343,3.0550256A1.1191912,2.2049735,0,0,1,5.6938085,3.4660738A1.1191912,2.2049735,0,0,1,5.6064274,6.451763">
+                                                            <GeometryDrawing.Pen>
+                                                                <Pen Brush="#FF000000" Thickness="0.132292" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                                                            </GeometryDrawing.Pen>
+                                                        </GeometryDrawing>
+                                                        <DrawingGroup Transform="0.58287604,0.12660212,-0.14552687,0.50707709,3.1732333,3.8465829">
+                                                            <GeometryDrawing Brush="#FF030000" Geometry="F1 M5.2916667,5.2916667z M0,0z M1.0651849,3.2972248L2.5603007,2.9222117 2.1375137,4.4045266z" />
+                                                        </DrawingGroup>
+                                                    </DrawingGroup>
+                                                </DrawingGroup>
+                                            </DrawingGroup>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                            <Border Background="White" BorderThickness="3" BorderBrush="Black" Grid.Row="0">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Label Content="ε:"/>
+                                    <CheckBox IsChecked="{Binding IsEpsilon}"/>
+                                    <ContentControl>
+                                        <ContentControl.Style>
+                                            <Style TargetType="ContentControl">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <TextBox Text="{Binding TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
+                                                             HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" Width="30"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsEpsilon}" Value="True">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate>
+                                                                    <TextBlock Text="ε"/>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ContentControl.Style>
+                                    </ContentControl>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                         <Path Stroke="Black"
                             StrokeThickness="2" MinWidth="1" MinHeight="1"
                             ToolTip="{TemplateBinding ToolTip}" 
