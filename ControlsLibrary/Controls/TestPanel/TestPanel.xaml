@@ -176,28 +176,6 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Debug">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Command="{Binding RemoveFromStorageCommand}" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom">
-                                            <Image Stretch="Uniform">
-                                                <Image.Source>
-                                                    <DrawingImage >
-                                                        <DrawingImage.Drawing>
-                                                            <DrawingGroup ClipGeometry="M0,0 V18.909 H18.909 V0 H0 Z">
-                                                                <DrawingGroup Opacity="1">
-                                                                    <GeometryDrawing Brush="Green" Geometry="F1 M18.909,18.909z M0,0z M10.193,8.311L1.887,1.714C1.484,1.511 1.003,1.533 0.619,1.766 0.233,1.998 0,2.412 0,2.856L0,16.054C0,16.497 0.233,16.91 0.619,17.143 0.827,17.269 1.063,17.333 1.302,17.333 1.503,17.333 1.703,17.287 1.888,17.195L10.194,10.596C10.594,10.22 10.91,9.938 10.91,9.453 10.91,8.968 10.641,8.707 10.193,8.311z" />
-                                                                    <GeometryDrawing Brush="Green" Geometry="F1 M18.909,18.909z M0,0z M18.193,8.311L9.887,1.714C9.484,1.511 9.002,1.533 8.618,1.766 8.232,1.998 7.999,2.412 7.999,2.856L7.999,16.054C7.999,16.497 8.232,16.91 8.618,17.143 8.826,17.269 9.062,17.333 9.301,17.333 9.502,17.333 9.702,17.287 9.887,17.195L18.193,10.596C18.593,10.22 18.909,9.938 18.909,9.453 18.909,8.968 18.641,8.707 18.193,8.311z" />
-                                                                </DrawingGroup>
-                                                            </DrawingGroup>
-                                                        </DrawingImage.Drawing>
-                                                    </DrawingImage>
-                                                </Image.Source>
-                                            </Image>
-                                        </Button>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Remove">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
