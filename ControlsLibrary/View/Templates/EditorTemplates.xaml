@@ -40,7 +40,7 @@
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
                             </StackPanel>
                         </StackPanel>
-                        <controls:VertexLabelControl x:Name="PART_vertexLabel" LabelPositionSide="Left" FontFamily="Comic Sans MS">
+                        <controls:VertexLabelControl x:Name="PART_vertexLabel" LabelPositionSide="Left">
                             <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="15" Height="15" Visibility="{Binding IsInitialMarkVisibility}">
                                 <Path.LayoutTransform>
                                     <RotateTransform Angle="180"/>
@@ -77,6 +77,13 @@
                                 <Ellipse Visibility="{Binding FinalMarkVisibility}" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="2" Height="90" Width="90"/>
                                 <TextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Center"
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" FontSize="30"/>
+                                <controls:VertexLabelControl x:Name="PART_vertexLabel" LabelPositionSide="Left" >
+                                    <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="15" Height="15" Visibility="{Binding IsInitialMarkVisibility}">
+                                        <Path.LayoutTransform>
+                                            <RotateTransform Angle="180"/>
+                                        </Path.LayoutTransform>
+                                    </Path>
+                                </controls:VertexLabelControl>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>

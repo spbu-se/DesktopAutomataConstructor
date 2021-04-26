@@ -97,6 +97,7 @@ namespace ControlsLibrary.Model
             {
                 isFinal = value;
                 OnPropertyChanged();
+                OnPropertyChanged("FinalMarkVisibility");
             }
         }
 
