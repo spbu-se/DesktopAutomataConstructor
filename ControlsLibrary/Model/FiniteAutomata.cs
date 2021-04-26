@@ -26,8 +26,7 @@ namespace ControlsLibrary.Model
         private List<int> _currentStates;
         private string _str;
         private int _strPosition;
-        private bool hasEpsilon;
-        public bool HasEpsilon { get => hasEpsilon; }
+        public ResultEnum StepResult;
         private bool hasErrorState;
         public bool HasErrorState { get => hasErrorState; }
         public static List<string> GetDefaultStatNames(int n)
@@ -40,7 +39,6 @@ namespace ControlsLibrary.Model
             }
             return list;
         }
-
         private List<int> GetNewStatesFromSingleState(int state, char x)
         {
             if (ConvertToInt(x, _alphabet) != ERROR_STATE)
@@ -106,6 +104,7 @@ namespace ControlsLibrary.Model
         {
             _currentStates = EpsilonClosure(_initialStates);
             hasErrorState = false;
+            StepResult = ResultEnum.NotRunned;
         }
 
         public void SetStr(string str)
@@ -115,10 +114,32 @@ namespace ControlsLibrary.Model
             this.ResetAutomata();
         }
 
+        private bool HasAccepingtState(List<int> states)
+        {
+            foreach (int state in states)
+            {
+                if (_acceptingStates.Contains(state))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public void SingleStep()
         {
             this.DoSingleTransition(_str[_strPosition]);
             _strPosition++;
+            if (_strPosition == _str.Length)
+            {
+                if (HasAccepingtState(_currentStates))
+                {
+                    StepResult = ResultEnum.Passed;
+                }
+                else
+                {
+                    StepResult = ResultEnum.Failed;
+                }
+            }
         }
         public bool CanDoStep()
         {

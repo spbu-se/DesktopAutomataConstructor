@@ -38,6 +38,8 @@
             <Button Content="Step" Command="{Binding StepInCommand}"/>
             <Label Content="Result:"/>
             <Label Content="{Binding Result}"/>
+            <Label Content="Step result:"/>
+            <Label Content="{Binding StepResult}"/>
         </StackPanel>
     </Grid>
 </UserControl>
