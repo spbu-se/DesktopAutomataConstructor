@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControlsLibrary.Controls.Executor"
+             xmlns:languages="clr-namespace:ControlsLibrary.Properties.Langs"
              mc:Ignorable="d" 
              >
     <UserControl.DataContext>
@@ -31,12 +32,35 @@
     </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Label Content="Debug:"/>
+            <Label Content="{x:Static languages:Lang.debugString}"/>
             <ContentPresenter Style="{StaticResource TextEditorStyle}" Content="{Binding}"/>
-            <Button Content="Run" Command="{Binding RunCommand}"/>
-            <Button Content="Stop debug" Command="{Binding StartOrDropDebugCommand}"/>
-            <Button Content="Step" Command="{Binding StepInCommand}"/>
-            <Label Content="Result:"/>
+            <Button Content="{x:Static languages:Lang.runString}" Command="{Binding RunCommand}"/>
+            <ContentControl>
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Button Content="{x:Static languages:Lang.startDebugString}" Command="{Binding StartDebugCommand}"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding InSimulation}" Value="True">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Button Content="{x:Static languages:Lang.resetDebugString}" Command="{Binding DropDebugCommand}"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <Button Content="{x:Static languages:Lang.stepDebugString}" Command="{Binding StepInCommand}"/>
+            <Label Content="{x:Static languages:Lang.resultDebugString}"/>
             <Label Content="{Binding Result}"/>
         </StackPanel>
     </Grid>

@@ -27,16 +27,9 @@ namespace ControlsLibrary.Controls.Executor
 
         public bool InSimulation { get => inSimulation; set => Set(ref inSimulation, value); }
 
-        private void DropSimulation()
-        {
-            InSimulation = false;
-            ActualStates.Clear();
-            PassedString = "";
-            CurrentToken = "";
-            NotPassedString = "";
-        }
+        public ICommand StartDebugCommand { get; }
 
-        private void StartSimulation()
+        private void OnStartDebugCommandExecuted(object p)
         {
             FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
             FA.SetStr(InputString);
@@ -48,21 +41,22 @@ namespace ControlsLibrary.Controls.Executor
             ActualStates = FA.GetCurrentStates();
         }
 
-        public ICommand StartOrDropDebugCommand { get; }
-        private void OnStartOrDropDebugCommandExecuted(object p)
-        {
-            if (InSimulation)
-            {
-                DropSimulation();
-            }
+        private bool CanStartDebugCommandExecute(object p)
+            => true;
 
-            StartSimulation();
+        public ICommand DropDebugCommand { get; }
+
+        private void OnDropDebugCommandExecuted(object p)
+        {
+            InSimulation = false;
+            ActualStates.Clear();
+            PassedString = "";
+            CurrentToken = "";
+            NotPassedString = "";
         }
 
-        private bool CanStartOrDropDebugExecute(object p)
-        {
-            return true;
-        }
+        private bool CanDropDebugCommandExecute(object p)
+            => true;
 
         public ICommand StepInCommand { get; }
 
@@ -82,7 +76,7 @@ namespace ControlsLibrary.Controls.Executor
             }
             if (!FA.CanDoStep())
             {
-                DropSimulation();
+                OnDropDebugCommandExecuted(this);
             }
         }
         private bool CanStepInCommandExecute(object p)
@@ -155,7 +149,8 @@ namespace ControlsLibrary.Controls.Executor
         public ExecutorViewModel()
         {
             #region Commands
-            StartOrDropDebugCommand = new RelayCommand(OnStartOrDropDebugCommandExecuted, CanStartOrDropDebugExecute);
+            StartDebugCommand = new RelayCommand(OnStartDebugCommandExecuted, CanStartDebugCommandExecute);
+            DropDebugCommand = new RelayCommand(OnDropDebugCommandExecuted, CanDropDebugCommandExecute);
             StepInCommand = new RelayCommand(OnStepInCommandExecuted, CanStepInCommandExecute);
             RunCommand = new RelayCommand(OnRunCommandExecuted, CanRunCommandExecute);
             #endregion

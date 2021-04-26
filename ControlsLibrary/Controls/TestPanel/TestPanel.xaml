@@ -153,7 +153,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Run">
+                            <DataGridTemplateColumn Header="{x:Static languages:Lang.runTest}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Command="{Binding ExecuteCommand}" Background="Transparent" BorderThickness="0">
@@ -176,7 +176,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Remove">
+                            <DataGridTemplateColumn Header="{x:Static languages:Lang.removeTest}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Command="{Binding RemoveFromStorageCommand}" Background="Transparent" BorderThickness="0">
