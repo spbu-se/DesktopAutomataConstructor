@@ -12,6 +12,7 @@
         <Setter Property="Background" Value="White"/>
         <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="VertexShape" Value="Circle"/>
+        <Setter Property="ShowLabel" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VertexControl}">
@@ -39,6 +40,13 @@
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
                             </StackPanel>
                         </StackPanel>
+                        <controls:VertexLabelControl x:Name="PART_vertexLabel" LabelPositionSide="Left" FontFamily="Comic Sans MS">
+                            <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="15" Height="15" Visibility="{Binding IsInitialMarkVisibility}">
+                                <Path.LayoutTransform>
+                                    <RotateTransform Angle="180"/>
+                                </Path.LayoutTransform>
+                            </Path>
+                        </controls:VertexLabelControl>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -53,9 +61,6 @@
                 <Setter Property="BorderBrush" Value="Gold"/>
                 <Setter Property="BorderThickness" Value="3"/>
             </Trigger>
-            <DataTrigger Binding="{Binding IsInitial}" Value="True">
-                <Setter Property="BorderBrush" Value="Green"/>
-            </DataTrigger>
             <DataTrigger Binding="{Binding IsActual}" Value="True">
                 <Setter Property="Background" Value="PaleVioletRed"/>
             </DataTrigger>
@@ -78,7 +83,6 @@
                 </Setter>
             </DataTrigger>
         </Style.Triggers>
-
     </Style>
 
     <!-- EDGE CONTROL -->

@@ -77,8 +77,15 @@ namespace ControlsLibrary.Model
             {
                 isInitial = value;
                 OnPropertyChanged();
+                OnPropertyChanged("IsInitialMarkVisibility");
             }
         }
+
+        public Visibility IsInitialMarkVisibility
+        {
+            get => IsInitial ? Visibility.Visible : Visibility.Hidden;
+        }
+
 
         /// <summary>
         /// Is state final
@@ -89,7 +96,6 @@ namespace ControlsLibrary.Model
             set
             {
                 isFinal = value;
-                OnPropertyChanged("FinalMarkVisibility");
                 OnPropertyChanged();
             }
         }
