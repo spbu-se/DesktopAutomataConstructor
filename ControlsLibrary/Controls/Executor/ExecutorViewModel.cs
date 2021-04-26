@@ -61,7 +61,7 @@ namespace ControlsLibrary.Controls.Executor
 
         private bool CanStartOrDropDebugExecute(object p)
         {
-            return true;
+            return (InputString != null && InputString.Length > 0);
         }
 
         public ICommand StepInCommand { get; }
