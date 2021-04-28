@@ -125,6 +125,9 @@ namespace ControlsLibrary.Controls.Scene
             zoomControl.IsAnimationEnabled = false;
             ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Hidden);
             zoomControl.MouseDown += OnSceneMouseDown;
+
+            using var deletionCursorStream = Application.GetResourceStream(new Uri("pack://application:,,,/ControlsLibrary;component/Controls/Scene/Assets/deletionCursor.cur", UriKind.RelativeOrAbsolute)).Stream;
+            deletionCursor = new Cursor(deletionCursorStream);
         }
 
         private void SetGraphAreaProperties()
@@ -227,11 +230,13 @@ namespace ControlsLibrary.Controls.Scene
             return vc;
         }
 
+        private static Cursor deletionCursor;
+
         private void ToolSelected(object sender, EventArgs e)
         {
             if (Toolbar.SelectedTool == SelectedTool.Delete)
             {
-                zoomControl.Cursor = Cursors.Help;
+                zoomControl.Cursor = deletionCursor;
                 ClearEditMode();
                 ClearSelectMode();
                 return;
