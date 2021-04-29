@@ -43,23 +43,23 @@ namespace AutomataConstructor
             var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = "Select layout file name", FileName = "laytest.xml" };
             if (dialog.ShowDialog() == true)
             {
-                FileServiceProviderWpf.SerializeDataToFile(dialog.FileName, scene.GraphArea.ExtractSerializationData());
+                scene.Save(dialog.FileName);
                 savePath = dialog.FileName;
             }
         }
 
         private void CanSaveAutomatAsCommandExecute(object sender, CanExecuteRoutedEventArgs e)
-            => e.CanExecute = scene.GraphArea != null && scene.GraphArea.LogicCore.Graph != null && scene.GraphArea.VertexList.Count > 0;
+            => e.CanExecute = scene != null && scene.CanSave();
         #endregion
 
         #region SaveAutomatCommand
         public static RoutedCommand SaveAutomatCommand { get; set; } = new RoutedCommand("SaveAutomat", typeof(MainWindow));
 
         private void OnSaveAutomatCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-            => FileServiceProviderWpf.SerializeDataToFile(savePath, scene.GraphArea.ExtractSerializationData());
+            => scene.Save(savePath);
 
         private void CanSaveAutomatCommand(object sender, CanExecuteRoutedEventArgs e)
-            => e.CanExecute = savePath != null && File.Exists(savePath) && scene.GraphArea != null && scene.GraphArea.LogicCore.Graph != null && scene.GraphArea.VertexList.Count > 0; 
+            => e.CanExecute = savePath != null && File.Exists(savePath) && scene != null && scene.CanSave(); 
         #endregion
 
         #region OpenAutomatCommand
@@ -74,10 +74,7 @@ namespace AutomataConstructor
             }
             try
             {
-                var data = FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(dialog.FileName);
-                scene.GraphArea.RebuildFromSerializationData(data);
-                scene.GraphArea.SetVerticesDrag(true, true);
-                scene.GraphArea.UpdateAllEdges();
+                scene.Open(dialog.FileName);
                 savePath = dialog.FileName;
             }
             catch (Exception ex)
@@ -131,14 +128,7 @@ namespace AutomataConstructor
                         var datas = (List<TestSerializationData>)deserializer.Deserialize(textReader);
                         foreach (var test in datas)
                         {
-                            tests.Tests.Add(new TestViewModel()
-                            {
-                                Result = test.Result,
-                                TestString = test.TestString,
-                                ShouldReject = test.ShouldReject,
-                                Storage = tests.Tests,
-                                Graph = scene.GraphArea.LogicCore.Graph
-                            });
+                            tests.AddTest(test.Result, test.TestString, test.ShouldReject);
                         }
                     }
                 }

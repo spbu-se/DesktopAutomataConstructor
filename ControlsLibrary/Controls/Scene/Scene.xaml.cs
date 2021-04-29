@@ -15,6 +15,8 @@ using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Executor;
 using System.ComponentModel;
 using ControlsLibrary.Controls.TestPanel;
+using ControlsLibrary.FileSerialization;
+using GraphX.Common.Models;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -90,7 +92,27 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
-        public GraphArea GraphArea { get => graphArea; }
+        public void Save(string path)
+        {
+            var datas = graphArea.ExtractSerializationData();
+            foreach (var data in datas)
+            {
+                data.HasLabel = false;
+            }
+            FileServiceProviderWpf.SerializeDataToFile(path, datas);
+        }
+
+        public bool CanSave()
+            => graphArea.VertexList.Count > 0;
+
+        public void Open(string path)
+        {
+            var data = FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(path);
+            graphArea.RebuildFromSerializationData(data);
+            graphArea.SetVerticesDrag(true, true);
+            graphArea.UpdateAllEdges();
+            GraphEdited?.Invoke(this, EventArgs.Empty);
+        }
 
         public Scene()
         {
