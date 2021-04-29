@@ -181,7 +181,7 @@ namespace ControlsLibrary.Controls.Scene
 
         public event EventHandler<EventArgs> GraphEdited;
 
-        private void UpdateEdgeRouting(NodeViewModel source, NodeViewModel target)
+        private void UpdateEdgeRoutingPoints(NodeViewModel source, NodeViewModel target)
         {
             var parralelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == target && e.Target == source);
             if (parralelEdge != null)
@@ -201,7 +201,7 @@ namespace ControlsLibrary.Controls.Scene
                 var source = edgeViewModel.Source;
                 var target = edgeViewModel.Target;
                 graphArea.RemoveEdge(edgeViewModel, true);
-                UpdateEdgeRouting(source, target);
+                UpdateEdgeRoutingPoints(source, target);
                 GraphEdited?.Invoke(this, EventArgs.Empty);
                 return;
             }
@@ -427,7 +427,6 @@ namespace ControlsLibrary.Controls.Scene
 
         private void SafeRemoveVertex(VertexControl vc)
         {
-            GraphEdited?.Invoke(this, EventArgs.Empty);
             foreach (var edge in graphArea.LogicCore.Graph.Edges)
             {
                 if (edge.IsSelfLoop && edge.Source == SelectNode(vc))
@@ -437,6 +436,7 @@ namespace ControlsLibrary.Controls.Scene
             }
 
             graphArea.RemoveVertexAndEdges(vc.Vertex as NodeViewModel);
+            GraphEdited?.Invoke(this, EventArgs.Empty);
         }
 
         public void Dispose()
