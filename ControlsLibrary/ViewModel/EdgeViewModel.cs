@@ -1,4 +1,5 @@
 ﻿using GraphX.Common.Models;
+using GraphX.Measure;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -65,6 +66,8 @@ namespace ControlsLibrary.Model
                 return transitionTokensString.ToList();
             }
         }
+
+        public override Point[] RoutingPoints { get; set; }
 
         public void OnPropertyChanged([CallerMemberName] string name = null)
         {
