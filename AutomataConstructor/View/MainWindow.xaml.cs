@@ -50,7 +50,7 @@ namespace AutomataConstructor
             get
             {
                 var name = fileName == null || fileName == "" ? "(unsaved)" : fileName;
-                var hasUnsavedChanges = saved || (fileName == null || fileName == "") ? "" : "*";
+                var hasUnsavedChanges = saved ? "" : "*";
                 return $"Automata constructor {name} {hasUnsavedChanges}";
             }
         }
