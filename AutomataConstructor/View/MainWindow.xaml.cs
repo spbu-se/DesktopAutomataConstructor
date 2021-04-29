@@ -39,7 +39,7 @@ namespace AutomataConstructor
             NotifyTitleChanged();
         }
 
-        private bool saved;
+        private bool saved = true;
 
         private string savePath = "";
 
@@ -95,7 +95,7 @@ namespace AutomataConstructor
             NotifyTitleChanged();
         }
 
-        private void CanSaveAutomatCommand(object sender, CanExecuteRoutedEventArgs e)
+        private void CanSaveAutomatCommandExecute(object sender, CanExecuteRoutedEventArgs e)
             => e.CanExecute = savePath != null && File.Exists(savePath) && scene != null && scene.CanSave(); 
         #endregion
 
@@ -180,7 +180,33 @@ namespace AutomataConstructor
             }
         }
 
-        private void CanOpenTestsCommandExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true; 
+        private void CanOpenTestsCommandExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         #endregion
+
+        private void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            if (!saved)
+            {
+                var result = MessageBox.Show("Save changes before closing?", "Automata constructor", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (scene != null && scene.CanSave() && File.Exists(savePath))
+                    {
+                        scene.Save(savePath);
+                        return;
+                    }
+
+                    var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = "Select layout file name", FileName = "laytest.xml" };
+                    if (dialog.ShowDialog() == true)
+                    {
+                        scene.Save(dialog.FileName);
+                    }
+                }
+                if (result == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
     }
 }

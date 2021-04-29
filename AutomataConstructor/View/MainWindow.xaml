@@ -11,10 +11,11 @@
         xmlns:executor="clr-namespace:ControlsLibrary.Controls.Executor;assembly=ControlsLibrary"
         xmlns:language="clr-namespace:AutomataConstructor.Properties.Langs"
         mc:Ignorable="d"
+        Closing="OnWindowClosing"
         Title="{Binding WindowTitle}" Height="450" Width="800">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" CanExecute="CanSaveAutomatAsCommandExecute" Executed="OnSaveAutomatAsCommandExecuted"/>
-        <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatCommand}" CanExecute="CanSaveAutomatCommand" Executed="OnSaveAutomatCommandExecuted"/>
+        <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatCommand}" CanExecute="CanSaveAutomatCommandExecute" Executed="OnSaveAutomatCommandExecuted"/>
         <CommandBinding Command="{x:Static local:MainWindow.OpenAutomatCommand}" CanExecute="CanOpenAutomatCommandExecute" Executed="OnOpenAutomatCommandExecuted"/>
         <CommandBinding Command="{x:Static local:MainWindow.SaveTestsAsCommand}" CanExecute="CanSaveTestsAsCommandExecute" Executed="OnSaveTestsAsCommandExecuted"/>
         <CommandBinding Command="{x:Static local:MainWindow.OpenTestsCommand}" CanExecute="CanOpenTestsCommandExecute" Executed="OnOpenTestsCommandExecuted"/>
