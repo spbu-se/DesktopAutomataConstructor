@@ -181,11 +181,28 @@ namespace ControlsLibrary.Controls.Scene
 
         public event EventHandler<EventArgs> GraphEdited;
 
+        private void UpdateEdgeRouting(NodeViewModel source, NodeViewModel target)
+        {
+            var parralelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == target && e.Target == source);
+            if (parralelEdge != null)
+            {
+                var newEdge = new EdgeViewModel(parralelEdge.Source, parralelEdge.Target) { TransitionTokensString = parralelEdge.TransitionTokensString };
+                var ec = new EdgeControl(graphArea.VertexList[parralelEdge.Source], graphArea.VertexList[parralelEdge.Target], newEdge);
+                graphArea.RemoveEdge(parralelEdge, true);
+                graphArea.InsertEdgeAndData(newEdge, ec, 0, true);
+            }
+        }
+
         private void EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Delete)
             {
-                graphArea.RemoveEdge(args.EdgeControl.Edge as EdgeViewModel, true);
+                var edgeViewModel = args.EdgeControl.Edge as EdgeViewModel;
+                var source = edgeViewModel.Source;
+                var target = edgeViewModel.Target;
+                graphArea.RemoveEdge(edgeViewModel, true);
+                UpdateEdgeRouting(source, target);
+                GraphEdited?.Invoke(this, EventArgs.Empty);
                 return;
             }
         }
@@ -418,6 +435,7 @@ namespace ControlsLibrary.Controls.Scene
                     graphArea.RemoveEdge(edge);
                 }
             }
+
             graphArea.RemoveVertexAndEdges(vc.Vertex as NodeViewModel);
         }
 
