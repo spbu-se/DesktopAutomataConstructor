@@ -97,7 +97,10 @@ namespace ControlsLibrary.Controls.Scene
             var datas = graphArea.ExtractSerializationData();
             foreach (var data in datas)
             {
-                data.HasLabel = false;
+                if (data.Data.GetType() == typeof(NodeViewModel))
+                {
+                    data.HasLabel = false;
+                }
             }
             FileServiceProviderWpf.SerializeDataToFile(path, datas);
         }
