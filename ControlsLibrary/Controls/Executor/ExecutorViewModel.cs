@@ -5,12 +5,12 @@ using System.Windows.Input;
 using ControlsLibrary.Infrastructure.Command;
 using QuickGraph;
 using System.Linq;
+using System.Windows;
 
 namespace ControlsLibrary.Controls.Executor
 {
     public class ExecutorViewModel : BaseViewModel
     {
-
         private FiniteAutomata FA;
         private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
         public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
@@ -91,6 +91,12 @@ namespace ControlsLibrary.Controls.Executor
         public ICommand RunCommand { get; }
         private void OnRunCommandExecuted(object p)
         {
+            var errors = FAAnalyzer.GetErrors(Graph);
+            if (errors.Count > 0)
+            {
+                MessageBox.Show(errors.Aggregate("", (folder, error) => folder + error + "\n"), "Invalid automat!", MessageBoxButton.OK);
+                return;
+            }
             FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
             FA.SetStr(InputString);
             Result = FA.DoAllTransitions(InputString) ? ResultEnum.Passed : ResultEnum.Failed;
