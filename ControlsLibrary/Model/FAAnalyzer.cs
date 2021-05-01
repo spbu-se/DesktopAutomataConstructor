@@ -20,6 +20,11 @@ namespace ControlsLibrary.Model
                 result.Add("Initital state should be only one");
             }
 
+            if (!graph.Vertices.Any(v => v.IsFinal == true) && graph.VertexCount != 0)
+            {
+                result.Add("Set accepting state");
+            }
+
             return result;
         }
     }
