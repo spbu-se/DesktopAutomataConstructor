@@ -148,22 +148,17 @@
 
     <!-- EDGE CONTROL -->
     <Style TargetType="{x:Type controls:EdgeControl}">
-        <Setter Property="SelfLoopIndicatorOffset" Value="80, 6"/>
+        <Setter Property="SelfLoopIndicatorOffset" Value="90, 6"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:EdgeControl}">
                     <Grid>
-                        <Grid x:Name="PART_SelfLoopedEdge">
+                        <Grid x:Name="PART_SelfLoopedEdge" Width="80">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="20"/>
                                 <RowDefinition Height="50"/>
                             </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Stretch="Uniform" Height="70" Grid.RowSpan="2" Grid.ColumnSpan="3">
+                            <Image Stretch="Uniform" Height="70" Grid.RowSpan="2" HorizontalAlignment="Center">
                                 <Image.Source>
                                     <DrawingImage >
                                         <DrawingImage.Drawing>
