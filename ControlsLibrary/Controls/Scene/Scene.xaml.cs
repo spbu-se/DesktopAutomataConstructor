@@ -315,9 +315,12 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        private int numberOfVertex = 0;
+
         private VertexControl CreateVertexControl(Point position)
         {
-            var data = new NodeViewModel() { Name = "S" + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = true };
+            var data = new NodeViewModel() { Name = "S" + numberOfVertex, IsFinal = false, IsInitial = false, IsExpanded = false };
+            numberOfVertex++;
             var vc = new VertexControl(data);
             data.PropertyChanged += errorReporter.GraphEdited;
             vc.SetPosition(position);
