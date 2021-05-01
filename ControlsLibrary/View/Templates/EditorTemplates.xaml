@@ -7,6 +7,47 @@
     
     <SolidColorBrush x:Key="EdgeArrowBrush" Color="Black" po:Freeze="true" />
 
+    <Style x:Key="TransitionsEditor" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="ε:" Grid.Row="0" Grid.Column="0" Foreground="Black"/>
+                        <CheckBox IsChecked="{Binding IsEpsilon}" Grid.Row="0" Grid.Column="1"/>
+                        <ContentControl Grid.Row="0" Grid.Column="2">
+                            <ContentControl.Style>
+                                <Style TargetType="ContentControl">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <TextBox Text="{Binding TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" TextAlignment="Left"
+                                                             HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="White" Width="30"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsEpsilon}" Value="True">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ContentControl.Style>
+                        </ContentControl>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- VERTEX CONTROL -->
     <Style TargetType="{x:Type controls:VertexControl}">
         <Setter Property="Background" Value="White"/>
@@ -131,31 +172,7 @@
                                     </DrawingImage>
                                 </Image.Source>
                             </Image>
-                            <TextBlock Text="ε:" Grid.Row="0" Grid.Column="0" Foreground="Black"/>
-                            <CheckBox IsChecked="{Binding IsEpsilon}" Grid.Row="0" Grid.Column="1"/>
-                            <ContentControl Grid.Row="0" Grid.Column="2">
-                                <ContentControl.Style>
-                                    <Style TargetType="ContentControl">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <TextBox Text="{Binding TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" TextAlignment="Left"
-                                                             HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="White" Width="30"/>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsEpsilon}" Value="True">
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate/>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ContentControl.Style>
-                            </ContentControl>
+                            <ContentControl Grid.Row="0" Style="{StaticResource TransitionsEditor}"/>
                         </Grid>
                         <Path Stroke="Black"
                             StrokeThickness="2" MinWidth="1" MinHeight="1"
@@ -190,38 +207,18 @@
     </Style>
 
     <!-- EDGE LABEL -->
-    <Style TargetType="controls:AttachableEdgeLabelControl">
+    <Style TargetType="controls:AttachableEdgeLabelControl" >
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="Black"/>
 
         <!-- Custom label template body -->
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:AttachableEdgeLabelControl}">
-                    <StackPanel Orientation="Horizontal" Background="Transparent">
-                        <Label Content="ε:"/>
-                        <CheckBox IsChecked="{Binding AttachNode.Edge.IsEpsilon}" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding AttachNode.Edge.TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Left"
-                                         HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="White" Width="50"/>
-                    </StackPanel>
+                <ControlTemplate>
+                    <ContentControl Style="{StaticResource TransitionsEditor}" DataContext="{Binding AttachNode.Edge}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding AttachNode.Edge.IsEpsilon}" Value="True">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type controls:AttachableEdgeLabelControl}">
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="ε:"/>
-                                <CheckBox IsChecked="{Binding AttachNode.Edge.IsEpsilon}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>
