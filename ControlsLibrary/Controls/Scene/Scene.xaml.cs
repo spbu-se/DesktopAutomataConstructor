@@ -236,7 +236,7 @@ namespace ControlsLibrary.Controls.Scene
 
             graphArea.VertexSelected += OnSceneVertexSelected;
             graphArea.EdgeSelected += EdgeSelected;
-
+            graphArea.SetEdgesDrag(false);
             graphArea.VertexMouseUp += VertexDragged;
         }
 
@@ -288,7 +288,7 @@ namespace ControlsLibrary.Controls.Scene
                         return;
                     }
                     var pos = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
-                    pos.Offset(-22.5, -22.5);
+                    pos.Offset(-60, -60);
                     var vc = CreateVertexControl(pos);
                     if (selectedVertex != null)
                     {
