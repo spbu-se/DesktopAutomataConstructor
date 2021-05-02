@@ -52,7 +52,7 @@
                             </ContentControl.Style>
                         </ContentControl>
                         <TextBox Text="{Binding TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" TextAlignment="Left"
-                                 HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="White" Width="30" Grid.Column="1" IsReadOnly="{Binding EditionAvailable}"/>
+                                 HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="White" Width="30" Grid.Column="1"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
