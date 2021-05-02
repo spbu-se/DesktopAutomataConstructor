@@ -214,6 +214,10 @@ namespace ControlsLibrary.Controls.Scene
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Delete)
             {
+                if (ExecutorViewModel.InSimulation)
+                {
+                    return;
+                }
                 var edgeViewModel = args.EdgeControl.Edge as EdgeViewModel;
                 var source = edgeViewModel.Source;
                 var target = edgeViewModel.Target;
@@ -233,6 +237,10 @@ namespace ControlsLibrary.Controls.Scene
             {
                 if (Toolbar.SelectedTool == SelectedTool.Edit)
                 {
+                    if (ExecutorViewModel.InSimulation)
+                    {
+                        return;
+                    }
                     var pos = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
                     pos.Offset(-22.5, -22.5);
                     var vc = CreateVertexControl(pos);
@@ -266,6 +274,10 @@ namespace ControlsLibrary.Controls.Scene
 
         private void CreateEdgeControl(VertexControl vc)
         {
+            if (ExecutorViewModel.InSimulation)
+            {
+                return;
+            }
             if (selectedVertex == null)
             {
                 editor.CreateVirtualEdge(vc, vc.GetPosition());
@@ -464,6 +476,10 @@ namespace ControlsLibrary.Controls.Scene
 
         private void SafeRemoveVertex(VertexControl vc)
         {
+            if (ExecutorViewModel.InSimulation)
+            {
+                return;
+            }
             foreach (var edge in graphArea.LogicCore.Graph.Edges)
             {
                 if (edge.IsSelfLoop && edge.Source == SelectNode(vc))
