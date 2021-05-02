@@ -67,6 +67,8 @@ namespace ControlsLibrary.Controls.Scene
         {
             if (e.PropertyName == "InSimulation")
             {
+                ClearSelectMode(true);
+                ClearEditMode();
                 foreach (var node in graphArea.LogicCore.Graph.Vertices)
                 {
                     node.EditionAvailable = !ExecutorViewModel.InSimulation;
