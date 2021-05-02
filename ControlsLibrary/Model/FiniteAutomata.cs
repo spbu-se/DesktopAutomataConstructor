@@ -6,18 +6,29 @@ namespace ControlsLibrary.Model
 {
     class FiniteAutomata
     {
+
+        public static readonly int ERROR_STATE = -1;
+        public static readonly int EPSILON = 0;
         public static int ConvertToInt(char x, List<char> alp)
         {
-            return alp.IndexOf(x);
+            int y = alp.IndexOf(x) + 1;
+            if (y > 0)
+            {
+                return y;
+            }
+            else return ERROR_STATE;
         }
 
         private readonly List<char> _alphabet;
         private readonly Dictionary<int, List<int>[]> _transitionTable;
-        private readonly int _initialState;
+        private List<int> _initialStates;
         private List<int> _acceptingStates;
         private List<int> _currentStates;
         private string _str;
         private int _strPosition;
+        public ResultEnum StepResult;
+        private bool hasErrorState;
+        public bool HasErrorState { get => hasErrorState; }
         public static List<string> GetDefaultStatNames(int n)
         {
             List<string> list = new List<string>();
@@ -28,14 +39,29 @@ namespace ControlsLibrary.Model
             }
             return list;
         }
-
         private List<int> GetNewStatesFromSingleState(int state, char x)
         {
-            if (_transitionTable[state][ConvertToInt(x, _alphabet)] != null)
+            if (ConvertToInt(x, _alphabet) != ERROR_STATE)
             {
-                return _transitionTable[state][ConvertToInt(x, _alphabet)];
+                if (_transitionTable[state][ConvertToInt(x, _alphabet)] != null)
+                {
+                    if (_transitionTable[state][ConvertToInt(x, _alphabet)].Count == 0)
+                    {
+                        hasErrorState = true;
+                    }
+                    return _transitionTable[state][ConvertToInt(x, _alphabet)];
+                }
+                else
+                {
+                    hasErrorState = true;
+                    return new List<int>();
+                }
             }
-            else return new List<int>() { };
+            else
+            {
+                hasErrorState = true;
+                return new List<int>();
+            }
         }
 
         private List<int> GetAllNewStates(List<int> states, char x)
@@ -47,15 +73,38 @@ namespace ControlsLibrary.Model
             }
             return result_list;
         }
+
+        private List<int> EpsilonClosure(List<int> states)
+        {
+            List<int> allStates = states;
+            List<int> progressStates = new List<int>();
+            while (true)
+            {
+                progressStates = allStates;
+                foreach (int n in allStates)
+                {
+                    progressStates = progressStates.Union(_transitionTable[n][EPSILON]).ToList();
+                }
+                if (progressStates.Count == allStates.Count)
+                {
+                    return allStates;
+                }
+                allStates = progressStates;
+            }
+
+        }
         private void DoSingleTransition(char x)
         {
             List<int> newCurrentStates = GetAllNewStates(_currentStates, x);
-            _currentStates = newCurrentStates;
+
+            _currentStates = EpsilonClosure(newCurrentStates);
         }
 
         private void ResetAutomata()
         {
-            this._currentStates = new List<int>() { _initialState };
+            _currentStates = EpsilonClosure(_initialStates);
+            hasErrorState = false;
+            StepResult = ResultEnum.NotRunned;
         }
 
         public void SetStr(string str)
@@ -65,10 +114,32 @@ namespace ControlsLibrary.Model
             this.ResetAutomata();
         }
 
+        private bool HasAccepingtState(List<int> states)
+        {
+            foreach (int state in states)
+            {
+                if (_acceptingStates.Contains(state))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public void SingleStep()
         {
             this.DoSingleTransition(_str[_strPosition]);
             _strPosition++;
+            if (_strPosition == _str.Length)
+            {
+                if (HasAccepingtState(_currentStates))
+                {
+                    StepResult = ResultEnum.Passed;
+                }
+                else
+                {
+                    StepResult = ResultEnum.Failed;
+                }
+            }
         }
         public bool CanDoStep()
         {
@@ -111,15 +182,16 @@ namespace ControlsLibrary.Model
             }
             return true;
         }
-        public FiniteAutomata(List<char> alphabet, Dictionary<int, List<int>[]> transitionTable, int numOfInitialState, List<int> acceptingStates)
+        public FiniteAutomata(List<char> alphabet, Dictionary<int, List<int>[]> transitionTable, List<int> numOfInitialStates, List<int> acceptingStates)
         {
             this._alphabet = alphabet;
             this._transitionTable = transitionTable;
             this._acceptingStates = acceptingStates;
-            this._initialState = numOfInitialState;
-            this._currentStates = new List<int> { _initialState };
+            this._initialStates = numOfInitialStates;
+            this._currentStates = _initialStates;
             _str = "";
             _strPosition = 0;
+            hasErrorState = false;
         }
 
         public List<int> GetCurrentStates()
@@ -130,7 +202,7 @@ namespace ControlsLibrary.Model
         {
             List<char> alph = new List<char>() { 'a', 'b', 'c' };
             Dictionary<int, List<int>[]> table = new Dictionary<int, List<int>[]>();
-            table.Add(0, new List<int>[] { new List<int>(), new List<int>(), new List<int>()});
+            table.Add(0, new List<int>[] { new List<int>(), new List<int>(), new List<int>() });
             table.Add(1, new List<int>[] { new List<int>(), new List<int>(), new List<int>() });
             table.Add(2, new List<int>[] { new List<int>(), new List<int>(), new List<int>() });
             table[0][ConvertToInt('a', alph)] = new List<int>() { 0 };
@@ -139,7 +211,7 @@ namespace ControlsLibrary.Model
             table[1][ConvertToInt('b', alph)] = new List<int>() { 1 };
             table[1][ConvertToInt('c', alph)] = new List<int>() { 2 };
             table[2][ConvertToInt('c', alph)] = new List<int>() { 2 };
-            return new FiniteAutomata(alph, table, 0, new List<int>() { 0, 1, 2 });
+            return new FiniteAutomata(alph, table, new List<int>() { 0 }, new List<int>() { 0, 1, 2 });
         }
 
         public static FiniteAutomata ConvertGraphToAutomata(List<EdgeViewModel> edges, List<NodeViewModel> nodes)
@@ -159,20 +231,20 @@ namespace ControlsLibrary.Model
             }
             Dictionary<int, List<int>[]> table = new Dictionary<int, List<int>[]>();
             List<int> acceptingStates = new List<int>();
-            int initialState = 0;
+            List<int> initialStates = new List<int>();
 
             foreach (var node in nodes)
             {
                 int nodeID = (int)node.ID;
                 if (node.IsInitial)
                 {
-                    initialState = nodeID;
+                    initialStates.Add(nodeID);
                 }
                 if (node.IsFinal)
                 {
                     acceptingStates.Add(nodeID);
                 }
-                table.Add(nodeID, new List<int>[automataAlphabet.Count]);
+                table.Add(nodeID, new List<int>[automataAlphabet.Count + 1]);
                 for (int i = 0; i < table[nodeID].Length; i++)
                 {
                     table[nodeID][i] = new List<int>();
@@ -184,8 +256,12 @@ namespace ControlsLibrary.Model
                 {
                     table[(int)edge.Source.ID][FiniteAutomata.ConvertToInt(element, automataAlphabet)].Add((int)edge.Target.ID);
                 }
+                if (edge.IsEpsilon)
+                {
+                    table[(int)edge.Source.ID][EPSILON].Add((int)edge.Target.ID);
+                }
             }
-            return new FiniteAutomata(automataAlphabet, table, initialState, acceptingStates);
+            return new FiniteAutomata(automataAlphabet, table, initialStates, acceptingStates);
         }
 
     }

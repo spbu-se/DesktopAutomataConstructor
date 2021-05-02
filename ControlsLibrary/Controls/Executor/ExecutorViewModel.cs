@@ -46,6 +46,7 @@ namespace ControlsLibrary.Controls.Executor
             notPassedString = inputString.Remove(0, 1);
             OnPropertyChanged("NotPassedString");
             ActualStates = FA.GetCurrentStates();
+            StepResult = ResultEnum.NotRunned;
         }
 
         public ICommand StartOrDropDebugCommand { get; }
@@ -61,7 +62,7 @@ namespace ControlsLibrary.Controls.Executor
 
         private bool CanStartOrDropDebugExecute(object p)
         {
-            return true;
+            return (InputString != null && InputString.Length > 0);
         }
 
         public ICommand StepInCommand { get; }
@@ -70,6 +71,7 @@ namespace ControlsLibrary.Controls.Executor
         private void OnStepInCommandExecuted(object p)
         {
             FA.SingleStep();
+            StepResult = FA.StepResult;
             ActualStates = FA.GetCurrentStates();
             passedString += currentToken;
             OnPropertyChanged("PassedString");
@@ -149,7 +151,16 @@ namespace ControlsLibrary.Controls.Executor
                 OnPropertyChanged("StringResult");
             }
         }
-
+        private ResultEnum _StepResult;
+        public ResultEnum StepResult
+        {
+            get => _StepResult;
+            set
+            {
+                Set(ref _StepResult, value);
+                OnPropertyChanged("StepResult");
+            }
+        }
         public string StringResult { get => ResultPrinter.PrintResult(Result); }
 
         public ExecutorViewModel()
