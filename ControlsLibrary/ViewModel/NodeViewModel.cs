@@ -29,6 +29,18 @@ namespace ControlsLibrary.Model
         private bool isFinal;
         private bool isExpanded;
         private bool isActual;
+        private bool editionAvailable = true;
+
+        [YAXDontSerialize]
+        public bool EditionAvailable
+        {
+            get => editionAvailable;
+            set
+            {
+                editionAvailable = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Is node expanded to edit attributes

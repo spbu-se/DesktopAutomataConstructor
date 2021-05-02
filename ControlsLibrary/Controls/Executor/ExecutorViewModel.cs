@@ -31,6 +31,10 @@ namespace ControlsLibrary.Controls.Executor
 
         private void OnStartDebugCommandExecuted(object p)
         {
+            if (InputString == null || InputString == "")
+            {
+                return;
+            }
             FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
             FA.SetStr(InputString);
             InSimulation = true;

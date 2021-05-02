@@ -29,7 +29,7 @@
                                                               Fill="Black" Stretch="Uniform"/>
                                                     </Button>
                                                     <TextBlock Text="ε:" Foreground="Black"/>
-                                                    <CheckBox IsChecked="{Binding IsEpsilon}"/>
+                                                    <CheckBox IsChecked="{Binding IsEpsilon}" IsEnabled="{Binding EditionAvailable}"/>
                                                 </StackPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -52,7 +52,7 @@
                             </ContentControl.Style>
                         </ContentControl>
                         <TextBox Text="{Binding TransitionTokensString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" TextAlignment="Left"
-                                 HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="White" Width="30" Grid.Column="1"/>
+                                 HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="White" Width="30" Grid.Column="1" IsReadOnly="{Binding EditionAvailable}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -84,12 +84,12 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="25">
                                 <TextBlock Text="{x:Static language:Lang.isAccept}" VerticalAlignment="Top"/>
-                                <CheckBox IsChecked="{Binding IsFinal, Mode=TwoWay}" VerticalAlignment="Top"
+                                <CheckBox IsChecked="{Binding IsFinal, Mode=TwoWay}" VerticalAlignment="Top" IsEnabled="{Binding EditionAvailable}"
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="25">
                                 <TextBlock Text="{x:Static language:Lang.isInitial}" VerticalAlignment="Top"/>
-                                <CheckBox IsChecked="{Binding IsInitial, Mode=TwoWay}" VerticalAlignment="Top"
+                                <CheckBox IsChecked="{Binding IsInitial, Mode=TwoWay}" VerticalAlignment="Top" IsEnabled="{Binding EditionAvailable}"
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
                             </StackPanel>
                         </StackPanel>

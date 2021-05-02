@@ -34,6 +34,19 @@ namespace ControlsLibrary.Model
             ChangeExpandingCommand = new RelayCommand(OnChangeExpandingCommandExecuted, CanChangeExpandingCommandExecute);
         }
 
+        private bool editionAvailable = true;
+
+        [YAXDontSerialize]
+        public bool EditionAvailable
+        {
+            get => editionAvailable;
+            set
+            {
+                editionAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool isEpsilon;
 
         public bool IsEpsilon
@@ -80,6 +93,10 @@ namespace ControlsLibrary.Model
             }
             set
             {
+                if (!EditionAvailable)
+                {
+                    return;
+                }
                 transitionTokensString = value;
                 OnPropertyChanged();
                 OnPropertyChanged("TransitionTokens");

@@ -63,6 +63,22 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        private void InSimulationChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "InSimulation")
+            {
+                foreach (var node in graphArea.LogicCore.Graph.Vertices)
+                {
+                    node.EditionAvailable = !ExecutorViewModel.InSimulation;
+                }
+
+                foreach (var edge in graphArea.LogicCore.Graph.Edges)
+                {
+                    edge.EditionAvailable = !ExecutorViewModel.InSimulation;
+                }
+            }
+        }
+
         private ExecutorViewModel executorViewModel;
         public ExecutorViewModel ExecutorViewModel
         {
@@ -72,6 +88,7 @@ namespace ControlsLibrary.Controls.Scene
                 executorViewModel = value;
                 executorViewModel.Graph = graphArea.LogicCore.Graph;
                 executorViewModel.PropertyChanged += UpdateActualStates;
+                executorViewModel.PropertyChanged += InSimulationChanged;
             }
         }
 
