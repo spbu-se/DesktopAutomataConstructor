@@ -24,13 +24,13 @@ namespace ControlsLibrary.Controls.Scene
             zoomControl.MouseMove += ZoomControlMouseMove;
             resourceDictionary = new ResourceDictionary
             {
-                Source = new Uri("pack://application:,,,/View/Templates/EditorTemplates.xaml", UriKind.RelativeOrAbsolute)
+                Source = new Uri("pack://application:,,,/ControlsLibrary;component/View/Templates/EditorTemplates.xaml", UriKind.RelativeOrAbsolute)
             };
         }
 
         public void CreateVirtualEdge(VertexControl source, Point mousePosition)
         {
-            edgeBlueprint = new EdgeBlueprint(source, mousePosition, (LinearGradientBrush)resourceDictionary["EdgeBrush"]);
+            edgeBlueprint = new EdgeBlueprint(source, mousePosition, (SolidColorBrush)resourceDictionary["EdgeArrowBrush"]);
             graphArea.InsertCustomChildControl(0, edgeBlueprint.EdgePath);
         }
 

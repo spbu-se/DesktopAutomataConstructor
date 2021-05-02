@@ -2,6 +2,7 @@
 using GraphX.Common.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using YAXLib;
 
@@ -21,11 +22,25 @@ namespace ControlsLibrary.Model
 
         private void OnChangeHigingCommandExecuted(object p) => IsExpanded = !IsExpanded;
 
+        public Visibility FinalMarkVisibility { get => IsFinal ? Visibility.Visible : Visibility.Hidden; }
+
         private string name;
         private bool isInitial;
         private bool isFinal;
         private bool isExpanded;
         private bool isActual;
+        private bool editionAvailable = true;
+
+        [YAXDontSerialize]
+        public bool EditionAvailable
+        {
+            get => editionAvailable;
+            set
+            {
+                editionAvailable = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Is node expanded to edit attributes
@@ -40,6 +55,7 @@ namespace ControlsLibrary.Model
             }
         }
 
+        [YAXDontSerialize]
         public bool IsActual
         {
             get => isActual;
@@ -73,8 +89,15 @@ namespace ControlsLibrary.Model
             {
                 isInitial = value;
                 OnPropertyChanged();
+                OnPropertyChanged("IsInitialMarkVisibility");
             }
         }
+
+        public Visibility IsInitialMarkVisibility
+        {
+            get => IsInitial ? Visibility.Visible : Visibility.Hidden;
+        }
+
 
         /// <summary>
         /// Is state final
@@ -86,6 +109,7 @@ namespace ControlsLibrary.Model
             {
                 isFinal = value;
                 OnPropertyChanged();
+                OnPropertyChanged("FinalMarkVisibility");
             }
         }
 

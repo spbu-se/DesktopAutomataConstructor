@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ControlsLibrary.Controls.SaveManager
+namespace ControlsLibrary.Controls.TypeAnalyzer
 {
     /// <summary>
-    /// Interaction logic for SaveManager.xaml
+    /// Interaction logic for TypeAnalyzer.xaml
     /// </summary>
-    public partial class SaveManager : UserControl
+    public partial class TypeAnalyzer : UserControl
     {
-        public SaveManager()
+        public TypeAnalyzer()
         {
             InitializeComponent();
         }

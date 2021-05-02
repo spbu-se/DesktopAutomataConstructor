@@ -5,6 +5,8 @@ using System.Runtime.CompilerServices;
 using System.Linq;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using ControlsLibrary.Properties.Langs;
 
 namespace ControlsLibrary.Controls.ErrorReporter
 {
@@ -23,16 +25,7 @@ namespace ControlsLibrary.Controls.ErrorReporter
 
         public void GraphEdited(object sender, EventArgs e)
         {
-            Errors.Clear();
-            if (!Graph.Vertices.Any(v => v.IsInitial == true) && Graph.VertexCount != 0)
-            {
-                Errors.Add("Set initial state");
-            }
-
-            if (Graph.Vertices.Where(v => v.IsInitial == true).Count() > 1)
-            {
-                Errors.Add("Initital state should be only one");
-            }
+            errors = FAAnalyzer.GetErrors(Graph);
 
             OnPropertyChanged("Errors");
             OnPropertyChanged("HasError");
@@ -45,13 +38,15 @@ namespace ControlsLibrary.Controls.ErrorReporter
             {
                 if (!HasError)
                 {
-                    return "No issues found";
+                    return Lang.noIssuesFound;
                 }
                 return Errors.Count.ToString();
             }
         }
 
-        public ObservableCollection<string> Errors { get; } = new ObservableCollection<string>();
+        private ICollection<string> errors = new ObservableCollection<string>();
+
+        public ObservableCollection<string> Errors { get => new ObservableCollection<string>(errors); }
 
         public bool HasError
         {

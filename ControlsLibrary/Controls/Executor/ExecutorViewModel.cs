@@ -5,12 +5,12 @@ using System.Windows.Input;
 using ControlsLibrary.Infrastructure.Command;
 using QuickGraph;
 using System.Linq;
+using System.Windows;
 
 namespace ControlsLibrary.Controls.Executor
 {
     public class ExecutorViewModel : BaseViewModel
     {
-
         private FiniteAutomata FA;
         private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
         public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
@@ -27,14 +27,14 @@ namespace ControlsLibrary.Controls.Executor
 
         public bool InSimulation { get => inSimulation; set => Set(ref inSimulation, value); }
 
-        private void DropSimulation()
-        {
-            InSimulation = false;
-            ActualStates.Clear();
-        }
+        public ICommand StartDebugCommand { get; }
 
-        private void StartSimulation()
+        private void OnStartDebugCommandExecuted(object p)
         {
+            if (InputString == null || InputString == "")
+            {
+                return;
+            }
             FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
             FA.SetStr(InputString);
             InSimulation = true;
@@ -43,23 +43,26 @@ namespace ControlsLibrary.Controls.Executor
             notPassedString = inputString.Remove(0, 1);
             OnPropertyChanged("NotPassedString");
             ActualStates = FA.GetCurrentStates();
+            Result = ResultEnum.NotRunned;
         }
 
-        public ICommand StartOrDropDebugCommand { get; }
-        private void OnStartOrDropDebugCommandExecuted(object p)
+        private bool CanStartDebugCommandExecute(object p)
+            => true;
+
+        public ICommand DropDebugCommand { get; }
+
+        private void OnDropDebugCommandExecuted(object p)
         {
-            if (InSimulation)
-            {
-                DropSimulation();
-            }
-
-            StartSimulation();
+            InSimulation = false;
+            ActualStates.Clear();
+            OnPropertyChanged("ActualStates");
+            PassedString = "";
+            CurrentToken = "";
+            NotPassedString = "";
         }
 
-        private bool CanStartOrDropDebugExecute(object p)
-        {
-            return true;
-        }
+        private bool CanDropDebugCommandExecute(object p)
+            => true;
 
         public ICommand StepInCommand { get; }
 
@@ -77,10 +80,14 @@ namespace ControlsLibrary.Controls.Executor
                 notPassedString = notPassedString.Remove(0, 1);
                 OnPropertyChanged("NotPassedString");
             }
+            else
+            {
+                currentToken = "";
+                OnPropertyChanged("CurrentToken");
+            }
             if (!FA.CanDoStep())
             {
-                
-                InSimulation = false;
+                Result = FA.StepResult;
             }
         }
         private bool CanStepInCommandExecute(object p)
@@ -95,6 +102,12 @@ namespace ControlsLibrary.Controls.Executor
         public ICommand RunCommand { get; }
         private void OnRunCommandExecuted(object p)
         {
+            var errors = FAAnalyzer.GetErrors(Graph);
+            if (errors.Count > 0)
+            {
+                MessageBox.Show(errors.Aggregate("", (folder, error) => folder + error + "\n"), "Invalid automat!", MessageBoxButton.OK);
+                return;
+            }
             FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
             FA.SetStr(InputString);
             Result = FA.DoAllTransitions(InputString) ? ResultEnum.Passed : ResultEnum.Failed;
@@ -104,16 +117,28 @@ namespace ControlsLibrary.Controls.Executor
             return !inSimulation;
         }
 
-        private string inputString;
-        public string InputString { get => inputString; set => Set(ref inputString, value); }
+        private string inputString = "";
+        public string InputString 
+        { 
+            get => inputString; 
+            set
+            {
+                if (inSimulation)
+                {
+                    return;
+                }
+                Result = ResultEnum.NotRunned;
+                Set(ref inputString, value);
+            }
+        }
 
-        private string passedString;
+        private string passedString = "";
         public string PassedString { get => passedString; set => passedString = value; }
 
-        private string currentToken;
+        private string currentToken = "";
         public string CurrentToken { get => currentToken; set => currentToken = value; }
 
-        private string notPassedString;
+        private string notPassedString = "";
         public string NotPassedString { get => notPassedString; set => notPassedString = value; }
 
         private List<int> _ActualStates;
@@ -147,13 +172,13 @@ namespace ControlsLibrary.Controls.Executor
                 OnPropertyChanged("StringResult");
             }
         }
-
         public string StringResult { get => ResultPrinter.PrintResult(Result); }
 
         public ExecutorViewModel()
         {
             #region Commands
-            StartOrDropDebugCommand = new RelayCommand(OnStartOrDropDebugCommandExecuted, CanStartOrDropDebugExecute);
+            StartDebugCommand = new RelayCommand(OnStartDebugCommandExecuted, CanStartDebugCommandExecute);
+            DropDebugCommand = new RelayCommand(OnDropDebugCommandExecuted, CanDropDebugCommandExecute);
             StepInCommand = new RelayCommand(OnStepInCommandExecuted, CanStepInCommandExecute);
             RunCommand = new RelayCommand(OnRunCommandExecuted, CanRunCommandExecute);
             #endregion

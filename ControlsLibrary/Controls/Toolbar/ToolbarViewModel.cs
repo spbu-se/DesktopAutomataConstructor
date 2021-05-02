@@ -8,7 +8,29 @@ namespace ControlsLibrary.Controls.Toolbar
     {
         private SelectedTool selectedTool;
 
-        public SelectedTool SelectedTool { get => selectedTool; }
+        public SelectedTool SelectedTool 
+        { 
+            get => selectedTool;
+            set
+            {
+                selectedTool = value;
+                EditToolSelected = false;
+                DeleteToolSelected = false;
+                SelectToolSelected = false;
+                switch (selectedTool)
+                {
+                    case SelectedTool.Select:
+                        SelectToolSelected = true;
+                        return;
+                    case SelectedTool.Delete:
+                        DeleteToolSelected = true;
+                        return;
+                    case SelectedTool.Edit:
+                        EditToolSelected = true;
+                        return;
+                }
+            }
+        }
 
         public delegate void SelectedToolChangedEventHandler(object sender, EventArgs e);
 
@@ -17,7 +39,6 @@ namespace ControlsLibrary.Controls.Toolbar
         private bool selectToolSelected;
         private bool editToolSelected;
         private bool deleteToolSelected;
-        private bool editAttributesToolSelected;
 
         public bool SelectToolSelected
         {

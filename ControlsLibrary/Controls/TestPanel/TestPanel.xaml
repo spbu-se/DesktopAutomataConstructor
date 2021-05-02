@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControlsLibrary.Controls.TestPanel"
+             xmlns:languages="clr-namespace:ControlsLibrary.Properties.Langs"
              mc:Ignorable="d" >
     <UserControl.DataContext>
         <local:TestPanelViewModel/>
@@ -20,16 +21,79 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="TestPanel"/>
-                    <Button Grid.Row="0" Grid.Column="1" Content="Hide" Command="{Binding HideCommand}"/>
-                    <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" RowHeight="20" Grid.Row="1" Grid.ColumnSpan="2"
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="{x:Static languages:Lang.runAllTests}" Command="{Binding RunAllTestsCommand}" Grid.Column="0"/>
+                        <Border Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                            <DockPanel Margin="5">
+                                <Image Height="20" Stretch="Uniform">
+                                    <Image.Source>
+                                        <DrawingImage>
+                                            <DrawingImage.Drawing>
+                                                <DrawingGroup ClipGeometry="M0,0 V256.462 H256.462 V0 H0 Z">
+                                                    <DrawingGroup Opacity="1">
+                                                        <GeometryDrawing Brush="#FF010002" Geometry="F1 M256.462,256.462z M0,0z M67.509,103.278C67.509,119.753,67.992,134.449,69.448,148.817L69.126,148.817C64.12,136.543,57.819,122.986,51.357,111.512L28.748,71.623 0,71.623 0,180.477 22.614,180.477 22.614,147.695C22.614,129.926,22.286,114.579,21.48,100.05L22.124,100.05C27.291,112.801,34.559,126.865,41.021,138.477L64.274,180.478 90.117,180.478 90.117,71.623 67.509,71.623 67.509,103.278z" />
+                                                        <GeometryDrawing Brush="#FF010002" Geometry="F1 M256.462,256.462z M0,0z M103.352,186.778L119.665,186.778 154.225,69.684 137.912,69.684 103.352,186.778z" />
+                                                        <GeometryDrawing Brush="#FF010002" Geometry="F1 M256.462,256.462z M0,0z M222.54,71.629L190.247,71.629 157.131,180.483 182.49,180.483 190.241,152.534 221.406,152.534 229.807,180.483 256.461,180.483C256.462,180.483,222.54,71.629,222.54,71.629z M193.786,134.12L200.254,111.028C202.032,104.727,203.643,96.487,205.26,90.025L205.582,90.025C207.199,96.487,209.138,104.566,211.072,111.028L217.856,134.12 193.786,134.12z" />
+                                                    </DrawingGroup>
+                                                </DrawingGroup>
+                                            </DrawingImage.Drawing>
+                                        </DrawingImage>
+                                    </Image.Source>
+                                </Image>
+                                <Label Content="{Binding NumberOfNotRunnedTests}"/>
+                            </DockPanel>
+                        </Border>
+                        <Border Grid.Column="1" BorderThickness="1" BorderBrush="Black">
+                            <DockPanel Margin="5">
+                                <Image Height="20" Stretch="Uniform">
+                                    <Image.Source>
+                                        <DrawingImage>
+                                            <DrawingImage.Drawing>
+                                                <DrawingGroup ClipGeometry="M0,0 V32 H32 V0 H0 Z">
+                                                    <GeometryDrawing Brush="Green" Geometry="F1 M32,32z M0,0z M16,3C8.832031,3 3,8.832031 3,16 3,23.167969 8.832031,29 16,29 23.167969,29 29,23.167969 29,16 29,8.832031 23.167969,3 16,3z M16,5C22.085938,5 27,9.914063 27,16 27,22.085938 22.085938,27 16,27 9.914063,27 5,22.085938 5,16 5,9.914063 9.914063,5 16,5z M15,10L15,15 10,15 10,17 15,17 15,22 17,22 17,17 22,17 22,15 17,15 17,10z" />
+                                                </DrawingGroup>
+                                            </DrawingImage.Drawing>
+                                        </DrawingImage>
+                                    </Image.Source>
+                                </Image>
+                                <Label Content="{Binding NumberOfPassedTests}"/>
+                            </DockPanel>
+                        </Border>
+                        <Border Grid.Column="3" BorderThickness="1" BorderBrush="Black">
+                            <DockPanel Margin="5">
+                                <Image Height="20" Stretch="Uniform">
+                                    <Image.Source>
+                                        <DrawingImage>
+                                            <DrawingImage.Drawing>
+                                                <DrawingGroup ClipGeometry="M0,0 V330 H330 V0 H0 Z">
+                                                    <DrawingGroup Opacity="1">
+                                                        <GeometryDrawing Brush="Red" Geometry="F1 M330,330z M0,0z M281.633,48.328C250.469,17.163 209.034,0 164.961,0 120.888,0 79.453,17.163 48.289,48.328 -16.044,112.662 -16.044,217.339 48.289,281.673 79.453,312.837 120.888,330 164.962,330 209.035,330 250.469,312.837 281.633,281.672 312.798,250.508 329.961,209.073 329.961,165 329.961,120.927 312.798,79.492 281.633,48.328z M260.42,260.46C234.922,285.957 201.021,300 164.962,300 128.902,300 95.001,285.957 69.502,260.46 16.866,207.823 16.866,122.178 69.502,69.541 95,44.042 128.901,30 164.961,30 201.021,30 234.922,44.042 260.42,69.54 285.918,95.039 299.961,128.94 299.961,165 299.961,201.06 285.918,234.961 260.42,260.46z" />
+                                                        <GeometryDrawing Brush="Red" Geometry="F1 M330,330z M0,0z M254.961,150L74.962,150C66.678,150 59.962,156.716 59.962,165 59.962,173.284 66.678,180 74.962,180L254.961,180C263.245,180 269.961,173.284 269.961,165 269.961,156.716 263.245,150 254.961,150z" />
+                                                    </DrawingGroup>
+                                                </DrawingGroup>
+                                            </DrawingImage.Drawing>
+                                        </DrawingImage>
+                                    </Image.Source>
+                                </Image>
+                                <Label Content="{Binding NumberOfFailedTests}"/>
+                            </DockPanel>
+                        </Border>
+                        <Button Content="{x:Static languages:Lang.hide}" Command="{Binding HideCommand}" Grid.Column="4"/>
+                    </Grid>
+                    <DataGrid ItemsSource="{Binding Tests}" AutoGenerateColumns="False" RowHeight="20" Grid.Row="1"
                           CanUserSortColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="String" IsReadOnly="False" Binding="{Binding TestString, UpdateSourceTrigger=PropertyChanged}" MaxWidth="50"/>
-                            <DataGridCheckBoxColumn Header="Reject" IsReadOnly="False" Binding="{Binding ShouldReject, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTemplateColumn Header="Result">
+                            <DataGridTextColumn Header="{x:Static languages:Lang._string}" IsReadOnly="False" Binding="{Binding TestString, UpdateSourceTrigger=PropertyChanged}" MaxWidth="50"/>
+                            <DataGridCheckBoxColumn Header="{x:Static languages:Lang.shouldReject}" IsReadOnly="False" Binding="{Binding ShouldReject, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTemplateColumn Header="{x:Static languages:Lang.testResult}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Image Stretch="Uniform">
@@ -89,7 +153,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Run">
+                            <DataGridTemplateColumn Header="{x:Static languages:Lang.runTest}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Command="{Binding ExecuteCommand}" Background="Transparent" BorderThickness="0">
@@ -112,29 +176,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Debug">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Command="{Binding RemoveFromStorageCommand}" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom">
-                                            <Image Stretch="Uniform">
-                                                <Image.Source>
-                                                    <DrawingImage >
-                                                        <DrawingImage.Drawing>
-                                                            <DrawingGroup ClipGeometry="M0,0 V18.909 H18.909 V0 H0 Z">
-                                                                <DrawingGroup Opacity="1">
-                                                                    <GeometryDrawing Brush="Green" Geometry="F1 M18.909,18.909z M0,0z M10.193,8.311L1.887,1.714C1.484,1.511 1.003,1.533 0.619,1.766 0.233,1.998 0,2.412 0,2.856L0,16.054C0,16.497 0.233,16.91 0.619,17.143 0.827,17.269 1.063,17.333 1.302,17.333 1.503,17.333 1.703,17.287 1.888,17.195L10.194,10.596C10.594,10.22 10.91,9.938 10.91,9.453 10.91,8.968 10.641,8.707 10.193,8.311z" />
-                                                                    <GeometryDrawing Brush="Green" Geometry="F1 M18.909,18.909z M0,0z M18.193,8.311L9.887,1.714C9.484,1.511 9.002,1.533 8.618,1.766 8.232,1.998 7.999,2.412 7.999,2.856L7.999,16.054C7.999,16.497 8.232,16.91 8.618,17.143 8.826,17.269 9.062,17.333 9.301,17.333 9.502,17.333 9.702,17.287 9.887,17.195L18.193,10.596C18.593,10.22 18.909,9.938 18.909,9.453 18.909,8.968 18.641,8.707 18.193,8.311z" />
-                                                                </DrawingGroup>
-                                                            </DrawingGroup>
-                                                        </DrawingImage.Drawing>
-                                                    </DrawingImage>
-                                                </Image.Source>
-                                            </Image>
-                                        </Button>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Remove">
+                            <DataGridTemplateColumn Header="{x:Static languages:Lang.removeTest}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Command="{Binding RemoveFromStorageCommand}" Background="Transparent" BorderThickness="0">
@@ -157,12 +199,12 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="Add new" Command="{Binding AddTestCommand}" Grid.Row="2" Grid.ColumnSpan="2"/>
+                    <Button Content="{x:Static languages:Lang.addNewTest}" Command="{Binding AddTestCommand}" Grid.Row="2"/>
                 </Grid>
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="HiddenContent">
-            <Button Content="Hidden" Command="{Binding HideCommand}"/>
+            <Button Content="{x:Static languages:Lang.openTestPanel}" Command="{Binding HideCommand}" MaxHeight="20"/>
         </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource DefaultContent}"/>
