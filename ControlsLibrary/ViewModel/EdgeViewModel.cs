@@ -48,6 +48,7 @@ namespace ControlsLibrary.Model
             }
         }
 
+        [YAXDontSerialize]
         public ICommand ChangeExpandingCommand { get; set; }
 
         private void OnChangeExpandingCommandExecuted(object p)
