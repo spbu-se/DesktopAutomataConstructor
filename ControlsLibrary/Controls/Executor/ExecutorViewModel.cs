@@ -80,6 +80,11 @@ namespace ControlsLibrary.Controls.Executor
                 notPassedString = notPassedString.Remove(0, 1);
                 OnPropertyChanged("NotPassedString");
             }
+            else
+            {
+                currentToken = "";
+                OnPropertyChanged("CurrentToken");
+            }
             if (!FA.CanDoStep())
             {
                 Result = FA.StepResult;
