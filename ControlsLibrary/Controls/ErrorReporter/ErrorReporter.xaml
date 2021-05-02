@@ -52,7 +52,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid Width="150">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
