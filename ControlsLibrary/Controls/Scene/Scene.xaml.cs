@@ -337,11 +337,20 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        private void VertexEdited(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Name" || e.PropertyName == "IsInitial" || e.PropertyName == "IsFinal")
+            {
+                GraphEdited?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         private int numberOfVertex = 0;
 
         private VertexControl CreateVertexControl(Point position)
         {
             var data = new NodeViewModel() { Name = "S" + numberOfVertex, IsFinal = false, IsInitial = false, IsExpanded = false };
+            data.PropertyChanged += VertexEdited;
             numberOfVertex++;
             var vc = new VertexControl(data);
             data.PropertyChanged += errorReporter.GraphEdited;
