@@ -62,8 +62,6 @@
             <Button Content="{x:Static languages:Lang.stepDebugString}" Command="{Binding StepInCommand}"/>
             <Label Content="{x:Static languages:Lang.resultDebugString}"/>
             <Label Content="{Binding Result}"/>
-            <Label Content="Step result:"/>
-            <Label Content="{Binding StepResult}"/>
         </StackPanel>
     </Grid>
 </UserControl>
