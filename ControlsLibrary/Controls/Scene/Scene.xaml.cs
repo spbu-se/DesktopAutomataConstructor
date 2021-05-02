@@ -141,12 +141,39 @@ namespace ControlsLibrary.Controls.Scene
         public bool CanSave()
             => graphArea.VertexList.Count > 0;
 
+
+        private void VertexEdited(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Name" || e.PropertyName == "IsInitial" || e.PropertyName == "IsFinal")
+            {
+                GraphEdited?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private void EdgeEdited(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "TransitionTokens" || e.PropertyName == "IsEpsilon")
+            {
+                GraphEdited?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         public void Open(string path)
         {
             var data = FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(path);
             graphArea.RebuildFromSerializationData(data);
-            graphArea.SetVerticesDrag(true, true);
             graphArea.UpdateAllEdges();
+
+            foreach (var node in graphArea.LogicCore.Graph.Vertices)
+            {
+                node.PropertyChanged += VertexEdited;
+            }
+
+            foreach (var edge in graphArea.LogicCore.Graph.Edges)
+            {
+                edge.PropertyChanged += EdgeEdited;
+            }
+
             GraphEdited?.Invoke(this, EventArgs.Empty);
         }
 
@@ -283,14 +310,6 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
-        private void EdgePropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "TransitionTokens" || e.PropertyName == "IsEpsilon")
-            {
-                GraphEdited?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
         private void CreateEdgeControl(VertexControl vc)
         {
             if (ExecutorViewModel.InSimulation)
@@ -316,7 +335,7 @@ namespace ControlsLibrary.Controls.Scene
                 editor.DestroyVirtualEdge();
                 return;
             }
-            data.PropertyChanged += EdgePropertyChanged;
+            data.PropertyChanged += EdgeEdited;
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
@@ -365,14 +384,6 @@ namespace ControlsLibrary.Controls.Scene
                 edge.RoutingPoints = new GraphX.Measure.Point[] { sourcePos, bypassPoint1, targetPos };
                 parralelEdge.RoutingPoints = new GraphX.Measure.Point[] { targetPos, bypassPoint2, targetPos };
                 graphArea.UpdateAllEdges();
-            }
-        }
-
-        private void VertexEdited(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Name" || e.PropertyName == "IsInitial" || e.PropertyName == "IsFinal")
-            {
-                GraphEdited?.Invoke(this, EventArgs.Empty);
             }
         }
 

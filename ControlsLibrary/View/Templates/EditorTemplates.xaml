@@ -153,10 +153,6 @@
             </Setter.Value>
         </Setter>
 
-        <!-- VERTEX DRAGGING CONTROL -->
-        <Setter Property="controls:DragBehaviour.IsDragEnabled" Value="False" />
-        <Setter Property="controls:DragBehaviour.UpdateEdgesOnMove" Value="True" />
-
         <Style.Triggers>
             <Trigger Property="controls:HighlightBehaviour.Highlighted" Value="True">
                 <Setter Property="BorderBrush" Value="Gold"/>
