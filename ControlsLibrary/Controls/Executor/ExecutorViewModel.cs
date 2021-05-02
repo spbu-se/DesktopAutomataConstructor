@@ -109,7 +109,19 @@ namespace ControlsLibrary.Controls.Executor
         }
 
         private string inputString = "";
-        public string InputString { get => inputString; set => Set(ref inputString, value); }
+        public string InputString 
+        { 
+            get => inputString; 
+            set
+            {
+                if (inSimulation)
+                {
+                    return;
+                }
+                Result = ResultEnum.NotRunned;
+                Set(ref inputString, value);
+            }
+        }
 
         private string passedString = "";
         public string PassedString { get => passedString; set => passedString = value; }
