@@ -61,6 +61,15 @@ namespace AutomataConstructor.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automata constructor.
+        /// </summary>
+        public static string AutomataConstructor_Name {
+            get {
+                return ResourceManager.GetString("AutomataConstructor.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         public static string file {
@@ -102,6 +111,60 @@ namespace AutomataConstructor.Properties.Langs {
         public static string saveAutomatAs {
             get {
                 return ResourceManager.GetString("saveAutomatAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load file with automaton.
+        /// </summary>
+        public static string Saves_FailedToLoadAutomaton {
+            get {
+                return ResourceManager.GetString("Saves.FailedToLoadAutomaton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load file with tests.
+        /// </summary>
+        public static string Saves_FailedToLoadTests {
+            get {
+                return ResourceManager.GetString("Saves.FailedToLoadTests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes before closing?.
+        /// </summary>
+        public static string Saves_Reminder {
+            get {
+                return ResourceManager.GetString("Saves.Reminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select automaton file name.
+        /// </summary>
+        public static string Saves_SelectAutomatonFileName {
+            get {
+                return ResourceManager.GetString("Saves.SelectAutomatonFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select test file name.
+        /// </summary>
+        public static string Saves_SelectTestFileName {
+            get {
+                return ResourceManager.GetString("Saves.SelectTestFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unsaved.
+        /// </summary>
+        public static string Saves_Unsaved {
+            get {
+                return ResourceManager.GetString("Saves.Unsaved", resourceCulture);
             }
         }
         

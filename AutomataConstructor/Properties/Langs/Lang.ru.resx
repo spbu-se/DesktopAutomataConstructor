@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AutomataConstructor.Name" xml:space="preserve">
+    <value>Конструктор автоматов</value>
+  </data>
   <data name="file" xml:space="preserve">
     <value>Файл</value>
   </data>
@@ -126,11 +129,32 @@
   <data name="openTests" xml:space="preserve">
     <value>Открыть тесты</value>
   </data>
+  <data name="s" xml:space="preserve">
+    <value />
+  </data>
   <data name="saveAutomat" xml:space="preserve">
     <value>Сохранить автомат</value>
   </data>
   <data name="saveAutomatAs" xml:space="preserve">
     <value>Сохранить автомат как...</value>
+  </data>
+  <data name="Saves.FailedToLoadAutomaton" xml:space="preserve">
+    <value>Ошибка при загрузке файла с автоматом</value>
+  </data>
+  <data name="Saves.FailedToLoadTests" xml:space="preserve">
+    <value>Ошибка при загрузке файла с тестами</value>
+  </data>
+  <data name="Saves.Reminder" xml:space="preserve">
+    <value>Сохранить изменения перед закрытием?</value>
+  </data>
+  <data name="Saves.SelectAutomatonFileName" xml:space="preserve">
+    <value>Выберите имя файла с автоматом</value>
+  </data>
+  <data name="Saves.SelectTestFileName" xml:space="preserve">
+    <value>Выберите имя файла с тестами</value>
+  </data>
+  <data name="Saves.Unsaved" xml:space="preserve">
+    <value>Не сохранено</value>
   </data>
   <data name="saveTestsAs" xml:space="preserve">
     <value>Сохранить тесты как...</value>

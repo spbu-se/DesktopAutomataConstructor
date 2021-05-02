@@ -1,10 +1,9 @@
 ﻿using ControlsLibrary.Model;
 using QuickGraph;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
+using ControlsLibrary.Properties.Langs;
 
 namespace ControlsLibrary.Controls.TypeAnalyzer
 {
@@ -38,15 +37,15 @@ namespace ControlsLibrary.Controls.TypeAnalyzer
                 {
                     case (FATypeEnum.DFA):
                         {
-                            return "Deterministic finite automaton";
+                            return Lang.DFA;
                         }
                     case (FATypeEnum.NFA):
                         {
-                            return "Non-deterministic finite automaton";
+                            return Lang.NFA;
                         }
                     case (FATypeEnum.EpsilonNFA):
                         {
-                            return "Non-deterministic finite automaton\n with epsilon-transitions";
+                            return Lang.EpsilonNFA;
                         }
                 }
                 return "Finite state machine";

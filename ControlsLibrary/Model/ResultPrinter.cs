@@ -1,4 +1,6 @@
-﻿namespace ControlsLibrary.Model
+﻿using ControlsLibrary.Properties.Langs;
+
+namespace ControlsLibrary.Model
 {
     internal static class ResultPrinter
     {
@@ -8,20 +10,19 @@
             {
                 case ResultEnum.NotRunned:
                     {
-                        return "NotRunned";
+                        return Lang.resultNotRunned;
                     }
                 case ResultEnum.Failed:
                     {
-                        return "Failed";
+                        return Lang.resultFailed;
                     }
                 case ResultEnum.Passed:
                     {
-                        return "Passed";
+                        return Lang.resultPassed;
                     }
                 default:
                     {
-                        return "NotDefined";
-
+                        return "Result not defined";
                     }
             }
         }

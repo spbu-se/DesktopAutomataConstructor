@@ -1,6 +1,7 @@
 ﻿using QuickGraph;
 using System.Collections.Generic;
 using System.Linq;
+using ControlsLibrary.Properties.Langs;
 
 namespace ControlsLibrary.Model
 {
@@ -12,12 +13,12 @@ namespace ControlsLibrary.Model
 
             if (!graph.Vertices.Any(v => v.IsInitial == true) && graph.VertexCount != 0)
             {
-                result.Add("Set initial state");
+                result.Add(Lang.Errors_SetInitial);
             }
 
             if (!graph.Vertices.Any(v => v.IsFinal == true) && graph.VertexCount != 0)
             {
-                result.Add("Set accepting state");
+                result.Add(Lang.Errors_SetAccepting);
             }
 
             return result;

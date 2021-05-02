@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AutomataConstructor.Name" xml:space="preserve">
+    <value>Automata constructor</value>
+  </data>
   <data name="file" xml:space="preserve">
     <value>File</value>
   </data>
@@ -131,6 +134,24 @@
   </data>
   <data name="saveAutomatAs" xml:space="preserve">
     <value>Save automat as...</value>
+  </data>
+  <data name="Saves.FailedToLoadAutomaton" xml:space="preserve">
+    <value>Failed to load file with automaton</value>
+  </data>
+  <data name="Saves.FailedToLoadTests" xml:space="preserve">
+    <value>Failed to load file with tests</value>
+  </data>
+  <data name="Saves.Reminder" xml:space="preserve">
+    <value>Save changes before closing?</value>
+  </data>
+  <data name="Saves.SelectAutomatonFileName" xml:space="preserve">
+    <value>Select automaton file name</value>
+  </data>
+  <data name="Saves.SelectTestFileName" xml:space="preserve">
+    <value>Select test file name</value>
+  </data>
+  <data name="Saves.Unsaved" xml:space="preserve">
+    <value>unsaved</value>
   </data>
   <data name="saveTestsAs" xml:space="preserve">
     <value>Save tests as...</value>

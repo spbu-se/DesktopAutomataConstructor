@@ -120,11 +120,29 @@
   <data name="addNewTest" xml:space="preserve">
     <value>Add new</value>
   </data>
+  <data name="AutomataConstructor.Name" xml:space="preserve">
+    <value>Automata constructor</value>
+  </data>
   <data name="debugString" xml:space="preserve">
     <value>Debug</value>
   </data>
   <data name="debugTest" xml:space="preserve">
     <value>Debug</value>
+  </data>
+  <data name="DFA" xml:space="preserve">
+    <value>Deterministic finite automaton</value>
+  </data>
+  <data name="Editor.TransitionsToolTip" xml:space="preserve">
+    <value>Enter transition tokens without any separators</value>
+  </data>
+  <data name="EpsilonNFA" xml:space="preserve">
+    <value>Non-deterministic finite automaton with epsilon-transitions</value>
+  </data>
+  <data name="Errors.SetAccepting" xml:space="preserve">
+    <value>Set accepting state</value>
+  </data>
+  <data name="Errors.SetInitial" xml:space="preserve">
+    <value>Set initial state</value>
   </data>
   <data name="hide" xml:space="preserve">
     <value>Hide</value>
@@ -134,6 +152,9 @@
   </data>
   <data name="isInitial" xml:space="preserve">
     <value>Is initial:</value>
+  </data>
+  <data name="NFA" xml:space="preserve">
+    <value>Non-deterministic finite automaton</value>
   </data>
   <data name="noIssuesFound" xml:space="preserve">
     <value>No issues found</value>
@@ -188,5 +209,14 @@
   </data>
   <data name="testResult" xml:space="preserve">
     <value>Result</value>
+  </data>
+  <data name="Toolbar.DeleteModeToolTip" xml:space="preserve">
+    <value>Click to delete states and transitions</value>
+  </data>
+  <data name="Toolbar.EditModeToolTip" xml:space="preserve">
+    <value>Click to place new states and transitions</value>
+  </data>
+  <data name="Toolbar.SelectModeToolTip" xml:space="preserve">
+    <value>Layout states and fill attributes</value>
   </data>
 </root>

@@ -120,11 +120,32 @@
   <data name="addNewTest" xml:space="preserve">
     <value>Добавить новый</value>
   </data>
+  <data name="AutomataConstructor.Name" xml:space="preserve">
+    <value>Конструктор автоматов</value>
+  </data>
   <data name="debugString" xml:space="preserve">
     <value>Отладка</value>
   </data>
   <data name="debugTest" xml:space="preserve">
     <value>Отладка</value>
+  </data>
+  <data name="DFA" xml:space="preserve">
+    <value>Детерминированный конечный автомат</value>
+  </data>
+  <data name="Editor.TransitionsToolTip" xml:space="preserve">
+    <value>Вводите символы перехода без разделителей</value>
+  </data>
+  <data name="EpsilonNFA" xml:space="preserve">
+    <value>Недетерминированный конечный автомат с эпсилон-переходами</value>
+  </data>
+  <data name="Errors.SetAccepting" xml:space="preserve">
+    <value>Выберите принимающее состояние</value>
+  </data>
+  <data name="Errors.SetInitial" xml:space="preserve">
+    <value>Выберите начальное состояние</value>
+  </data>
+  <data name="f" xml:space="preserve">
+    <value />
   </data>
   <data name="hide" xml:space="preserve">
     <value>Скрыть</value>
@@ -135,8 +156,11 @@
   <data name="isInitial" xml:space="preserve">
     <value>Начальное:</value>
   </data>
+  <data name="NFA" xml:space="preserve">
+    <value>Недетерминированный конечный автомат</value>
+  </data>
   <data name="noIssuesFound" xml:space="preserve">
-    <value>Нет ошибок</value>
+    <value>Ошибок не найдено</value>
   </data>
   <data name="openTestPanel" xml:space="preserve">
     <value>Открыть тесты</value>
@@ -148,7 +172,7 @@
     <value>Завершить отладку</value>
   </data>
   <data name="resultDebugString" xml:space="preserve">
-    <value>Результат</value>
+    <value>Результат:</value>
   </data>
   <data name="resultFailed" xml:space="preserve">
     <value>Не принята</value>
@@ -186,7 +210,19 @@
   <data name="string" xml:space="preserve">
     <value>Строка</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
   <data name="testResult" xml:space="preserve">
-    <value>Результат</value>
+    <value>Результат:</value>
+  </data>
+  <data name="Toolbar.DeleteModeToolTip" xml:space="preserve">
+    <value>Удаляйте состояния и переходы по клику</value>
+  </data>
+  <data name="Toolbar.EditModeToolTip" xml:space="preserve">
+    <value>Размещайте новые состояния и переходы по клику</value>
+  </data>
+  <data name="Toolbar.SelectModeToolTip" xml:space="preserve">
+    <value>Размещайте состояние и вводите значения свойств</value>
   </data>
 </root>

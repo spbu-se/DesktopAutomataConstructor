@@ -6,6 +6,7 @@ using System.Linq;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using ControlsLibrary.Properties.Langs;
 
 namespace ControlsLibrary.Controls.ErrorReporter
 {
@@ -37,7 +38,7 @@ namespace ControlsLibrary.Controls.ErrorReporter
             {
                 if (!HasError)
                 {
-                    return "No issues found";
+                    return Lang.noIssuesFound;
                 }
                 return Errors.Count.ToString();
             }

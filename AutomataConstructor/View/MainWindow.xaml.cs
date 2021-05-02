@@ -12,6 +12,7 @@ using System.IO;
 using YAXLib;
 using System.Windows.Input;
 using System.ComponentModel;
+using AutomataConstructor.Properties.Langs;
 
 namespace AutomataConstructor
 {
@@ -51,9 +52,9 @@ namespace AutomataConstructor
         { 
             get
             {
-                var name = fileName == null || fileName == "" ? "(unsaved)" : fileName;
+                var name = fileName == null || fileName == "" ? $"({Lang.Saves_Unsaved})" : fileName;
                 var hasUnsavedChanges = saved ? "" : "*";
-                return $"Automata constructor {name} {hasUnsavedChanges}";
+                return $"{Lang.AutomataConstructor_Name} {name} {hasUnsavedChanges}";
             }
         }
 
@@ -71,7 +72,7 @@ namespace AutomataConstructor
 
         private void OnSaveAutomatAsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = "Select layout file name", FileName = "laytest.xml" };
+            var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "automaton.xml" };
             if (dialog.ShowDialog() == true)
             {
                 scene.Save(dialog.FileName);
@@ -106,7 +107,7 @@ namespace AutomataConstructor
 
         private void OnOpenAutomatCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new OpenFileDialog { Filter = "All files|*.*", Title = "Select layout file", FileName = "laytest.xml" };
+            var dialog = new OpenFileDialog { Filter = "All files|*.*", Title = Lang.Saves_SelectAutomatonFileName, FileName = "automaton.xml" };
             if (dialog.ShowDialog() != true)
             {
                 return;
@@ -122,7 +123,7 @@ namespace AutomataConstructor
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format("Failed to load layout file:\n {0}", ex));
+                MessageBox.Show(string.Format($"{Lang.Saves_FailedToLoadAutomaton}\n {0}", ex));
             }
         }
 
@@ -134,7 +135,7 @@ namespace AutomataConstructor
 
         private void OnSaveTestsAsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = "Select layout file name", FileName = "laytest.xml" };
+            var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "automaton.xml" };
             if (dialog.ShowDialog() == true)
             {
                 var data = new List<TestSerializationData>();
@@ -156,7 +157,7 @@ namespace AutomataConstructor
         private void OnOpenTestsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             tests.Tests.Clear();
-            var dialog = new OpenFileDialog { Filter = "All files|*.xml", Title = "Select tests file", FileName = "laytest.xml" };
+            var dialog = new OpenFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectTestFileName, FileName = "tests.xml" };
             if (dialog.ShowDialog() != true)
             {
                 return;
@@ -178,7 +179,7 @@ namespace AutomataConstructor
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format("Failed to load layout file:\n {0}", ex));
+                MessageBox.Show(Lang.Saves_FailedToLoadTests);
             }
         }
 
@@ -189,7 +190,7 @@ namespace AutomataConstructor
         {
             if (!saved)
             {
-                var result = MessageBox.Show("Save changes before closing?", "Automata constructor", MessageBoxButton.YesNoCancel);
+                var result = MessageBox.Show(Lang.Saves_Reminder, Lang.AutomataConstructor_Name, MessageBoxButton.YesNoCancel);
                 if (result == MessageBoxResult.Yes)
                 {
                     if (scene != null && scene.CanSave() && File.Exists(savePath))
@@ -198,7 +199,7 @@ namespace AutomataConstructor
                         return;
                     }
 
-                    var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = "Select layout file name", FileName = "laytest.xml" };
+                    var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "FSA.xml" };
                     if (dialog.ShowDialog() == true)
                     {
                         scene.Save(dialog.FileName);

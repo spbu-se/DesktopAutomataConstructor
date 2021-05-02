@@ -79,6 +79,15 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automata constructor.
+        /// </summary>
+        public static string AutomataConstructor_Name {
+            get {
+                return ResourceManager.GetString("AutomataConstructor.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Debug.
         /// </summary>
         public static string debugString {
@@ -93,6 +102,51 @@ namespace ControlsLibrary.Properties.Langs {
         public static string debugTest {
             get {
                 return ResourceManager.GetString("debugTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deterministic finite automaton.
+        /// </summary>
+        public static string DFA {
+            get {
+                return ResourceManager.GetString("DFA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter transition tokens without any separators.
+        /// </summary>
+        public static string Editor_TransitionsToolTip {
+            get {
+                return ResourceManager.GetString("Editor.TransitionsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non-deterministic finite automaton with epsilon-transitions.
+        /// </summary>
+        public static string EpsilonNFA {
+            get {
+                return ResourceManager.GetString("EpsilonNFA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set accepting state.
+        /// </summary>
+        public static string Errors_SetAccepting {
+            get {
+                return ResourceManager.GetString("Errors.SetAccepting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set initial state.
+        /// </summary>
+        public static string Errors_SetInitial {
+            get {
+                return ResourceManager.GetString("Errors.SetInitial", resourceCulture);
             }
         }
         
@@ -120,6 +174,15 @@ namespace ControlsLibrary.Properties.Langs {
         public static string isInitial {
             get {
                 return ResourceManager.GetString("isInitial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non-deterministic finite automaton.
+        /// </summary>
+        public static string NFA {
+            get {
+                return ResourceManager.GetString("NFA", resourceCulture);
             }
         }
         
@@ -273,6 +336,33 @@ namespace ControlsLibrary.Properties.Langs {
         public static string testResult {
             get {
                 return ResourceManager.GetString("testResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to delete states and transitions.
+        /// </summary>
+        public static string Toolbar_DeleteModeToolTip {
+            get {
+                return ResourceManager.GetString("Toolbar.DeleteModeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to place new states and transitions.
+        /// </summary>
+        public static string Toolbar_EditModeToolTip {
+            get {
+                return ResourceManager.GetString("Toolbar.EditModeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Layout states and fill attributes.
+        /// </summary>
+        public static string Toolbar_SelectModeToolTip {
+            get {
+                return ResourceManager.GetString("Toolbar.SelectModeToolTip", resourceCulture);
             }
         }
     }
