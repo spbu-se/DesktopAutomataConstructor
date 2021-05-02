@@ -170,7 +170,7 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type controls:VertexControl}">
                             <Grid Width="{StaticResource NodeRadius}" Height="{StaticResource NodeRadius}" >
-                                <Button MaxHeight="20" Command="{Binding ChangeHidingCommand}" Background="Transparent" BorderThickness="0"
+                                <Button MaxHeight="18" Command="{Binding ChangeHidingCommand}" Background="Transparent" BorderThickness="0"
                                         HorizontalAlignment="Right" VerticalAlignment="Top">
                                     <Image Stretch="Uniform" Source="{StaticResource penDrawingImage}"/>
                                 </Button>
