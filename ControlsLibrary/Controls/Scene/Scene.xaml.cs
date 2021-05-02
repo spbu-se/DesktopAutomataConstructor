@@ -424,7 +424,6 @@ namespace ControlsLibrary.Controls.Scene
                 zoomControl.Cursor = Cursors.Hand;
                 ClearEditMode();
                 graphArea.SetVerticesDrag(true, true);
-                graphArea.SetEdgesDrag(true);
                 return;
             }
         }
