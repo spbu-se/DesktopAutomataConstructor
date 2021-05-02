@@ -232,7 +232,7 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed.
+        ///   Looks up a localized string similar to Rejected.
         /// </summary>
         public static string resultFailed {
             get {
@@ -250,7 +250,7 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Passed.
+        ///   Looks up a localized string similar to Accepted.
         /// </summary>
         public static string resultPassed {
             get {

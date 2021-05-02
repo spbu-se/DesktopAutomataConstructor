@@ -172,13 +172,13 @@
     <value>Result:</value>
   </data>
   <data name="resultFailed" xml:space="preserve">
-    <value>Failed</value>
+    <value>Rejected</value>
   </data>
   <data name="resultNotRunned" xml:space="preserve">
     <value>Not runned</value>
   </data>
   <data name="resultPassed" xml:space="preserve">
-    <value>Passed</value>
+    <value>Accepted</value>
   </data>
   <data name="runAllTests" xml:space="preserve">
     <value>Run all</value>
