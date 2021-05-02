@@ -22,5 +22,30 @@ namespace ControlsLibrary.Model
 
             return result;
         }
+
+        public static FATypeEnum GetType(BidirectionalGraph<NodeViewModel, EdgeViewModel> graph)
+        {
+            foreach (var edge in graph.Edges)
+            {
+                if (edge.IsEpsilon)
+                {
+                    return FATypeEnum.EpsilonNFA;
+                }
+            }
+
+            var result = FATypeEnum.DFA;
+            foreach (var edge1 in graph.Edges)
+            {
+                foreach (var edge2 in graph.Edges)
+                {
+                    if (edge1 != edge2 && edge1.Source == edge2.Source && edge1.TransitionTokens.Intersect(edge2.TransitionTokens).Count() > 0)
+                    {
+                        result = FATypeEnum.NFA;
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

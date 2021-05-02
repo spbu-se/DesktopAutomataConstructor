@@ -82,6 +82,20 @@ namespace ControlsLibrary.Model
             {
                 transitionTokensString = value;
                 OnPropertyChanged();
+                OnPropertyChanged("TransitionTokens");
+            }
+        }
+
+        [YAXDontSerialize]
+        public List<char> TransitionTokens
+        {
+            get
+            {
+                if (transitionTokensString == "")
+                {
+                    return new List<char>();
+                }
+                return transitionTokensString.ToList();
             }
         }
 

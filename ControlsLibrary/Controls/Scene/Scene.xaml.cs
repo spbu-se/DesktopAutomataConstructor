@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ControlsLibrary.Controls.ErrorReporter;
+using ControlsLibrary.Controls.TypeAnalyzer;
 using ControlsLibrary.Controls.Executor;
 using System.ComponentModel;
 using ControlsLibrary.Controls.TestPanel;
@@ -25,6 +26,19 @@ namespace ControlsLibrary.Controls.Scene
     /// </summary>
     public partial class Scene : UserControl
     {
+        private TypeAnalyzerViewModel typeAnalyzer;
+
+        public TypeAnalyzerViewModel TypeAnalyzer
+        {
+            get => typeAnalyzer;
+            set
+            {
+                typeAnalyzer = value;
+                typeAnalyzer.Graph = graphArea.LogicCore.Graph;
+                GraphEdited += typeAnalyzer.GraphEdited;
+            }
+        }
+
         private ToolbarViewModel toolBar;
 
         private ErrorReporterViewModel errorReporter;
@@ -242,6 +256,14 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        private void EdgePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "TransitionTokens" || e.PropertyName == "IsEpsilon")
+            {
+                GraphEdited?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         private void CreateEdgeControl(VertexControl vc)
         {
             if (selectedVertex == null)
@@ -263,8 +285,8 @@ namespace ControlsLibrary.Controls.Scene
                 editor.DestroyVirtualEdge();
                 return;
             }
+            data.PropertyChanged += EdgePropertyChanged;
             var ec = new EdgeControl(selectedVertex, vc, data);
-
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
             AvoidParralelEdges(ec);

@@ -2,6 +2,7 @@ using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.Executor;
 using ControlsLibrary.Controls.TestPanel;
+using ControlsLibrary.Controls.TypeAnalyzer;
 using ControlsLibrary.FileSerialization;
 using System.Windows;
 using Microsoft.Win32;
@@ -26,6 +27,7 @@ namespace AutomataConstructor
             NotifyTitleChanged();
             scene.Toolbar = (ToolbarViewModel)toolbar.DataContext;
             scene.ErrorReporter = (ErrorReporterViewModel)errorReporter.DataContext;
+            scene.TypeAnalyzer = (TypeAnalyzerViewModel)typeAnalyzer.DataContext;
             scene.ExecutorViewModel = (ExecutorViewModel)executor.DataContext;
             scene.GraphEdited += HandleGraphEditions;
             tests = (TestPanelViewModel)testPanel.DataContext;

@@ -204,7 +204,7 @@
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="HiddenContent">
-            <Button Content="{x:Static languages:Lang.openTestPanel}" Command="{Binding HideCommand}"/>
+            <Button Content="{x:Static languages:Lang.openTestPanel}" Command="{Binding HideCommand}" MaxHeight="20"/>
         </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource DefaultContent}"/>
