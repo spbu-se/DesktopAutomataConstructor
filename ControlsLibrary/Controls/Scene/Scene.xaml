@@ -12,7 +12,7 @@
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="pack://application:,,,/View/Templates/EditorTemplates.xaml"/>
+                    <ResourceDictionary Source="pack://application:,,,/ControlsLibrary;component/View/Templates/EditorTemplates.xaml"/>
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>

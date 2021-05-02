@@ -6,34 +6,63 @@ using ControlsLibrary.FileSerialization;
 using System.Windows;
 using Microsoft.Win32;
 using System.Collections.Generic;
-using GraphX.Common.Models;
 using System;
 using System.IO;
 using YAXLib;
 using System.Windows.Input;
-using ControlsLibrary.Infrastructure.Command;
+using System.ComponentModel;
 
 namespace AutomataConstructor
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public MainWindow()
         {
+            this.DataContext = this;
             InitializeComponent();
+            NotifyTitleChanged();
             scene.Toolbar = (ToolbarViewModel)toolbar.DataContext;
             scene.ErrorReporter = (ErrorReporterViewModel)errorReporter.DataContext;
             scene.ExecutorViewModel = (ExecutorViewModel)executor.DataContext;
+            scene.GraphEdited += HandleGraphEditions;
             tests = (TestPanelViewModel)testPanel.DataContext;
             scene.TestPanel = tests;
             this.KeyDown += scene.OnSceneKeyDown;
         }
 
-        private TestPanelViewModel tests;
+        private void HandleGraphEditions(object sender, EventArgs e)
+        {
+            saved = false;
+            NotifyTitleChanged();
+        }
+
+        private bool saved = true;
 
         private string savePath = "";
+
+        private string fileName = "";
+
+        public string WindowTitle 
+        { 
+            get
+            {
+                var name = fileName == null || fileName == "" ? "(unsaved)" : fileName;
+                var hasUnsavedChanges = saved ? "" : "*";
+                return $"Automata constructor {name} {hasUnsavedChanges}";
+            }
+        }
+
+        private TestPanelViewModel tests;
+
+        private void NotifyTitleChanged() => PropertyChanged?.Invoke(
+            this,
+            new PropertyChangedEventArgs(nameof(this.WindowTitle))
+            );
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #region SaveAutomatAsCommand
         public static RoutedCommand SaveAutomatAsCommand { get; set; } = new RoutedCommand("SaveAutomatAs", typeof(MainWindow));
@@ -43,23 +72,31 @@ namespace AutomataConstructor
             var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = "Select layout file name", FileName = "laytest.xml" };
             if (dialog.ShowDialog() == true)
             {
-                FileServiceProviderWpf.SerializeDataToFile(dialog.FileName, scene.GraphArea.ExtractSerializationData());
+                scene.Save(dialog.FileName);
                 savePath = dialog.FileName;
+                var splittedPath = dialog.FileName.Split(@"\");
+                fileName = splittedPath[splittedPath.Length - 1];
+                saved = true;
+                NotifyTitleChanged();
             }
         }
 
         private void CanSaveAutomatAsCommandExecute(object sender, CanExecuteRoutedEventArgs e)
-            => e.CanExecute = scene.GraphArea != null && scene.GraphArea.LogicCore.Graph != null && scene.GraphArea.VertexList.Count > 0;
+            => e.CanExecute = scene != null && scene.CanSave();
         #endregion
 
         #region SaveAutomatCommand
         public static RoutedCommand SaveAutomatCommand { get; set; } = new RoutedCommand("SaveAutomat", typeof(MainWindow));
 
         private void OnSaveAutomatCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-            => FileServiceProviderWpf.SerializeDataToFile(savePath, scene.GraphArea.ExtractSerializationData());
+        {
+            scene.Save(savePath);
+            saved = true;
+            NotifyTitleChanged();
+        }
 
-        private void CanSaveAutomatCommand(object sender, CanExecuteRoutedEventArgs e)
-            => e.CanExecute = savePath != null && File.Exists(savePath) && scene.GraphArea != null && scene.GraphArea.LogicCore.Graph != null && scene.GraphArea.VertexList.Count > 0; 
+        private void CanSaveAutomatCommandExecute(object sender, CanExecuteRoutedEventArgs e)
+            => e.CanExecute = savePath != null && File.Exists(savePath) && scene != null && scene.CanSave(); 
         #endregion
 
         #region OpenAutomatCommand
@@ -74,11 +111,12 @@ namespace AutomataConstructor
             }
             try
             {
-                var data = FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(dialog.FileName);
-                scene.GraphArea.RebuildFromSerializationData(data);
-                scene.GraphArea.SetVerticesDrag(true, true);
-                scene.GraphArea.UpdateAllEdges();
+                scene.Open(dialog.FileName);
                 savePath = dialog.FileName;
+                var splittedPath = dialog.FileName.Split(@"\");
+                fileName = splittedPath[splittedPath.Length - 1];
+                saved = true;
+                NotifyTitleChanged();
             }
             catch (Exception ex)
             {
@@ -131,14 +169,7 @@ namespace AutomataConstructor
                         var datas = (List<TestSerializationData>)deserializer.Deserialize(textReader);
                         foreach (var test in datas)
                         {
-                            tests.Tests.Add(new TestViewModel()
-                            {
-                                Result = test.Result,
-                                TestString = test.TestString,
-                                ShouldReject = test.ShouldReject,
-                                Storage = tests.Tests,
-                                Graph = scene.GraphArea.LogicCore.Graph
-                            });
+                            tests.AddTest(test.Result, test.TestString, test.ShouldReject);
                         }
                     }
                 }
@@ -149,7 +180,33 @@ namespace AutomataConstructor
             }
         }
 
-        private void CanOpenTestsCommandExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true; 
+        private void CanOpenTestsCommandExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         #endregion
+
+        private void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            if (!saved)
+            {
+                var result = MessageBox.Show("Save changes before closing?", "Automata constructor", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (scene != null && scene.CanSave() && File.Exists(savePath))
+                    {
+                        scene.Save(savePath);
+                        return;
+                    }
+
+                    var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = "Select layout file name", FileName = "laytest.xml" };
+                    if (dialog.ShowDialog() == true)
+                    {
+                        scene.Save(dialog.FileName);
+                    }
+                }
+                if (result == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
     }
 }

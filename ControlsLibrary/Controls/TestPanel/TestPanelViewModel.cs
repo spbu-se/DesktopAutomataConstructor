@@ -86,5 +86,21 @@ namespace ControlsLibrary.Controls.TestPanel
             OnPropertyChanged("NumberOfFailedTests");
             OnPropertyChanged("NumberOfNotRunnedTests");
         }
+
+        public void AddTest(ResultEnum result, string testString, bool shouldReject)
+        {
+            Tests.Add(new TestViewModel()
+            {
+                Result = result,
+                TestString = testString,
+                ShouldReject = shouldReject,
+                Storage = Tests,
+                Graph = graph
+            });
+
+            OnPropertyChanged("NumberOfPassedTests");
+            OnPropertyChanged("NumberOfFailedTests");
+            OnPropertyChanged("NumberOfNotRunnedTests");
+        }
     }
 }

@@ -15,6 +15,8 @@ using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Executor;
 using System.ComponentModel;
 using ControlsLibrary.Controls.TestPanel;
+using ControlsLibrary.FileSerialization;
+using GraphX.Common.Models;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -90,7 +92,30 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
-        public GraphArea GraphArea { get => graphArea; }
+        public void Save(string path)
+        {
+            var datas = graphArea.ExtractSerializationData();
+            foreach (var data in datas)
+            {
+                if (data.Data.GetType() == typeof(NodeViewModel))
+                {
+                    data.HasLabel = false;
+                }
+            }
+            FileServiceProviderWpf.SerializeDataToFile(path, datas);
+        }
+
+        public bool CanSave()
+            => graphArea.VertexList.Count > 0;
+
+        public void Open(string path)
+        {
+            var data = FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(path);
+            graphArea.RebuildFromSerializationData(data);
+            graphArea.SetVerticesDrag(true, true);
+            graphArea.UpdateAllEdges();
+            GraphEdited?.Invoke(this, EventArgs.Empty);
+        }
 
         public Scene()
         {
@@ -125,6 +150,9 @@ namespace ControlsLibrary.Controls.Scene
             zoomControl.IsAnimationEnabled = false;
             ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Hidden);
             zoomControl.MouseDown += OnSceneMouseDown;
+
+            using var deletionCursorStream = Application.GetResourceStream(new Uri("pack://application:,,,/ControlsLibrary;component/Controls/Scene/Assets/deletionCursor.cur", UriKind.RelativeOrAbsolute)).Stream;
+            deletionCursor = new Cursor(deletionCursorStream);
         }
 
         private void SetGraphAreaProperties()
@@ -148,17 +176,36 @@ namespace ControlsLibrary.Controls.Scene
 
             graphArea.VertexSelected += OnSceneVertexSelected;
             graphArea.EdgeSelected += EdgeSelected;
+
+            graphArea.VertexMouseUp += VertexDragged;
         }
 
         public event EventHandler<NodeSelectedEventArgs> NodeSelected;
 
         public event EventHandler<EventArgs> GraphEdited;
-        
+
+        private void UpdateEdgeRoutingPoints(NodeViewModel source, NodeViewModel target)
+        {
+            var parralelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == target && e.Target == source);
+            if (parralelEdge != null)
+            {
+                var newEdge = new EdgeViewModel(parralelEdge.Source, parralelEdge.Target) { TransitionTokensString = parralelEdge.TransitionTokensString };
+                var ec = new EdgeControl(graphArea.VertexList[parralelEdge.Source], graphArea.VertexList[parralelEdge.Target], newEdge);
+                graphArea.RemoveEdge(parralelEdge, true);
+                graphArea.InsertEdgeAndData(newEdge, ec, 0, true);
+            }
+        }
+
         private void EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Delete)
             {
-                graphArea.RemoveEdge(args.EdgeControl.Edge as EdgeViewModel, true);
+                var edgeViewModel = args.EdgeControl.Edge as EdgeViewModel;
+                var source = edgeViewModel.Source;
+                var target = edgeViewModel.Target;
+                graphArea.RemoveEdge(edgeViewModel, true);
+                UpdateEdgeRoutingPoints(source, target);
+                GraphEdited?.Invoke(this, EventArgs.Empty);
                 return;
             }
         }
@@ -187,6 +234,14 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        private void VertexDragged(object sender, VertexSelectedEventArgs args)
+        {
+            foreach (var edge in graphArea.EdgesList.Where(e => e.Value.Source == args.VertexControl || e.Value.Target == args.VertexControl))
+            {
+                AvoidParralelEdges(edge.Value);
+            }
+        }
+
         private void CreateEdgeControl(VertexControl vc)
         {
             if (selectedVertex == null)
@@ -209,16 +264,63 @@ namespace ControlsLibrary.Controls.Scene
                 return;
             }
             var ec = new EdgeControl(selectedVertex, vc, data);
+
             graphArea.InsertEdgeAndData(data, ec, 0, true);
+
+            AvoidParralelEdges(ec);
 
             HighlightBehaviour.SetHighlighted(selectedVertex, false);
             selectedVertex = null;
             editor.DestroyVirtualEdge();
         }
 
+        private void AvoidParralelEdges(EdgeControl edgeControl)
+        {
+            var edge = edgeControl.Edge as EdgeViewModel;
+            var parralelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == edge.Target && edge.Source == e.Target);
+
+            if (parralelEdge != null)
+            {
+                var sourcePos = edgeControl.Source.GetCenterPosition().ToGraphX();
+                var targetPos = edgeControl.Target.GetCenterPosition().ToGraphX();
+
+                var middleX = (sourcePos.X + targetPos.X) / 2;
+                var middleY = (sourcePos.Y + targetPos.Y) / 2;
+
+                var distance = Geometry.GetDistance(sourcePos, targetPos);
+                var diagonal = Math.Min(Math.Max(distance / 25, 20), 80);
+
+                var bypassPoint1 = new GraphX.Measure.Point(middleX, middleY);
+                var bypassPoint2 = new GraphX.Measure.Point(middleX, middleY);
+
+                if ((sourcePos.X - targetPos.X) * (sourcePos.Y - targetPos.Y) > 0)
+                {
+                    bypassPoint1.X -= diagonal;
+                    bypassPoint1.Y += diagonal;
+                    bypassPoint2.X += diagonal;
+                    bypassPoint2.Y -= diagonal;
+                }
+                else
+                {
+                    bypassPoint1.X -= diagonal;
+                    bypassPoint1.Y -= diagonal;
+                    bypassPoint2.X += diagonal;
+                    bypassPoint2.Y += diagonal;
+                }
+                new GraphX.Measure.Point(middleX - diagonal, middleY);
+
+                edge.RoutingPoints = new GraphX.Measure.Point[] { sourcePos, bypassPoint1, targetPos };
+                parralelEdge.RoutingPoints = new GraphX.Measure.Point[] { targetPos, bypassPoint2, targetPos };
+                graphArea.UpdateAllEdges();
+            }
+        }
+
+        private int numberOfVertex = 0;
+
         private VertexControl CreateVertexControl(Point position)
         {
-            var data = new NodeViewModel() { Name = "S" + (graphArea.VertexList.Count + 1), IsFinal = false, IsInitial = false, IsExpanded = true };
+            var data = new NodeViewModel() { Name = "S" + numberOfVertex, IsFinal = false, IsInitial = false, IsExpanded = false };
+            numberOfVertex++;
             var vc = new VertexControl(data);
             data.PropertyChanged += errorReporter.GraphEdited;
             vc.SetPosition(position);
@@ -227,11 +329,13 @@ namespace ControlsLibrary.Controls.Scene
             return vc;
         }
 
+        private static Cursor deletionCursor;
+
         private void ToolSelected(object sender, EventArgs e)
         {
             if (Toolbar.SelectedTool == SelectedTool.Delete)
             {
-                zoomControl.Cursor = Cursors.Help;
+                zoomControl.Cursor = deletionCursor;
                 ClearEditMode();
                 ClearSelectMode();
                 return;
@@ -329,7 +433,6 @@ namespace ControlsLibrary.Controls.Scene
 
         private void SafeRemoveVertex(VertexControl vc)
         {
-            GraphEdited?.Invoke(this, EventArgs.Empty);
             foreach (var edge in graphArea.LogicCore.Graph.Edges)
             {
                 if (edge.IsSelfLoop && edge.Source == SelectNode(vc))
@@ -337,7 +440,9 @@ namespace ControlsLibrary.Controls.Scene
                     graphArea.RemoveEdge(edge);
                 }
             }
+
             graphArea.RemoveVertexAndEdges(vc.Vertex as NodeViewModel);
+            GraphEdited?.Invoke(this, EventArgs.Empty);
         }
 
         public void Dispose()

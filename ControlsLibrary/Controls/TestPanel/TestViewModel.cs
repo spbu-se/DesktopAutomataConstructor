@@ -62,7 +62,11 @@ namespace ControlsLibrary.Controls.TestPanel
 
         public ICommand RemoveFromStorageCommand { get; set; }
 
-        private void OnRemoveFromStorageCommandExecuted(object p) => storage.Remove(this);
+        private void OnRemoveFromStorageCommandExecuted(object p)
+        {
+            storage.Remove(this);
+            OnPropertyChanged("Result");
+        }
 
         private bool CanRemoveFromStorageCommandExecute(object p) => storage != null && storage.Contains(this);
 
