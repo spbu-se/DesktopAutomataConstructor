@@ -211,12 +211,12 @@
     <value>Result</value>
   </data>
   <data name="Toolbar.DeleteModeToolTip" xml:space="preserve">
-    <value>Click to delete states and transitions</value>
+    <value>Click to delete states and transitions  (D)</value>
   </data>
   <data name="Toolbar.EditModeToolTip" xml:space="preserve">
-    <value>Click to place new states and transitions</value>
+    <value>Click to place new states and transitions  (E)</value>
   </data>
   <data name="Toolbar.SelectModeToolTip" xml:space="preserve">
-    <value>Layout states and fill attributes</value>
+    <value>Layout states and fill attributes  (S)</value>
   </data>
 </root>

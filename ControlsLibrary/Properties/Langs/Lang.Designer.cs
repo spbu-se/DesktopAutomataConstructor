@@ -340,7 +340,7 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click to delete states and transitions.
+        ///   Looks up a localized string similar to Click to delete states and transitions  (D).
         /// </summary>
         public static string Toolbar_DeleteModeToolTip {
             get {
@@ -349,7 +349,7 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click to place new states and transitions.
+        ///   Looks up a localized string similar to Click to place new states and transitions  (E).
         /// </summary>
         public static string Toolbar_EditModeToolTip {
             get {
@@ -358,7 +358,7 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout states and fill attributes.
+        ///   Looks up a localized string similar to Layout states and fill attributes  (S).
         /// </summary>
         public static string Toolbar_SelectModeToolTip {
             get {

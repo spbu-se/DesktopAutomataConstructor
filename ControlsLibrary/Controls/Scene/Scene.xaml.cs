@@ -411,18 +411,21 @@ namespace ControlsLibrary.Controls.Scene
                 zoomControl.Cursor = deletionCursor;
                 ClearEditMode();
                 ClearSelectMode();
+                graphArea.SetEdgesDrag(true);
                 return;
             }
             if (Toolbar.SelectedTool == SelectedTool.Edit)
             {
                 zoomControl.Cursor = Cursors.Pen;
                 ClearSelectMode();
+                graphArea.SetEdgesDrag(false);
                 return;
             }
             if (Toolbar.SelectedTool == SelectedTool.Select)
             {
                 zoomControl.Cursor = Cursors.Hand;
                 ClearEditMode();
+                graphArea.SetEdgesDrag(false);
                 graphArea.SetVerticesDrag(true, true);
                 return;
             }

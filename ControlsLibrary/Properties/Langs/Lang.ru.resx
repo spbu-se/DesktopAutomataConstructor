@@ -217,12 +217,12 @@
     <value>Результат:</value>
   </data>
   <data name="Toolbar.DeleteModeToolTip" xml:space="preserve">
-    <value>Удаляйте состояния и переходы по клику</value>
+    <value>Удаляйте состояния и переходы по клику  (D)</value>
   </data>
   <data name="Toolbar.EditModeToolTip" xml:space="preserve">
-    <value>Размещайте новые состояния и переходы по клику</value>
+    <value>Размещайте новые состояния и переходы по клику   (E)</value>
   </data>
   <data name="Toolbar.SelectModeToolTip" xml:space="preserve">
-    <value>Размещайте состояние и вводите значения свойств</value>
+    <value>Размещайте состояние и вводите значения свойств  (S)</value>
   </data>
 </root>
