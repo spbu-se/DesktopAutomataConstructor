@@ -48,9 +48,10 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
-    <sys:Double x:Key="NodeRadius">120</sys:Double>
-    <sys:Double x:Key="AcceptingMarkRadius">110</sys:Double>
+    <sys:Double x:Key="NodeRadius">115</sys:Double>
+    <sys:Double x:Key="AcceptingMarkRadius">105</sys:Double>
     <sys:Double x:Key="NodeContentSize">80</sys:Double>
+    <sys:Double x:Key="NodeContentStringHeight">26</sys:Double>
     <sys:Double x:Key="ChangeHiddingButtonSize">20</sys:Double>
     <sys:Double x:Key="SelfLoopedIndicatorWidth">80</sys:Double>
     <sys:Double x:Key="EdgePointerSize">20</sys:Double>
@@ -123,26 +124,23 @@
                         </Button>
                         <Ellipse x:Name="BackgroundNorm" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="3" Width="{StaticResource NodeRadius}" Height="{StaticResource NodeRadius}"/>
                         <Ellipse Visibility="{Binding FinalMarkVisibility}" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="2" Height="{StaticResource AcceptingMarkRadius}" Width="{StaticResource AcceptingMarkRadius}"/>
-                        <Grid HorizontalAlignment="Center" Height="{StaticResource NodeContentSize}" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{x:Static language:Lang.stateName}" Grid.Column="0" Grid.Row="0"/>
-                            <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1"
-                                         FontWeight="Bold" Foreground="Black" Background="Transparent" Width="30"/>
-                            <TextBlock Text="{x:Static language:Lang.isAccept}" Grid.Row="1" Grid.Column="0"/>
-                            <CheckBox IsChecked="{Binding IsFinal, Mode=TwoWay}" IsEnabled="{Binding EditionAvailable}" Grid.Row="1" Grid.Column="1"
-                                          FontWeight="Bold" Foreground="Black" Background="Transparent"/>
-                            <TextBlock Text="{x:Static language:Lang.isInitial}" Grid.Row="2" Grid.Column="0"/>
-                            <CheckBox IsChecked="{Binding IsInitial, Mode=TwoWay}"  IsEnabled="{Binding EditionAvailable}" Grid.Row="2" Grid.Column="1"
-                                         FontWeight="Bold" Foreground="Black" Background="Transparent"/>
-                        </Grid>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Height="{StaticResource NodeContentSize}">
+                            <StackPanel Orientation="Horizontal" Height="{StaticResource NodeContentStringHeight}">
+                                <TextBlock Text="{x:Static language:Lang.stateName}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         FontWeight="Bold" Foreground="Black" Background="Transparent" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"  Height="{StaticResource NodeContentStringHeight}">
+                                <TextBlock Text="{x:Static language:Lang.isAccept}" VerticalAlignment="Center"/>
+                                <CheckBox IsChecked="{Binding IsFinal, Mode=TwoWay}" IsEnabled="{Binding EditionAvailable}"
+                                          FontWeight="Bold" Foreground="Black" Background="Transparent" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"  Height="{StaticResource NodeContentStringHeight}">
+                                <TextBlock Text="{x:Static language:Lang.isInitial}" VerticalAlignment="Center"/>
+                                <CheckBox IsChecked="{Binding IsInitial, Mode=TwoWay}"  IsEnabled="{Binding EditionAvailable}"
+                                         FontWeight="Bold" Foreground="Black" Background="Transparent" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
                         <controls:VertexLabelControl x:Name="PART_vertexLabel" LabelPositionSide="Left">
                             <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="20" Height="20" Visibility="{Binding IsInitialMarkVisibility}">
                                 <Path.LayoutTransform>
@@ -171,7 +169,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type controls:VertexControl}">
-                            <Grid Width="120" Height="120" >
+                            <Grid Width="{StaticResource NodeRadius}" Height="{StaticResource NodeRadius}" >
                                 <Button MaxHeight="20" Command="{Binding ChangeHidingCommand}" Background="Transparent" BorderThickness="0"
                                         HorizontalAlignment="Right" VerticalAlignment="Top">
                                     <Image Stretch="Uniform" Source="{StaticResource penDrawingImage}"/>
@@ -197,7 +195,7 @@
 
     <!-- EDGE CONTROL -->
     <Style TargetType="{x:Type controls:EdgeControl}">
-        <Setter Property="SelfLoopIndicatorOffset" Value="90, 6"/>
+        <Setter Property="SelfLoopIndicatorOffset" Value="95, 4"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:EdgeControl}">
