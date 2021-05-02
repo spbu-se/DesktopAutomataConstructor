@@ -51,6 +51,7 @@ namespace ControlsLibrary.Controls.Executor
         {
             InSimulation = false;
             ActualStates.Clear();
+            OnPropertyChanged("ActualStates");
             PassedString = "";
             CurrentToken = "";
             NotPassedString = "";
@@ -78,7 +79,6 @@ namespace ControlsLibrary.Controls.Executor
             if (!FA.CanDoStep())
             {
                 Result = FA.StepResult;
-                OnDropDebugCommandExecuted(this);
             }
         }
         private bool CanStepInCommandExecute(object p)
