@@ -73,7 +73,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
-                <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="2" Grid.Column="2"/>
+                <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"/>
                 <test:TestPanel x:Name="testPanel" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                 <typeAnalyzer:TypeAnalyzer x:Name="typeAnalyzer" Grid.Column="2" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
             </Grid>
