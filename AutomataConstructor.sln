@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomataConstructor", "Auto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsLibrary", "ControlsLibrary\ControlsLibrary.csproj", "{ADDE8E8F-851C-4788-BBF1-674F85D42525}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{3A7CD87C-C2C6-4716-AB8E-AA433E05269F}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{91B1082F-A9FD-4FAA-B28F-BC42D9F4CC3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,8 +23,8 @@ Global
 		{ADDE8E8F-851C-4788-BBF1-674F85D42525}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADDE8E8F-851C-4788-BBF1-674F85D42525}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADDE8E8F-851C-4788-BBF1-674F85D42525}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A7CD87C-C2C6-4716-AB8E-AA433E05269F}.Debug|Any CPU.ActiveCfg = Debug
-		{3A7CD87C-C2C6-4716-AB8E-AA433E05269F}.Release|Any CPU.ActiveCfg = Release
+		{91B1082F-A9FD-4FAA-B28F-BC42D9F4CC3C}.Debug|Any CPU.ActiveCfg = Debug
+		{91B1082F-A9FD-4FAA-B28F-BC42D9F4CC3C}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

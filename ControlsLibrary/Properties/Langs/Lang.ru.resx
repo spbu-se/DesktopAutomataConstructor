@@ -196,7 +196,7 @@
     <value>Выберите инструмент:</value>
   </data>
   <data name="shouldReject" xml:space="preserve">
-    <value>Принимается</value>
+    <value>Отклоняется</value>
   </data>
   <data name="startDebugString" xml:space="preserve">
     <value>Начать отладку</value>
