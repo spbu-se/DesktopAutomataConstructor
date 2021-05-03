@@ -4,9 +4,9 @@
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
 "ProjectName" = "8:Setup"
-"LanguageId" = "3:1049"
-"CodePage" = "3:1251"
-"UILanguageId" = "3:1049"
+"LanguageId" = "3:0"
+"CodePage" = "3:1252"
+"UILanguageId" = "3:0"
 "SccProjectName" = "8:"
 "SccLocalPath" = "8:"
 "SccAuxPath" = "8:"
@@ -90,11 +90,6 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
-                    {
-                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
-                    }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.CoreRuntime.3.1.x64"
                     {
                     "Name" = "8:.NET Core Runtime 3.1.12 (x64)"
@@ -238,7 +233,7 @@
         }
         "MsiBootstrapper"
         {
-        "LangId" = "3:1049"
+        "LangId" = "3:0"
         "RequiresElevation" = "11:FALSE"
         }
         "Product"
@@ -246,7 +241,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Automata constructor"
         "ProductCode" = "8:{398FD3D4-2CED-4562-8710-727B705373A3}"
-        "PackageCode" = "8:{AF12AA87-D91D-4E89-8A4C-8A337CEDF0C5}"
+        "PackageCode" = "8:{E4BE6A40-4224-4FB9-99FE-5603185C81D8}"
         "UpgradeCode" = "8:{E0B19DC8-2E7A-4E14-A8B8-850BB7D93B2D}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -795,7 +790,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_93FBEC25050242E783B33D6DFD23A3C0"
             {
-            "SourcePath" = "8:..\\AutomataConstructor\\obj\\Debug\\netcoreapp3.1\\apphost.exe"
+            "SourcePath" = "8:..\\AutomataConstructor\\obj\\Release\\netcoreapp3.1\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3D678A99BF274852AB9CFE7FC158D281"
