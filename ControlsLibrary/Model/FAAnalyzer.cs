@@ -34,19 +34,23 @@ namespace ControlsLibrary.Model
                 }
             }
 
-            var result = FATypeEnum.DFA;
             foreach (var edge1 in graph.Edges)
             {
                 foreach (var edge2 in graph.Edges)
                 {
                     if (edge1 != edge2 && edge1.Source == edge2.Source && edge1.TransitionTokens.Intersect(edge2.TransitionTokens).Count() > 0)
                     {
-                        result = FATypeEnum.NFA;
+                        return FATypeEnum.NFA;
                     }
                 }
             }
 
-            return result;
+            if (graph.Vertices.Where(v => v.IsInitial).Count() > 1)
+            {
+                return FATypeEnum.NFA;
+            }
+
+            return FATypeEnum.DFA;
         }
     }
 }
