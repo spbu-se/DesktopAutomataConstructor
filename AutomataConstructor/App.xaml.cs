@@ -11,10 +11,10 @@ namespace AutomataConstructor
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            AutomataConstructor.Properties.Settings.Default.language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
             //AutomataConstructor.Properties.Settings.Default.language = "ru-RU";
-            var language = AutomataConstructor.Properties.Settings.Default.language;
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            var language = Thread.CurrentThread.CurrentUICulture;
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
+            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
             base.OnStartup(e);
         }
     }
