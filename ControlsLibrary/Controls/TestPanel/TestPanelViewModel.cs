@@ -8,6 +8,10 @@ using QuickGraph;
 using System.Threading.Tasks;
 using System.Linq;
 using System.ComponentModel;
+using System.Collections.Generic;
+using ControlsLibrary.FileSerialization;
+using YAXLib;
+using System.IO;
 
 namespace ControlsLibrary.Controls.TestPanel
 {
@@ -19,6 +23,33 @@ namespace ControlsLibrary.Controls.TestPanel
             HideCommand = new RelayCommand(OnHideCommandExecuted, CanHideCommandExecute);
             RunAllTestsCommand = new RelayCommand(OnRunAllTestsCommandExecuted, CanRunAllTestsCommandExecute);
             Tests = new ObservableCollection<TestViewModel>();
+        }
+
+        public void Save(string path)
+        {
+            var data = new List<TestSerializationData>();
+            foreach (var test in Tests)
+            {
+                data.Add(new TestSerializationData() { Result = test.Result, ShouldReject = test.ShouldReject, TestString = test.TestString });
+            }
+            FileServiceProviderWpf.SerializeDataToFile(path, data);
+        }
+
+        public void Open(string path)
+        {
+            Tests.Clear();
+            using (FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                var deserializer = new YAXSerializer(typeof(List<TestSerializationData>));
+                using (var textReader = new StreamReader(stream))
+                {
+                    var datas = (List<TestSerializationData>)deserializer.Deserialize(textReader);
+                    foreach (var test in datas)
+                    {
+                        AddTest(test.Result, test.TestString, test.ShouldReject);
+                    }
+                }
+            }
         }
 
         private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
