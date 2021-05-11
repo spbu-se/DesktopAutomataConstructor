@@ -29,6 +29,9 @@ namespace ControlsLibrary.Controls.Scene
     {
         private TypeAnalyzerViewModel typeAnalyzer;
 
+        /// <summary>
+        /// Sets a new type analyzer view model on the scene
+        /// </summary>
         public TypeAnalyzerViewModel TypeAnalyzer
         {
             get => typeAnalyzer;
@@ -42,7 +45,9 @@ namespace ControlsLibrary.Controls.Scene
 
         private ToolbarViewModel toolBar;
 
-        private ErrorReporterViewModel errorReporter;
+        /// <summary>
+        /// Sets a new toolbar view model on the scene
+        /// </summary>
         public ToolbarViewModel Toolbar
         {
             get => toolBar;
@@ -53,6 +58,11 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        private ErrorReporterViewModel errorReporter;
+
+        /// <summary>
+        /// Sets a new error reporter view model on the scene
+        /// </summary>
         public ErrorReporterViewModel ErrorReporter
         {
             get => errorReporter;
@@ -64,6 +74,9 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        /// <summary>
+        /// Disables graph editing if executor in simulation
+        /// </summary>
         private void InSimulationChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "InSimulation")
@@ -82,31 +95,9 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
-        private ExecutorViewModel executorViewModel;
-        public ExecutorViewModel ExecutorViewModel
-        {
-            get => executorViewModel;
-            set
-            {
-                executorViewModel = value;
-                executorViewModel.Graph = graphArea.LogicCore.Graph;
-                executorViewModel.PropertyChanged += UpdateActualStates;
-                executorViewModel.PropertyChanged += InSimulationChanged;
-            }
-        }
-
-        private TestPanelViewModel testPanel;
-
-        public TestPanelViewModel TestPanel
-        {
-            get => testPanel;
-            set
-            {
-                testPanel = value;
-                testPanel.Graph = graphArea.LogicCore.Graph;
-            }
-        }
-
+        /// <summary>
+        /// Updates isAcutal property values in nodes of the graph if executor state changed
+        /// </summary>
         private void UpdateActualStates(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "ActualStates")
@@ -126,6 +117,64 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        private ExecutorViewModel executorViewModel;
+
+        /// <summary>
+        /// Sets a new executor view model
+        /// </summary>
+        public ExecutorViewModel ExecutorViewModel
+        {
+            get => executorViewModel;
+            set
+            {
+                executorViewModel = value;
+                executorViewModel.Graph = graphArea.LogicCore.Graph;
+                executorViewModel.PropertyChanged += UpdateActualStates;
+                executorViewModel.PropertyChanged += InSimulationChanged;
+            }
+        }
+
+        private TestPanelViewModel testPanel;
+
+        /// <summary>
+        /// Sets a new test panel
+        /// </summary>
+        public TestPanelViewModel TestPanel
+        {
+            get => testPanel;
+            set
+            {
+                testPanel = value;
+                testPanel.Graph = graphArea.LogicCore.Graph;
+            }
+        }
+
+        /// <summary>
+        /// Handles changing of states properties values and invokes graph edited if property is important to FSA
+        /// </summary>
+        private void VertexEdited(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Name" || e.PropertyName == "IsInitial" || e.PropertyName == "IsFinal")
+            {
+                GraphEdited?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Handles changing of transitions properties values and invokes graph edited if property is important to FSA
+        /// </summary>
+        private void EdgeEdited(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "TransitionTokens" || e.PropertyName == "IsEpsilon")
+            {
+                GraphEdited?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Serializes and saves graph in xml format into the file in the given path
+        /// </summary>
+        /// <param name="path">Path of the file to save graph</param>
         public void Save(string path)
         {
             var datas = graphArea.ExtractSerializationData();
@@ -139,26 +188,17 @@ namespace ControlsLibrary.Controls.Scene
             FileServiceProviderWpf.SerializeDataToFile(path, datas);
         }
 
+        /// <summary>
+        /// Returs if graph can be saved or not
+        /// </summary>
+        /// <returns>True if there are more than 0 vertices</returns>
         public bool CanSave()
             => graphArea.VertexList.Count > 0;
 
-
-        private void VertexEdited(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Name" || e.PropertyName == "IsInitial" || e.PropertyName == "IsFinal")
-            {
-                GraphEdited?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        private void EdgeEdited(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "TransitionTokens" || e.PropertyName == "IsEpsilon")
-            {
-                GraphEdited?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
+        /// <summary>
+        /// Deserializes graph data from the file on the given path
+        /// </summary>
+        /// <param name="path">Path of the given file</param>
         public void Open(string path)
         {
             var data = FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(path);
@@ -178,6 +218,9 @@ namespace ControlsLibrary.Controls.Scene
             GraphEdited?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// The basic constructor
+        /// </summary>
         public Scene()
         {
             InitializeComponent();
@@ -186,6 +229,9 @@ namespace ControlsLibrary.Controls.Scene
             editor = new EditorObjectManager(graphArea, zoomControl);
         }
 
+        /// <summary>
+        /// Handles application hotkeys
+        /// </summary>
         public void OnSceneKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.D)
@@ -216,6 +262,7 @@ namespace ControlsLibrary.Controls.Scene
             deletionCursor = new Cursor(deletionCursorStream);
         }
 
+        //TODO: learn how to extract drag information from the graphArea
         private void SetGraphAreaProperties()
         {
             var logic =
@@ -241,10 +288,21 @@ namespace ControlsLibrary.Controls.Scene
             graphArea.VertexMouseUp += VertexDragged;
         }
 
+        /// <summary>
+        /// Invokes if node on the graph was selected
+        /// </summary>
         public event EventHandler<NodeSelectedEventArgs> NodeSelected;
 
+        /// <summary>
+        /// Invokes if FSA was edited
+        /// </summary>
         public event EventHandler<EventArgs> GraphEdited;
 
+        /// <summary>
+        /// Update edge route if graph was edited
+        /// </summary>
+        /// <param name="source">Source vertex</param>
+        /// <param name="target">Target vertex</param>
         private void UpdateEdgeRoutingPoints(NodeViewModel source, NodeViewModel target)
         {
             var parralelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == target && e.Target == source);
@@ -257,6 +315,9 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        /// <summary>
+        /// Handles edge selection and removes edge if scene in the deletion mode
+        /// </summary>
         private void EdgeSelected(object sender, EdgeSelectedEventArgs args)
         {
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed && Toolbar.SelectedTool == SelectedTool.Delete)
@@ -276,8 +337,12 @@ namespace ControlsLibrary.Controls.Scene
         }
 
         private VertexControl selectedVertex;
+
         private readonly EditorObjectManager editor;
 
+        /// <summary>
+        /// Creates new vertices by click on the scene and creates targeted edges if scene in the creating of the new edge state
+        /// </summary>
         private void OnSceneMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -288,9 +353,10 @@ namespace ControlsLibrary.Controls.Scene
                     {
                         return;
                     }
-                    var pos = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
-                    pos.Offset(-60, -60);
-                    var vc = CreateVertexControl(pos);
+                    var position = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
+                    
+                    position.Offset(-60, -60); //Offset should be the half of the vertex controls width
+                    var vc = CreateVertexControl(position);
                     if (selectedVertex != null)
                     {
                         CreateEdgeControl(vc);
@@ -303,6 +369,9 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        /// <summary>
+        /// Fixes edges routing if vertex was dragged
+        /// </summary>
         private void VertexDragged(object sender, VertexSelectedEventArgs args)
         {
             foreach (var edge in graphArea.EdgesList.Where(e => e.Value.Source == args.VertexControl || e.Value.Target == args.VertexControl))
@@ -319,7 +388,7 @@ namespace ControlsLibrary.Controls.Scene
             }
             if (selectedVertex == null)
             {
-                editor.CreateVirtualEdge(vc, vc.GetPosition());
+                editor.CreateVirtualEdge(vc);
                 selectedVertex = vc;
                 HighlightBehaviour.SetHighlighted(selectedVertex, true);
                 return;
@@ -347,6 +416,10 @@ namespace ControlsLibrary.Controls.Scene
             editor.DestroyVirtualEdge();
         }
 
+        /// <summary>
+        /// Creates edge routing points to avoid overlapping of an edge by a parallel one
+        /// </summary>
+        /// <param name="edgeControl">Edge control which was overlapped or overlaps other</param>
         private void AvoidParralelEdges(EdgeControl edgeControl)
         {
             var edge = edgeControl.Edge as EdgeViewModel;
@@ -405,6 +478,9 @@ namespace ControlsLibrary.Controls.Scene
 
         private static Cursor deletionCursor;
 
+        /// <summary>
+        /// Handles changing of the selected tool
+        /// </summary>
         private void ToolSelected(object sender, EventArgs e)
         {
             if (Toolbar.SelectedTool == SelectedTool.Delete)
@@ -459,6 +535,9 @@ namespace ControlsLibrary.Controls.Scene
             selectedVertex = null;
         }
 
+        /// <summary>
+        /// Selects node view model by the vertex control
+        /// </summary>
         private NodeViewModel SelectNode(VertexControl vertexControl)
             => graphArea.VertexList.FirstOrDefault(x => x.Value == vertexControl).Key;
 
@@ -470,11 +549,15 @@ namespace ControlsLibrary.Controls.Scene
                 switch (Toolbar.SelectedTool)
                 {
                     case SelectedTool.Edit:
-                        CreateEdgeControl(args.VertexControl);
-                        break;
+                        {
+                            CreateEdgeControl(args.VertexControl);
+                            break;
+                        }
                     case SelectedTool.Delete:
-                        SafeRemoveVertex(args.VertexControl);
-                        break;
+                        {
+                            SafeRemoveVertex(args.VertexControl);
+                            break;
+                        }
                     default:
                         if (Toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
                         {

@@ -10,9 +10,16 @@ using System.Windows.Input;
 
 namespace ControlsLibrary.Controls.TestPanel
 {
+    /// <summary>
+    /// Contains test data and provides interaction logic
+    /// </summary>
     public class TestViewModel : INotifyPropertyChanged
     {
         private ICollection<TestViewModel> storage;
+
+        /// <summary>
+        /// Storage to remove test from
+        /// </summary>
         public ICollection<TestViewModel> Storage
         {
             get => storage;
@@ -24,6 +31,10 @@ namespace ControlsLibrary.Controls.TestPanel
         }
 
         private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
         {
             get => graph;

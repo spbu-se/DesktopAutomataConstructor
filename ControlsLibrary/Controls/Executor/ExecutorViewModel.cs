@@ -10,24 +10,30 @@ using System.Windows.Input;
 
 namespace ControlsLibrary.Controls.Executor
 {
+    /// <summary>
+    /// Contains executor data and provides logic of execution
+    /// </summary>
     public class ExecutorViewModel : BaseViewModel
     {
         private FiniteAutomata FA;
+
         private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
-        public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
-        {
-            get => graph;
-            set
-            {
-                graph = value;
-                OnPropertyChanged();
-            }
-        }
+
+        /// <summary>
+        /// Gets or sets FA graph to execute
+        /// </summary>
+        public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph { get => graph; set => Set(ref graph, value); }
 
         private bool inSimulation = false;
 
-        public bool InSimulation { get => inSimulation; set => Set(ref inSimulation, value); }
+        /// <summary>
+        /// Returns true if executor in the simulation state else false
+        /// </summary>
+        public bool InSimulation { get => inSimulation; private set => Set(ref inSimulation, value); }
 
+        /// <summary>
+        /// Starts simulation
+        /// </summary>
         public ICommand StartDebugCommand { get; }
 
         private void OnStartDebugCommandExecuted(object p)
@@ -50,6 +56,9 @@ namespace ControlsLibrary.Controls.Executor
         private bool CanStartDebugCommandExecute(object p)
             => true;
 
+        /// <summary>
+        /// Resets executor state to initial
+        /// </summary>
         public ICommand DropDebugCommand { get; }
 
         private void OnDropDebugCommandExecuted(object p)
@@ -65,9 +74,11 @@ namespace ControlsLibrary.Controls.Executor
         private bool CanDropDebugCommandExecute(object p)
             => true;
 
+        /// <summary>
+        /// Makes one step of execution
+        /// </summary>
         public ICommand StepInCommand { get; }
 
-        //TODO: Make in the FA methods which returns result in 
         private void OnStepInCommandExecuted(object p)
         {
             FA.SingleStep();
@@ -91,6 +102,7 @@ namespace ControlsLibrary.Controls.Executor
                 Result = FA.StepResult;
             }
         }
+
         private bool CanStepInCommandExecute(object p)
         {
             if (!InSimulation || FA == null)
@@ -100,7 +112,11 @@ namespace ControlsLibrary.Controls.Executor
             return FA.CanDoStep();
         }
 
+        /// <summary>
+        /// Gets result of execution by fast run and sets it on the result string
+        /// </summary>
         public ICommand RunCommand { get; }
+
         private void OnRunCommandExecuted(object p)
         {
             var errors = FAAnalyzer.GetErrors(Graph);
@@ -113,12 +129,17 @@ namespace ControlsLibrary.Controls.Executor
             FA.SetStr(InputString);
             Result = FA.DoAllTransitions(InputString) ? ResultEnum.Passed : ResultEnum.Failed;
         }
+
         private bool CanRunCommandExecute(object p)
         {
             return !inSimulation;
         }
 
         private string inputString = "";
+
+        /// <summary>
+        /// The input string for automaton
+        /// </summary>
         public string InputString
         {
             get => inputString;
@@ -134,36 +155,38 @@ namespace ControlsLibrary.Controls.Executor
         }
 
         private string passedString = "";
+
+        /// <summary>
+        /// The part of a string that already has been feed to an automaton
+        /// </summary>
         public string PassedString { get => passedString; set => passedString = value; }
 
         private string currentToken = "";
+
+        /// <summary>
+        /// The token which an automaton is handling at the moment
+        /// </summary>
         public string CurrentToken { get => currentToken; set => currentToken = value; }
 
         private string notPassedString = "";
+
+        /// <summary>
+        /// The not handled by an automaton part of a string
+        /// </summary>
         public string NotPassedString { get => notPassedString; set => notPassedString = value; }
 
-        private List<int> _ActualStates;
-        public List<int> ActualStates
-        {
-            get => _ActualStates;
-            set
-            {
-                Set(ref _ActualStates, value);
-                string x = "";
-                foreach (int state in _ActualStates)
-                {
-                    x += state.ToString();
-                }
-                States = x;
-            }
-        }
-        private string _States;
-        public string States
-        {
-            get => _States;
-            set => Set(ref _States, value);
-        }
+        private List<int> actualStates;
+
+        /// <summary>
+        /// The list of states ids that an automaton stays on at the moment
+        /// </summary>
+        public List<int> ActualStates { get => actualStates; set => Set(ref actualStates, value); }
+
         private ResultEnum _Result;
+
+        /// <summary>
+        /// The current result of an execution
+        /// </summary>
         public ResultEnum Result
         {
             get => _Result;
@@ -173,6 +196,10 @@ namespace ControlsLibrary.Controls.Executor
                 OnPropertyChanged("StringResult");
             }
         }
+
+        /// <summary>
+        /// The result converted into the string type
+        /// </summary>
         public string StringResult { get => ResultPrinter.PrintResult(Result); }
 
         public ExecutorViewModel()
@@ -184,6 +211,5 @@ namespace ControlsLibrary.Controls.Executor
             RunCommand = new RelayCommand(OnRunCommandExecuted, CanRunCommandExecute);
             #endregion
         }
-
     }
 }

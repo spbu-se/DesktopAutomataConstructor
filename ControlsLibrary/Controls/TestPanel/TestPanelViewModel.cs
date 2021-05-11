@@ -15,6 +15,9 @@ using YAXLib;
 
 namespace ControlsLibrary.Controls.TestPanel
 {
+    /// <summary>
+    /// Contains test panel data and provides non-visual interaction logic
+    /// </summary>
     public class TestPanelViewModel : BaseViewModel
     {
         public TestPanelViewModel()
@@ -25,6 +28,10 @@ namespace ControlsLibrary.Controls.TestPanel
             Tests = new ObservableCollection<TestViewModel>();
         }
 
+        /// <summary>
+        /// Saves tests into the file by the given path
+        /// </summary>
+        /// <param name="path">Path of the file to save</param>
         public void Save(string path)
         {
             var data = new List<TestSerializationData>();
@@ -35,6 +42,10 @@ namespace ControlsLibrary.Controls.TestPanel
             FileServiceProviderWpf.SerializeDataToFile(path, data);
         }
 
+        /// <summary>
+        /// Deserializes tests data fromthe file by the given path
+        /// </summary>
+        /// <param name="path">Path of the file to open</param>
         public void Open(string path)
         {
             Tests.Clear();
@@ -54,6 +65,9 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
 
+        /// <summary>
+        /// Sets FA graph to execute tests on
+        /// </summary>
         public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
         {
             get => graph;
@@ -67,12 +81,24 @@ namespace ControlsLibrary.Controls.TestPanel
             }
         }
 
+        /// <summary>
+        /// Number of tests with positive actual result
+        /// </summary>
         public int NumberOfPassedTests { get => Tests.Count(test => test.Result == ResultEnum.Passed); }
 
+        /// <summary>
+        /// Number of tests with negative actual result
+        /// </summary>
         public int NumberOfFailedTests { get => Tests.Count(test => test.Result == ResultEnum.Failed); }
 
+        /// <summary>
+        /// Number of tests which was not runned
+        /// </summary>
         public int NumberOfNotRunnedTests { get => Tests.Count(test => test.Result == ResultEnum.NotRunned); }
 
+        /// <summary>
+        /// Hides test panel data
+        /// </summary>
         public ICommand HideCommand { get; }
 
         private void OnHideCommandExecuted(object p) => IsHidden = !IsHidden;
@@ -81,8 +107,14 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private bool isHidden = true;
 
+        /// <summary>
+        /// Gets or sets hidding mode
+        /// </summary>
         public bool IsHidden { get => isHidden; set => Set(ref isHidden, value); }
 
+        /// <summary>
+        /// Executes all tests
+        /// </summary>
         public ICommand RunAllTestsCommand { get; set; }
 
         private void OnRunAllTestsCommandExecuted(object p)
@@ -93,12 +125,21 @@ namespace ControlsLibrary.Controls.TestPanel
         private bool CanRunAllTestsCommandExecute(object p)
             => Tests != null;
 
+        /// <summary>
+        /// Collection of tests data
+        /// </summary>
         public ObservableCollection<TestViewModel> Tests { get; set; }
 
+        /// <summary>
+        /// Adds new tests to the collection
+        /// </summary>
         public ICommand AddTestCommand { get; set; }
 
         private bool CanAddTestCommandExecute(object p) => true;
 
+        /// <summary>
+        /// Handles changing of result in some test view nodel
+        /// </summary>
         private void UpdateStorage(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Result")
@@ -119,7 +160,7 @@ namespace ControlsLibrary.Controls.TestPanel
             OnPropertyChanged("NumberOfNotRunnedTests");
         }
 
-        public void AddTest(ResultEnum result, string testString, bool shouldReject)
+        private void AddTest(ResultEnum result, string testString, bool shouldReject)
         {
             Tests.Add(new TestViewModel()
             {

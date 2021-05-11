@@ -12,19 +12,39 @@ namespace ControlsLibrary.Controls.Scene
     /// </summary>
     internal class EdgeBlueprint : IDisposable
     {
+        /// <summary>
+        /// The source vertex of an edge
+        /// </summary>
         public VertexControl Source { get; set; }
+
+        /// <summary>
+        /// The current target position of an edge
+        /// </summary>
         public Point TargetPosition { get; set; }
+
+        /// <summary>
+        /// The actual calculated path of an edge
+        /// </summary>
         public Path EdgePath { get; set; }
 
-        public EdgeBlueprint(VertexControl source, Point targetPosition, Brush brush)
+        /// <summary>
+        /// The basic constructor
+        /// </summary>
+        /// <param name="source">Source vertex of a new edge</param>
+        /// <param name="brush">Brush to draw a bluepring</param>
+        public EdgeBlueprint(VertexControl source, Brush brush)
         {
             EdgePath = new Path() { Stroke = brush, Data = new LineGeometry() };
             Source = source;
         }
 
-        void Source_PositionChanged(object sender, EventArgs eventArgs)
+        private void SourcePositionChanged(object sender, EventArgs eventArgs)
             => UpdateGeometry(Source.GetCenterPosition(), TargetPosition);
 
+        /// <summary>
+        /// Handles target position update
+        /// </summary>
+        /// <param name="point">New target position</param>
         public void UpdateTargetPosition(Point point)
         {
             TargetPosition = point;
@@ -39,7 +59,7 @@ namespace ControlsLibrary.Controls.Scene
 
         public void Dispose()
         {
-            Source.PositionChanged -= Source_PositionChanged;
+            Source.PositionChanged -= SourcePositionChanged;
             Source = null;
         }
     }
