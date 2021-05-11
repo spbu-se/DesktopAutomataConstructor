@@ -20,6 +20,8 @@ namespace ControlsLibrary.Controls.TestPanel
     /// </summary>
     public class TestPanelViewModel : BaseViewModel
     {
+        public FAExecutor Executor { private get; set; }
+
         public TestPanelViewModel()
         {
             AddTestCommand = new RelayCommand(OnAddTestCommandExecuted, CanAddTestCommandExecute);
@@ -59,24 +61,6 @@ namespace ControlsLibrary.Controls.TestPanel
                     {
                         AddTest(test.Result, test.TestString, test.ShouldReject);
                     }
-                }
-            }
-        }
-
-        private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
-
-        /// <summary>
-        /// Sets FA graph to execute tests on
-        /// </summary>
-        public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
-        {
-            get => graph;
-            set
-            {
-                Set(ref graph, value);
-                foreach (var test in Tests)
-                {
-                    test.Graph = graph;
                 }
             }
         }
@@ -152,7 +136,7 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private void OnAddTestCommandExecuted(object p)
         {
-            var newTest = new TestViewModel() { Result = ResultEnum.NotRunned, Graph = graph, Storage = Tests };
+            var newTest = new TestViewModel() { Result = ResultEnum.NotRunned, Executor = this.Executor, Storage = Tests };
             newTest.PropertyChanged += UpdateStorage;
             Tests.Add(newTest);
             OnPropertyChanged("NumberOfPassedTests");
@@ -168,7 +152,7 @@ namespace ControlsLibrary.Controls.TestPanel
                 TestString = testString,
                 ShouldReject = shouldReject,
                 Storage = Tests,
-                Graph = graph
+                Executor = this.Executor
             });
 
             OnPropertyChanged("NumberOfPassedTests");

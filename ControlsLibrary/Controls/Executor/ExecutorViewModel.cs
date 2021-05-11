@@ -1,10 +1,8 @@
 ﻿using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
-using ControlsLibrary.ViewModel;
 using ControlsLibrary.ViewModel.Base;
-using QuickGraph;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -17,12 +15,7 @@ namespace ControlsLibrary.Controls.Executor
     {
         private FiniteAutomata FA;
 
-        private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
-
-        /// <summary>
-        /// Gets or sets FA graph to execute
-        /// </summary>
-        public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph { get => graph; set => Set(ref graph, value); }
+        public FAExecutor Executor { private get; set; }
 
         private bool inSimulation = false;
 
@@ -42,8 +35,8 @@ namespace ControlsLibrary.Controls.Executor
             {
                 return;
             }
-            FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
-            FA.SetStr(InputString);
+            FA = Executor.StartDebug(InputString);
+            FA.SetString(InputString);
             InSimulation = true;
             currentToken = inputString[0].ToString();
             OnPropertyChanged("CurrentToken");
@@ -119,15 +112,14 @@ namespace ControlsLibrary.Controls.Executor
 
         private void OnRunCommandExecuted(object p)
         {
-            var errors = FAAnalyzer.GetErrors(Graph);
-            if (errors.Count > 0)
+            try
             {
-                MessageBox.Show(errors.Aggregate("", (folder, error) => folder + error + "\n"), "Invalid automat!", MessageBoxButton.OK);
-                return;
+                Result = Executor.Execute(InputString);
             }
-            FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
-            FA.SetStr(InputString);
-            Result = FA.DoAllTransitions(InputString) ? ResultEnum.Passed : ResultEnum.Failed;
+            catch (InvalidOperationException e)
+            {
+                MessageBox.Show(e.Message, "Invalid automat!", MessageBoxButton.OK);
+            }
         }
 
         private bool CanRunCommandExecute(object p)

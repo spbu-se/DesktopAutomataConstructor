@@ -128,7 +128,7 @@ namespace ControlsLibrary.Controls.Scene
             set
             {
                 executorViewModel = value;
-                executorViewModel.Graph = graphArea.LogicCore.Graph;
+                executorViewModel.Executor = new FAExecutor(graphArea.LogicCore.Graph);
                 executorViewModel.PropertyChanged += UpdateActualStates;
                 executorViewModel.PropertyChanged += InSimulationChanged;
             }
@@ -145,7 +145,7 @@ namespace ControlsLibrary.Controls.Scene
             set
             {
                 testPanel = value;
-                testPanel.Graph = graphArea.LogicCore.Graph;
+                testPanel.Executor = new FAExecutor(graphArea.LogicCore.Graph);
             }
         }
 

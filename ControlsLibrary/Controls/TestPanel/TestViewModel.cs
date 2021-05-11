@@ -3,9 +3,11 @@ using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
 using ControlsLibrary.ViewModel;
 using QuickGraph;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ControlsLibrary.Controls.TestPanel
@@ -30,20 +32,7 @@ namespace ControlsLibrary.Controls.TestPanel
             }
         }
 
-        private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
-        {
-            get => graph;
-            set
-            {
-                graph = value;
-                OnPropertyChanged();
-            }
-        }
+        public FAExecutor Executor { private get; set; }
 
         public TestViewModel()
         {
@@ -55,18 +44,21 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private void OnExecuteCommandExecuted(object p)
         {
-            var executor = new ExecutorViewModel();
-            executor.InputString = TestString;
-            executor.Graph = Graph;
-            executor.RunCommand.Execute(new object());
-            Result = executor.Result;
-            if (shouldReject && Result == ResultEnum.Passed)
+            try
             {
-                Result = ResultEnum.Failed;
+                Result = Executor.Execute(TestString);
+                if (shouldReject && Result == ResultEnum.Passed)
+                {
+                    Result = ResultEnum.Failed;
+                }
+                else if (shouldReject && Result == ResultEnum.Failed)
+                {
+                    Result = ResultEnum.Passed;
+                }
             }
-            else if (shouldReject && Result == ResultEnum.Failed)
+            catch (InvalidOperationException e)
             {
-                Result = ResultEnum.Passed;
+                MessageBox.Show(e.Message, "Invalid automat!", MessageBoxButton.OK);
             }
         }
 
