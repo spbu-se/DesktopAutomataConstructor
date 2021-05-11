@@ -1,15 +1,15 @@
+using AutomataConstructor.Properties.Langs;
 using ControlsLibrary.Controls.ErrorReporter;
-using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.Executor;
 using ControlsLibrary.Controls.TestPanel;
+using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.TypeAnalyzer;
-using System.Windows;
 using Microsoft.Win32;
 using System;
-using System.IO;
-using System.Windows.Input;
 using System.ComponentModel;
-using AutomataConstructor.Properties.Langs;
+using System.IO;
+using System.Windows;
+using System.Windows.Input;
 
 namespace AutomataConstructor
 {
@@ -45,8 +45,8 @@ namespace AutomataConstructor
 
         private string fileName = "";
 
-        public string WindowTitle 
-        { 
+        public string WindowTitle
+        {
             get
             {
                 var name = fileName == null || fileName == "" ? $"({Lang.Saves_Unsaved})" : fileName;
@@ -96,7 +96,7 @@ namespace AutomataConstructor
         }
 
         private void CanSaveAutomatCommandExecute(object sender, CanExecuteRoutedEventArgs e)
-            => e.CanExecute = savePath != null && File.Exists(savePath) && scene != null && scene.CanSave(); 
+            => e.CanExecute = savePath != null && File.Exists(savePath) && scene != null && scene.CanSave();
         #endregion
 
         #region OpenAutomatCommand
