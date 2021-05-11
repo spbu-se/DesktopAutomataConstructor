@@ -12,9 +12,7 @@ namespace AutomataConstructor
         protected override void OnStartup(StartupEventArgs e)
         {
             //AutomataConstructor.Properties.Settings.Default.language = "ru-RU";
-            var language = Thread.CurrentThread.CurrentUICulture;
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
-            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
             base.OnStartup(e);
         }
     }
