@@ -119,23 +119,6 @@
                     <Grid Width="{StaticResource NodeRadius}"  Height="{StaticResource NodeRadius}">
                         <Ellipse x:Name="BackgroundNorm" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="3" Width="{StaticResource NodeRadius}" Height="{StaticResource NodeRadius}"/>
                         <Ellipse Visibility="{Binding FinalMarkVisibility}" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="2" Height="{StaticResource AcceptingMarkRadius}" Width="{StaticResource AcceptingMarkRadius}"/>
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Height="{StaticResource NodeContentSize}">
-                            <StackPanel Orientation="Horizontal" Height="{StaticResource NodeContentStringHeight}">
-                                <TextBlock Text="{x:Static language:Lang.stateName}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         FontWeight="Bold" Foreground="Black" Background="Transparent" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal"  Height="{StaticResource NodeContentStringHeight}">
-                                <TextBlock Text="{x:Static language:Lang.isAccept}" VerticalAlignment="Center"/>
-                                <CheckBox IsChecked="{Binding IsFinal, Mode=TwoWay}" IsEnabled="{Binding EditionAvailable}"
-                                          FontWeight="Bold" Foreground="Black" Background="Transparent" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal"  Height="{StaticResource NodeContentStringHeight}">
-                                <TextBlock Text="{x:Static language:Lang.isInitial}" VerticalAlignment="Center"/>
-                                <CheckBox IsChecked="{Binding IsInitial, Mode=TwoWay}"  IsEnabled="{Binding EditionAvailable}"
-                                         FontWeight="Bold" Foreground="Black" Background="Transparent" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </StackPanel>
                         <controls:VertexLabelControl x:Name="InitialMark" LabelPositionSide="Left">
                             <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="20" Height="20" Visibility="{Binding IsInitialMarkVisibility}">
                                 <Path.LayoutTransform>
@@ -150,11 +133,28 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate>
-                                                    <Button MaxHeight="24" Command="{Binding ChangeHidingCommand}" Background="Transparent"
-                                                        BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top">
-                                                        <Path Data="F1 M330,330z M0,0z M325.607,304.394L262.128,240.915C300.698,211.88 325.65,175.995 327.375,173.478 330.876,168.368 330.876,161.632 327.375,156.522 324.45,152.253 254.716,51.978 165.004,51.978 139.132,51.978 114.929,60.323 93.5050000000001,72.291L25.607,4.394C19.75,-1.464 10.252,-1.464 4.394,4.394 -1.464,10.252 -1.464,19.749 4.394,25.607L67.872,89.085C29.299,118.12 4.35,154.006 2.625,156.523 -0.875,161.632 -0.875,168.368 2.625,173.478 5.55,177.746 75.275,278.024 165.003,278.024 190.871,278.024 215.072,269.679 236.496,257.71L304.393,325.608C307.323,328.536 311.161,330 315,330 318.839,330 322.678,328.536 325.606,325.606 331.465,319.749 331.465,310.252 325.607,304.394z M165.003,81.977C225.263,81.977 278.411,142.315 296.26,164.999 286.587,177.293 266.555,200.628 240.651,219.438L115.673,94.461C131.079,86.902,147.736,81.977,165.003,81.977z M165.003,248.023C104.718,248.023 51.564,187.659 33.73,164.986 43.381,152.683 63.382,129.328 89.304,110.516L214.294,235.506C198.884,243.084,182.236,248.023,165.003,248.023z" 
-                                                          Fill="Black" Stretch="Uniform"/>
-                                                    </Button>
+                                                    <Border Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="5">
+                                                        <StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{x:Static language:Lang.stateName}"/>
+                                                                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                                         FontWeight="Bold" Foreground="Black" Background="Transparent" Width="30"/>
+                                                                <Button MaxHeight="24" Command="{Binding ChangeHidingCommand}" Background="Transparent" BorderThickness="0">
+                                                                    <Path Data="F1 M330,330z M0,0z M325.607,304.394L262.128,240.915C300.698,211.88 325.65,175.995 327.375,173.478 330.876,168.368 330.876,161.632 327.375,156.522 324.45,152.253 254.716,51.978 165.004,51.978 139.132,51.978 114.929,60.323 93.5050000000001,72.291L25.607,4.394C19.75,-1.464 10.252,-1.464 4.394,4.394 -1.464,10.252 -1.464,19.749 4.394,25.607L67.872,89.085C29.299,118.12 4.35,154.006 2.625,156.523 -0.875,161.632 -0.875,168.368 2.625,173.478 5.55,177.746 75.275,278.024 165.003,278.024 190.871,278.024 215.072,269.679 236.496,257.71L304.393,325.608C307.323,328.536 311.161,330 315,330 318.839,330 322.678,328.536 325.606,325.606 331.465,319.749 331.465,310.252 325.607,304.394z M165.003,81.977C225.263,81.977 278.411,142.315 296.26,164.999 286.587,177.293 266.555,200.628 240.651,219.438L115.673,94.461C131.079,86.902,147.736,81.977,165.003,81.977z M165.003,248.023C104.718,248.023 51.564,187.659 33.73,164.986 43.381,152.683 63.382,129.328 89.304,110.516L214.294,235.506C198.884,243.084,182.236,248.023,165.003,248.023z" 
+                                                                          Fill="Black" Stretch="Uniform"/>
+                                                                </Button>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{x:Static language:Lang.isAccept}"/>
+                                                                <CheckBox IsChecked="{Binding IsFinal, Mode=TwoWay}" IsEnabled="{Binding EditionAvailable}"
+                                                                          FontWeight="Bold" Foreground="Black" Background="Transparent"/>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{x:Static language:Lang.isInitial}" VerticalAlignment="Center"/>
+                                                                <CheckBox IsChecked="{Binding IsInitial, Mode=TwoWay}"  IsEnabled="{Binding EditionAvailable}" FontWeight="Bold" Foreground="Black" Background="Transparent"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </Border>
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
