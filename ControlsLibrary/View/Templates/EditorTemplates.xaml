@@ -48,13 +48,10 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
-    <sys:Double x:Key="NodeRadius">115</sys:Double>
-    <sys:Double x:Key="AcceptingMarkRadius">105</sys:Double>
-    <sys:Double x:Key="NodeContentSize">80</sys:Double>
-    <sys:Double x:Key="NodeContentStringHeight">26</sys:Double>
-    <sys:Double x:Key="ChangeHiddingButtonSize">20</sys:Double>
+    <sys:Double x:Key="NodeRadius">50</sys:Double>
+    <sys:Double x:Key="AcceptingMarkRadius">40</sys:Double>
     <sys:Double x:Key="SelfLoopedIndicatorWidth">90</sys:Double>
-    <sys:Double x:Key="EdgePointerSize">20</sys:Double>
+    <sys:Double x:Key="EdgePointerSize">15</sys:Double>
     
     <Style x:Key="TransitionsEditor" TargetType="ContentControl">
         <Setter Property="ToolTip" Value="{x:Static language:Lang.Editor_TransitionsToolTip}"/>
@@ -117,10 +114,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VertexControl}">
                     <Grid Width="{StaticResource NodeRadius}"  Height="{StaticResource NodeRadius}">
-                        <Ellipse x:Name="BackgroundNorm" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="3" Width="{StaticResource NodeRadius}" Height="{StaticResource NodeRadius}"/>
-                        <Ellipse Visibility="{Binding FinalMarkVisibility}" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="2" Height="{StaticResource AcceptingMarkRadius}" Width="{StaticResource AcceptingMarkRadius}"/>
+                        <Ellipse x:Name="BackgroundNorm" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="2" Width="{StaticResource NodeRadius}" Height="{StaticResource NodeRadius}"/>
+                        <Ellipse Visibility="{Binding FinalMarkVisibility}" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="1" Height="{StaticResource AcceptingMarkRadius}" Width="{StaticResource AcceptingMarkRadius}"/>
+                        <TextBlock Text="{Binding Name}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" FontStretch="Expanded"/>
                         <controls:VertexLabelControl x:Name="InitialMark" LabelPositionSide="Left">
-                            <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="20" Height="20" Visibility="{Binding IsInitialMarkVisibility}">
+                            <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="{StaticResource EdgePointerSize}" Height="{StaticResource EdgePointerSize}" Visibility="{Binding IsInitialMarkVisibility}">
                                 <Path.LayoutTransform>
                                     <RotateTransform Angle="180"/>
                                 </Path.LayoutTransform>
@@ -194,7 +192,7 @@
 
     <!-- EDGE CONTROL -->
     <Style TargetType="{x:Type controls:EdgeControl}">
-        <Setter Property="SelfLoopIndicatorOffset" Value="100, 4"/>
+        <Setter Property="SelfLoopIndicatorOffset" Value="40, 17"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:EdgeControl}">

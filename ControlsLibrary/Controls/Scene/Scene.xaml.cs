@@ -288,7 +288,7 @@ namespace ControlsLibrary.Controls.Scene
                         return;
                     }
                     var pos = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
-                    pos.Offset(-60, -60);
+                    pos.Offset(-25, -25);
                     var vc = CreateVertexControl(pos);
                     if (selectedVertex != null)
                     {
