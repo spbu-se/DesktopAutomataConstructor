@@ -1,5 +1,6 @@
 ﻿using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Model;
+using ControlsLibrary.ViewModel;
 using GraphX.Common.Enums;
 using GraphX.Controls;
 using GraphX.Controls.Models;

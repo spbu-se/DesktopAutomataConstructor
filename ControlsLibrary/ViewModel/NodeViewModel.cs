@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using YAXLib;
 
-namespace ControlsLibrary.Model
+namespace ControlsLibrary.ViewModel
 {
     public class NodeViewModel : VertexBase, INotifyPropertyChanged
     {

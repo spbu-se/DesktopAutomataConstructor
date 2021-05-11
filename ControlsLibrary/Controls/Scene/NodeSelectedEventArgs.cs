@@ -1,4 +1,4 @@
-﻿using ControlsLibrary.Model;
+﻿using ControlsLibrary.ViewModel;
 using System;
 
 namespace ControlsLibrary.Controls.Scene

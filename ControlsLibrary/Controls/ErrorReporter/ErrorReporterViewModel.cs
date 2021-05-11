@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using ControlsLibrary.Properties.Langs;
+using ControlsLibrary.ViewModel;
 
 namespace ControlsLibrary.Controls.ErrorReporter
 {

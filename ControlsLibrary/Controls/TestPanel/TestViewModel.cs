@@ -1,5 +1,6 @@
 ﻿using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
+using ControlsLibrary.ViewModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

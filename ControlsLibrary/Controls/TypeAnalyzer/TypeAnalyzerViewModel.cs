@@ -1,5 +1,6 @@
 ﻿using ControlsLibrary.Model;
 using QuickGraph;
+using ControlsLibrary.ViewModel;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

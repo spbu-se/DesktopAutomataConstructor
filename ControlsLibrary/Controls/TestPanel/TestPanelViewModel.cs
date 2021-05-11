@@ -1,5 +1,6 @@
 ﻿using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.ViewModel.Base;
+using ControlsLibrary.ViewModel;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ControlsLibrary.Model;

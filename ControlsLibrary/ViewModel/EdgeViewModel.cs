@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using YAXLib;
 
-namespace ControlsLibrary.Model
+namespace ControlsLibrary.ViewModel
 {
     public class EdgeViewModel : EdgeBase<NodeViewModel>, INotifyPropertyChanged
     {

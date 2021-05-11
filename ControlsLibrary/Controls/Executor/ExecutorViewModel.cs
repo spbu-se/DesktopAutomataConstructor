@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ControlsLibrary.ViewModel.Base;
+using ControlsLibrary.ViewModel;
 using ControlsLibrary.Model;
 using System.Windows.Input;
 using ControlsLibrary.Infrastructure.Command;
