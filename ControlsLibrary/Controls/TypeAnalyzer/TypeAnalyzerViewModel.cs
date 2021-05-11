@@ -1,10 +1,10 @@
 ﻿using ControlsLibrary.Model;
-using QuickGraph;
+using ControlsLibrary.Properties.Langs;
 using ControlsLibrary.ViewModel;
+using QuickGraph;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ControlsLibrary.Properties.Langs;
 
 namespace ControlsLibrary.Controls.TypeAnalyzer
 {

@@ -8,8 +8,8 @@ namespace ControlsLibrary.Controls.Toolbar
     {
         private SelectedTool selectedTool;
 
-        public SelectedTool SelectedTool 
-        { 
+        public SelectedTool SelectedTool
+        {
             get => selectedTool;
             set
             {

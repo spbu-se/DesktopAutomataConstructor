@@ -1,13 +1,12 @@
-﻿using QuickGraph;
-using ControlsLibrary.Model;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Linq;
-using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
+﻿using ControlsLibrary.Model;
 using ControlsLibrary.Properties.Langs;
 using ControlsLibrary.ViewModel;
+using QuickGraph;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ControlsLibrary.Controls.ErrorReporter
 {

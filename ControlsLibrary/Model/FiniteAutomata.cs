@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ControlsLibrary.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ControlsLibrary.ViewModel;
 
 namespace ControlsLibrary.Model
 {

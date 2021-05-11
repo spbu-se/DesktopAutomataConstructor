@@ -1,12 +1,12 @@
-﻿using ControlsLibrary.Infrastructure.Command;
+﻿using ControlsLibrary.Controls.Executor;
+using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
 using ControlsLibrary.ViewModel;
+using QuickGraph;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using ControlsLibrary.Controls.Executor;
-using QuickGraph;
 
 namespace ControlsLibrary.Controls.TestPanel
 {

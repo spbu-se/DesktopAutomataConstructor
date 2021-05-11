@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using ControlsLibrary.ViewModel.Base;
-using ControlsLibrary.ViewModel;
+﻿using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
-using System.Windows.Input;
-using ControlsLibrary.Infrastructure.Command;
+using ControlsLibrary.ViewModel;
+using ControlsLibrary.ViewModel.Base;
 using QuickGraph;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ControlsLibrary.Controls.Executor
 {
@@ -119,9 +119,9 @@ namespace ControlsLibrary.Controls.Executor
         }
 
         private string inputString = "";
-        public string InputString 
-        { 
-            get => inputString; 
+        public string InputString
+        {
+            get => inputString;
             set
             {
                 if (inSimulation)

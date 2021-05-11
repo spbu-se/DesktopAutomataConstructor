@@ -1,8 +1,8 @@
-﻿using QuickGraph;
+﻿using ControlsLibrary.Properties.Langs;
+using ControlsLibrary.ViewModel;
+using QuickGraph;
 using System.Collections.Generic;
 using System.Linq;
-using ControlsLibrary.Properties.Langs;
-using ControlsLibrary.ViewModel;
 
 namespace ControlsLibrary.Model
 {

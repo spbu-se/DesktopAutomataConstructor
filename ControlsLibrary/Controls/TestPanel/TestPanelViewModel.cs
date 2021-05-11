@@ -1,17 +1,17 @@
-﻿using ControlsLibrary.Infrastructure.Command;
-using ControlsLibrary.ViewModel.Base;
-using ControlsLibrary.ViewModel;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using ControlsLibrary.FileSerialization;
+using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
+using ControlsLibrary.ViewModel;
+using ControlsLibrary.ViewModel.Base;
 using QuickGraph;
-using System.Threading.Tasks;
-using System.Linq;
-using System.ComponentModel;
 using System.Collections.Generic;
-using ControlsLibrary.FileSerialization;
-using YAXLib;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using YAXLib;
 
 namespace ControlsLibrary.Controls.TestPanel
 {

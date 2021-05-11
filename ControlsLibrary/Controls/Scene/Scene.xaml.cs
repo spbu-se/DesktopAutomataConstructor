@@ -1,24 +1,24 @@
-﻿using ControlsLibrary.Controls.Toolbar;
+﻿using ControlsLibrary.Controls.ErrorReporter;
+using ControlsLibrary.Controls.Executor;
+using ControlsLibrary.Controls.TestPanel;
+using ControlsLibrary.Controls.Toolbar;
+using ControlsLibrary.Controls.TypeAnalyzer;
+using ControlsLibrary.FileSerialization;
 using ControlsLibrary.Model;
 using ControlsLibrary.ViewModel;
 using GraphX.Common.Enums;
+using GraphX.Common.Models;
 using GraphX.Controls;
 using GraphX.Controls.Models;
 using GraphX.Logic.Algorithms.OverlapRemoval;
 using GraphX.Logic.Models;
 using QuickGraph;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ControlsLibrary.Controls.ErrorReporter;
-using ControlsLibrary.Controls.TypeAnalyzer;
-using ControlsLibrary.Controls.Executor;
-using System.ComponentModel;
-using ControlsLibrary.Controls.TestPanel;
-using ControlsLibrary.FileSerialization;
-using GraphX.Common.Models;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -326,7 +326,7 @@ namespace ControlsLibrary.Controls.Scene
             }
 
             var data = new EdgeViewModel((NodeViewModel)selectedVertex.Vertex, (NodeViewModel)vc.Vertex);
-            
+
             // Doesn't create new edges with the same direction
             // TODO: should somehow notice user that edge wasn't created
             if (graphArea.LogicCore.Graph.Edges.Any(e => e.Source == (NodeViewModel)selectedVertex.Vertex && e.Target == (NodeViewModel)vc.Vertex))
