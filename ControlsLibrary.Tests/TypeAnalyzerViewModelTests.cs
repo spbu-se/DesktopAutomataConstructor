@@ -40,6 +40,7 @@ namespace ControlsLibrary.Tests
             Assert.AreEqual(Lang.DFA, typeAnalyzer.StringType);
             var state1 = graph.Vertices.FirstOrDefault(v => v.ID == 1);
             graph.AddEdge(new EdgeViewModel(state1, state1) { TransitionTokensString = "1" });
+            typeAnalyzer.OnPropertyChanged(nameof(typeAnalyzer.StringType));
             Assert.AreEqual(Lang.NFA, typeAnalyzer.StringType);
             Assert.True(notified);
         }

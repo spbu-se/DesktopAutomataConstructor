@@ -39,7 +39,9 @@ namespace ControlsLibrary.Tests
             errorReporter.PropertyChanged += CheckNotified;
             errorReporter.Graph = graph;
             Assert.AreEqual(Lang.noIssuesFound, errorReporter.ErrorMessage);
-            graph.Vertices.FirstOrDefault(v => v.ID == 1).IsInitial = false;
+            var state1 = graph.Vertices.FirstOrDefault(v => v.ID == 1);
+            state1.PropertyChanged += errorReporter.GraphEdited;
+            state1.IsInitial = false;
             Assert.AreEqual("1", errorReporter.ErrorMessage);
             Assert.AreEqual(1, errorReporter.Errors.Count);
             Assert.True(notified);
