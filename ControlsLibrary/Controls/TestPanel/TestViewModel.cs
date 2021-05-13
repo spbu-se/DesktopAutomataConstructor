@@ -112,7 +112,7 @@ namespace ControlsLibrary.Controls.TestPanel
         /// <summary>
         /// Actual result of the execution converted to the string type
         /// </summary>
-        public string StringResult { get => ResultPrinter.PrintResult(Result); }
+        public string StringResult => ResultPrinter.PrintResult(Result);
 
         private bool shouldReject;
 

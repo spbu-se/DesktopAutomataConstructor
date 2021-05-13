@@ -35,7 +35,7 @@ namespace ControlsLibrary.Controls.Executor
 
         private void OnStartDebugCommandExecuted(object p)
         {
-            if (InputString == null || InputString == "")
+            if (string.IsNullOrEmpty(InputString))
             {
                 return;
             }
@@ -49,7 +49,7 @@ namespace ControlsLibrary.Controls.Executor
         }
 
         private bool CanStartDebugCommandExecute(object p)
-            => InputString != null && InputString != "";
+            => string.IsNullOrEmpty(InputString);
 
         /// <summary>
         /// Resets executor state to initial
@@ -190,7 +190,7 @@ namespace ControlsLibrary.Controls.Executor
         /// <summary>
         /// The result converted into the string type
         /// </summary>
-        public string StringResult { get => ResultPrinter.PrintResult(Result); }
+        public string StringResult => ResultPrinter.PrintResult(Result);
 
         public ExecutorViewModel()
         {

@@ -7,7 +7,7 @@
 
     <SolidColorBrush x:Key="EdgeArrowBrush" Color="Black" po:Freeze="true" />
 
-    <DrawingImage x:Key="selfLoopedIndicator">
+    <DrawingImage x:Key="SelfLoopedIndicator">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V5.2916667 H5.2916667 V0 H0 Z">
                 <DrawingGroup Opacity="1">
@@ -26,7 +26,7 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
-    <DrawingImage x:Key="penDrawingImage">
+    <DrawingImage x:Key="PenDrawingImage">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
                 <DrawingGroup.Transform>
@@ -37,7 +37,7 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
-    <DrawingImage x:Key="settingsDrawingImage">
+    <DrawingImage x:Key="SettingsDrawingImage">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
                 <DrawingGroup.Transform>
@@ -52,7 +52,7 @@
     <sys:Double x:Key="AcceptingMarkRadius">105</sys:Double>
     <sys:Double x:Key="NodeContentSize">80</sys:Double>
     <sys:Double x:Key="NodeContentStringHeight">26</sys:Double>
-    <sys:Double x:Key="ChangeHiddingButtonSize">20</sys:Double>
+    <sys:Double x:Key="ChangeHidingButtonSize">20</sys:Double>
     <sys:Double x:Key="SelfLoopedIndicatorWidth">90</sys:Double>
     <sys:Double x:Key="EdgePointerSize">20</sys:Double>
 
@@ -89,7 +89,7 @@
                                                 <Setter.Value>
                                                     <ControlTemplate>
                                                         <Button HorizontalAlignment="Right" Command="{Binding ChangeExpandingCommand}" Background="Transparent" BorderThickness="0" MaxHeight="20" MaxWidth="20">
-                                                            <Image Stretch="Uniform" Source="{StaticResource settingsDrawingImage}" />
+                                                            <Image Stretch="Uniform" Source="{StaticResource SettingsDrawingImage}" />
                                                         </Button>
                                                     </ControlTemplate>
                                                 </Setter.Value>
@@ -189,7 +189,7 @@
                             <Grid Width="{StaticResource NodeRadius}" Height="{StaticResource NodeRadius}">
                                 <Button MaxHeight="18" Command="{Binding ChangeHidingCommand}" Background="Transparent" BorderThickness="0"
                                         HorizontalAlignment="Right" VerticalAlignment="Top">
-                                    <Image Stretch="Uniform" Source="{StaticResource penDrawingImage}" />
+                                    <Image Stretch="Uniform" Source="{StaticResource PenDrawingImage}" />
                                 </Button>
                                 <Ellipse x:Name="BackgroundNorm" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="3" Width="{StaticResource NodeRadius}" Height="{StaticResource NodeRadius}" />
                                 <Ellipse Visibility="{Binding FinalMarkVisibility}" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="2" Height="{StaticResource AcceptingMarkRadius}" Width="{StaticResource AcceptingMarkRadius}" />
@@ -243,7 +243,7 @@
                                 <RowDefinition Height="20" />
                                 <RowDefinition Height="50" />
                             </Grid.RowDefinitions>
-                            <Image Stretch="Uniform" Height="70" Grid.RowSpan="2" HorizontalAlignment="Center" Source="{StaticResource selfLoopedIndicator}" />
+                            <Image Stretch="Uniform" Height="70" Grid.RowSpan="2" HorizontalAlignment="Center" Source="{StaticResource SelfLoopedIndicator}" />
                             <ContentControl Grid.Row="0" Style="{StaticResource TransitionsEditor}" />
                         </Grid>
                         <Path Stroke="Black"

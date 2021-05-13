@@ -18,18 +18,18 @@ namespace ControlsLibrary.ViewModel
         /// </summary>
         public NodeViewModel()
         {
-            ChangeHidingCommand = new RelayCommand(OnChangeHigingCommandExecuted, CanChangeHigingCommandExecute);
+            ChangeHidingCommand = new RelayCommand(OnChangeHidingCommandExecuted, CanChangeHidingCommandExecute);
         }
 
         /// <summary>
-        /// Changes hidding
+        /// Changes hiding
         /// </summary>
         [YAXDontSerialize]
         public ICommand ChangeHidingCommand { get; set; }
 
-        private bool CanChangeHigingCommandExecute(object p) => true;
+        private bool CanChangeHidingCommandExecute(object p) => true;
 
-        private void OnChangeHigingCommandExecuted(object p) => IsExpanded = !IsExpanded;
+        private void OnChangeHidingCommandExecuted(object p) => IsExpanded = !IsExpanded;
 
         private string name;
         private bool isInitial;
@@ -39,7 +39,7 @@ namespace ControlsLibrary.ViewModel
         private bool editionAvailable = true;
 
         /// <summary>
-        /// Gets if properties editing availible
+        /// Gets if properties editing available
         /// </summary>
         [YAXDontSerialize]
         public bool EditionAvailable
@@ -122,7 +122,7 @@ namespace ControlsLibrary.ViewModel
         /// <summary>
         /// Returns is state final mark visibility
         /// </summary>
-        public Visibility FinalMarkVisibility { get => IsFinal ? Visibility.Visible : Visibility.Hidden; }
+        public Visibility FinalMarkVisibility => IsFinal ? Visibility.Visible : Visibility.Hidden;
 
         //TODO: Add bool to visibility converter and remove this property
 

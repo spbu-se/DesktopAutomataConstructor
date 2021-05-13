@@ -21,7 +21,7 @@ namespace ControlsLibrary.ViewModel
         public EdgeViewModel()
             : base(null, null, 1)
         {
-            IniitCommands();
+            InitCommands();
         }
 
         /// <summary>
@@ -29,14 +29,13 @@ namespace ControlsLibrary.ViewModel
         /// </summary>
         /// <param name="source">Source vertex</param>
         /// <param name="target">Target vertex</param>
-        /// <param name="availableSymbols">Symbols of transition</param>
         public EdgeViewModel(NodeViewModel source, NodeViewModel target)
             : base(source, target, 1)
         {
-            IniitCommands();
+            InitCommands();
         }
 
-        private void IniitCommands()
+        private void InitCommands()
         {
             ChangeExpandingCommand = new RelayCommand(OnChangeExpandingCommandExecuted, CanChangeExpandingCommandExecute);
         }
@@ -75,7 +74,7 @@ namespace ControlsLibrary.ViewModel
         }
 
         /// <summary>
-        /// Changes expangind
+        /// Changes expanding
         /// </summary>
         [YAXDontSerialize]
         public ICommand ChangeExpandingCommand { get; set; }
@@ -108,10 +107,7 @@ namespace ControlsLibrary.ViewModel
         /// </summary>
         public string TransitionTokensString
         {
-            get
-            {
-                return transitionTokensString;
-            }
+            get => transitionTokensString;
             set
             {
                 if (!EditionAvailable)
@@ -128,17 +124,7 @@ namespace ControlsLibrary.ViewModel
         /// List of tokens to do transition
         /// </summary>
         [YAXDontSerialize]
-        public ICollection<char> TransitionTokens
-        {
-            get
-            {
-                if (transitionTokensString == "")
-                {
-                    return new List<char>();
-                }
-                return transitionTokensString.ToList();
-            }
-        }
+        public ICollection<char> TransitionTokens => transitionTokensString == "" ? new List<char>() : transitionTokensString.ToList();
 
         /// <summary>
         /// Routing points

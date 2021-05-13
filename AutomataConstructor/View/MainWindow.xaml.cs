@@ -8,6 +8,7 @@ using Microsoft.Win32;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -49,13 +50,13 @@ namespace AutomataConstructor
         {
             get
             {
-                var name = fileName == null || fileName == "" ? $"({Lang.Saves_Unsaved})" : fileName;
+                var name = string.IsNullOrEmpty(fileName) ? $"({Lang.Saves_Unsaved})" : fileName;
                 var hasUnsavedChanges = saved ? "" : "*";
                 return $"{Lang.AutomataConstructor_Name} {name} {hasUnsavedChanges}";
             }
         }
 
-        private TestPanelViewModel tests;
+        private readonly TestPanelViewModel tests;
 
         private void NotifyTitleChanged() => PropertyChanged?.Invoke(
             this,
@@ -64,11 +65,11 @@ namespace AutomataConstructor
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        #region SaveAutomatAsCommand
+        #region SaveAutomatonAsCommand
 
-        public static RoutedCommand SaveAutomatAsCommand { get; set; } = new RoutedCommand("SaveAutomatAs", typeof(MainWindow));
+        public static RoutedCommand SaveAutomatonAsCommand { get; set; } = new RoutedCommand("SaveAutomatAs", typeof(MainWindow));
 
-        private void OnSaveAutomatAsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        private void OnSaveAutomatonAsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "automaton.xml" };
             if (dialog.ShowDialog() == true)
@@ -76,38 +77,38 @@ namespace AutomataConstructor
                 scene.Save(dialog.FileName);
                 savePath = dialog.FileName;
                 var splittedPath = dialog.FileName.Split(@"\");
-                fileName = splittedPath[splittedPath.Length - 1];
+                fileName = splittedPath[^1];
                 saved = true;
                 NotifyTitleChanged();
             }
         }
 
-        private void CanSaveAutomatAsCommandExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void CanSaveAutomatonAsCommandExecute(object sender, CanExecuteRoutedEventArgs e)
             => e.CanExecute = scene != null && scene.CanSave();
 
-        #endregion SaveAutomatAsCommand
+        #endregion SaveAutomatonAsCommand
 
-        #region SaveAutomatCommand
+        #region SaveAutomatonCommand
 
-        public static RoutedCommand SaveAutomatCommand { get; set; } = new RoutedCommand("SaveAutomat", typeof(MainWindow));
+        public static RoutedCommand SaveAutomatonCommand { get; set; } = new RoutedCommand("SaveAutomat", typeof(MainWindow));
 
-        private void OnSaveAutomatCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        private void OnSaveAutomatonCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             scene.Save(savePath);
             saved = true;
             NotifyTitleChanged();
         }
 
-        private void CanSaveAutomatCommandExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void CanSaveAutomatonCommandExecute(object sender, CanExecuteRoutedEventArgs e)
             => e.CanExecute = savePath != null && File.Exists(savePath) && scene != null && scene.CanSave();
 
-        #endregion SaveAutomatCommand
+        #endregion SaveAutomatonCommand
 
-        #region OpenAutomatCommand
+        #region OpenAutomatonCommand
 
-        public static RoutedCommand OpenAutomatCommand { get; set; } = new RoutedCommand("OpenAutomat", typeof(MainWindow));
+        public static RoutedCommand OpenAutomatonCommand { get; set; } = new RoutedCommand("OpenAutomat", typeof(MainWindow));
 
-        private void OnOpenAutomatCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        private void OnOpenAutomatonCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var dialog = new OpenFileDialog { Filter = "All files|*.*", Title = Lang.Saves_SelectAutomatonFileName, FileName = "automaton.xml" };
             if (dialog.ShowDialog() != true)
@@ -129,9 +130,9 @@ namespace AutomataConstructor
             }
         }
 
-        private void CanOpenAutomatCommandExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+        private void CanOpenAutomatonCommandExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
 
-        #endregion OpenAutomatCommand
+        #endregion OpenAutomatonCommand
 
         #region SaveTestsAsCommand
 
@@ -147,7 +148,7 @@ namespace AutomataConstructor
         }
 
         private void CanSaveTestsAsCommandExecute(object sender, CanExecuteRoutedEventArgs e)
-            => e.CanExecute = tests.Tests != null && tests.Tests.Count > 0;
+            => e.CanExecute = tests.Tests != null && tests.Tests.Any();
 
         #endregion SaveTestsAsCommand
 
@@ -166,7 +167,7 @@ namespace AutomataConstructor
             {
                 tests.Open(dialog.FileName);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show(Lang.Saves_FailedToLoadTests);
             }
@@ -178,10 +179,14 @@ namespace AutomataConstructor
 
         private void OnWindowClosing(object sender, CancelEventArgs e)
         {
-            if (!saved)
+            if (saved)
             {
-                var result = MessageBox.Show(Lang.Saves_Reminder, Lang.AutomataConstructor_Name, MessageBoxButton.YesNoCancel);
-                if (result == MessageBoxResult.Yes)
+                return;
+            }
+
+            switch (MessageBox.Show(Lang.Saves_Reminder, Lang.AutomataConstructor_Name, MessageBoxButton.YesNoCancel))
+            {
+                case MessageBoxResult.Yes:
                 {
                     if (scene != null && scene.CanSave() && File.Exists(savePath))
                     {
@@ -192,12 +197,19 @@ namespace AutomataConstructor
                     var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "FSA.xml" };
                     if (dialog.ShowDialog() == true)
                     {
-                        scene.Save(dialog.FileName);
+                        scene?.Save(dialog.FileName);
                     }
+
+                    return;
                 }
-                if (result == MessageBoxResult.Cancel)
+                case MessageBoxResult.Cancel:
                 {
                     e.Cancel = true;
+                    return;
+                }
+                default:
+                {
+                    return;
                 }
             }
         }
