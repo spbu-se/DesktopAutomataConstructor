@@ -1,5 +1,4 @@
-﻿
-using ControlsLibrary.Controls.ErrorReporter;
+﻿using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Properties.Langs;
 using ControlsLibrary.ViewModel;
 using NUnit.Framework;

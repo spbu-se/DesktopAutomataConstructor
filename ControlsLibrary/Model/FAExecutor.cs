@@ -13,7 +13,7 @@ namespace ControlsLibrary.Model
         public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph { private get; set; }
 
         /// <summary>
-        /// Basic constructor 
+        /// Basic constructor
         /// </summary>
         /// <param name="graph"></param>
         public FAExecutor(BidirectionalGraph<NodeViewModel, EdgeViewModel> graph)

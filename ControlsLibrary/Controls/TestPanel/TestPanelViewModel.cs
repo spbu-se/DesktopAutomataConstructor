@@ -19,12 +19,13 @@ namespace ControlsLibrary.Controls.TestPanel
     public class TestPanelViewModel : BaseViewModel
     {
         private FAExecutor executor;
+
         /// <summary>
         /// Sets FA executor model to execute tests on it
         /// </summary>
-        public FAExecutor Executor 
-        { 
-            private get => executor; 
+        public FAExecutor Executor
+        {
+            private get => executor;
             set
             {
                 executor = value;

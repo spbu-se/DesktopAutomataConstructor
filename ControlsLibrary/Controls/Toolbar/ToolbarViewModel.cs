@@ -28,9 +28,11 @@ namespace ControlsLibrary.Controls.Toolbar
                     case SelectedTool.Select:
                         SelectToolSelected = true;
                         return;
+
                     case SelectedTool.Delete:
                         DeleteToolSelected = true;
                         return;
+
                     case SelectedTool.Edit:
                         EditToolSelected = true;
                         return;

@@ -195,11 +195,13 @@ namespace ControlsLibrary.Controls.Executor
         public ExecutorViewModel()
         {
             #region Commands
+
             StartDebugCommand = new RelayCommand(OnStartDebugCommandExecuted, CanStartDebugCommandExecute);
             DropDebugCommand = new RelayCommand(OnDropDebugCommandExecuted, CanDropDebugCommandExecute);
             StepInCommand = new RelayCommand(OnStepInCommandExecuted, CanStepInCommandExecute);
             RunCommand = new RelayCommand(OnRunCommandExecuted, CanRunCommandExecute);
-            #endregion
+
+            #endregion Commands
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
-using ControlsLibrary.Controls.Scene;
+﻿using ControlsLibrary.Controls.Scene;
 using GraphX.Measure;
+using NUnit.Framework;
 
 namespace ControlsLibrary.Tests
 {

@@ -65,6 +65,7 @@ namespace AutomataConstructor
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region SaveAutomatAsCommand
+
         public static RoutedCommand SaveAutomatAsCommand { get; set; } = new RoutedCommand("SaveAutomatAs", typeof(MainWindow));
 
         private void OnSaveAutomatAsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -83,9 +84,11 @@ namespace AutomataConstructor
 
         private void CanSaveAutomatAsCommandExecute(object sender, CanExecuteRoutedEventArgs e)
             => e.CanExecute = scene != null && scene.CanSave();
-        #endregion
+
+        #endregion SaveAutomatAsCommand
 
         #region SaveAutomatCommand
+
         public static RoutedCommand SaveAutomatCommand { get; set; } = new RoutedCommand("SaveAutomat", typeof(MainWindow));
 
         private void OnSaveAutomatCommandExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -97,9 +100,11 @@ namespace AutomataConstructor
 
         private void CanSaveAutomatCommandExecute(object sender, CanExecuteRoutedEventArgs e)
             => e.CanExecute = savePath != null && File.Exists(savePath) && scene != null && scene.CanSave();
-        #endregion
+
+        #endregion SaveAutomatCommand
 
         #region OpenAutomatCommand
+
         public static RoutedCommand OpenAutomatCommand { get; set; } = new RoutedCommand("OpenAutomat", typeof(MainWindow));
 
         private void OnOpenAutomatCommandExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -125,9 +130,11 @@ namespace AutomataConstructor
         }
 
         private void CanOpenAutomatCommandExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
-        #endregion
+
+        #endregion OpenAutomatCommand
 
         #region SaveTestsAsCommand
+
         public static RoutedCommand SaveTestsAsCommand { get; set; } = new RoutedCommand("SaveTestsAs", typeof(MainWindow));
 
         private void OnSaveTestsAsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -141,9 +148,11 @@ namespace AutomataConstructor
 
         private void CanSaveTestsAsCommandExecute(object sender, CanExecuteRoutedEventArgs e)
             => e.CanExecute = tests.Tests != null && tests.Tests.Count > 0;
-        #endregion
+
+        #endregion SaveTestsAsCommand
 
         #region OpenTests
+
         public static RoutedCommand OpenTestsCommand { get; set; } = new RoutedCommand("OpenTests", typeof(MainWindow));
 
         private void OnOpenTestsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -164,7 +173,8 @@ namespace AutomataConstructor
         }
 
         private void CanOpenTestsCommandExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
-        #endregion
+
+        #endregion OpenTests
 
         private void OnWindowClosing(object sender, CancelEventArgs e)
         {

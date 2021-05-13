@@ -1,6 +1,6 @@
-using NUnit.Framework;
 using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Model;
+using NUnit.Framework;
 using System;
 
 namespace ControlsLibrary.Tests

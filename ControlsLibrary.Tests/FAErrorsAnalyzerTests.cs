@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using ControlsLibrary.Model;
-using ControlsLibrary.ViewModel;
+﻿using ControlsLibrary.Model;
 using ControlsLibrary.Properties.Langs;
+using ControlsLibrary.ViewModel;
+using NUnit.Framework;
 using QuickGraph;
 using System.Linq;
 

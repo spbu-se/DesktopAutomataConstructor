@@ -15,69 +15,69 @@
         Closing="OnWindowClosing"
         Title="{Binding WindowTitle}" Height="450" Width="800">
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" CanExecute="CanSaveAutomatAsCommandExecute" Executed="OnSaveAutomatAsCommandExecuted"/>
-        <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatCommand}" CanExecute="CanSaveAutomatCommandExecute" Executed="OnSaveAutomatCommandExecuted"/>
-        <CommandBinding Command="{x:Static local:MainWindow.OpenAutomatCommand}" CanExecute="CanOpenAutomatCommandExecute" Executed="OnOpenAutomatCommandExecuted"/>
-        <CommandBinding Command="{x:Static local:MainWindow.SaveTestsAsCommand}" CanExecute="CanSaveTestsAsCommandExecute" Executed="OnSaveTestsAsCommandExecuted"/>
-        <CommandBinding Command="{x:Static local:MainWindow.OpenTestsCommand}" CanExecute="CanOpenTestsCommandExecute" Executed="OnOpenTestsCommandExecuted"/>
+        <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" CanExecute="CanSaveAutomatAsCommandExecute" Executed="OnSaveAutomatAsCommandExecuted" />
+        <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatCommand}" CanExecute="CanSaveAutomatCommandExecute" Executed="OnSaveAutomatCommandExecuted" />
+        <CommandBinding Command="{x:Static local:MainWindow.OpenAutomatCommand}" CanExecute="CanOpenAutomatCommandExecute" Executed="OnOpenAutomatCommandExecuted" />
+        <CommandBinding Command="{x:Static local:MainWindow.SaveTestsAsCommand}" CanExecute="CanSaveTestsAsCommandExecute" Executed="OnSaveTestsAsCommandExecuted" />
+        <CommandBinding Command="{x:Static local:MainWindow.OpenTestsCommand}" CanExecute="CanOpenTestsCommandExecute" Executed="OnOpenTestsCommandExecuted" />
     </Window.CommandBindings>
 
     <Window.InputBindings>
-        <KeyBinding Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" Gesture="CTRL+SHIFT+S"/>
-        <KeyBinding Command="{x:Static local:MainWindow.SaveAutomatCommand}" Gesture="CTRL+S"/>
-        <KeyBinding Command="{x:Static local:MainWindow.OpenAutomatCommand}" Gesture="CTRL+O"/>
+        <KeyBinding Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" Gesture="CTRL+SHIFT+S" />
+        <KeyBinding Command="{x:Static local:MainWindow.SaveAutomatCommand}" Gesture="CTRL+S" />
+        <KeyBinding Command="{x:Static local:MainWindow.OpenAutomatCommand}" Gesture="CTRL+O" />
     </Window.InputBindings>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" Grid.ColumnSpan="3">
             <MenuItem Header="{x:Static language:Lang.file}">
-                <MenuItem Header="{x:Static language:Lang.saveAutomatAs}" Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" InputGestureText="Ctrl+Shift+S"/>
-                <MenuItem Header="{x:Static language:Lang.saveAutomat}" Command="{x:Static local:MainWindow.SaveAutomatCommand}" InputGestureText="Ctrl+S"/>
-                <MenuItem Header="{x:Static language:Lang.openAutomat}" Command="{x:Static local:MainWindow.OpenAutomatCommand}" InputGestureText="Ctrl+O"/>
-                <MenuItem Header="{x:Static language:Lang.saveTestsAs}" Command="{x:Static local:MainWindow.SaveTestsAsCommand}"/>
-                <MenuItem Header="{x:Static language:Lang.openTests}" Command="{x:Static local:MainWindow.OpenTestsCommand}"/>
+                <MenuItem Header="{x:Static language:Lang.saveAutomatAs}" Command="{x:Static local:MainWindow.SaveAutomatAsCommand}" InputGestureText="Ctrl+Shift+S" />
+                <MenuItem Header="{x:Static language:Lang.saveAutomat}" Command="{x:Static local:MainWindow.SaveAutomatCommand}" InputGestureText="Ctrl+S" />
+                <MenuItem Header="{x:Static language:Lang.openAutomat}" Command="{x:Static local:MainWindow.OpenAutomatCommand}" InputGestureText="Ctrl+O" />
+                <MenuItem Header="{x:Static language:Lang.saveTestsAs}" Command="{x:Static local:MainWindow.SaveTestsAsCommand}" />
+                <MenuItem Header="{x:Static language:Lang.openTests}" Command="{x:Static local:MainWindow.OpenTestsCommand}" />
             </MenuItem>
         </Menu>
 
-        <toolbar:Toolbar x:Name="toolbar" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="3"/>
+        <toolbar:Toolbar x:Name="toolbar" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="3" />
 
-        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderBrush="Aqua" BorderThickness="1"  Margin="2" >
+        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderBrush="Aqua" BorderThickness="1"  Margin="2">
             <Border.Background>
                 <VisualBrush TileMode="Tile"  Viewport="0,0,0.09,0.095">
                     <VisualBrush.Visual>
-                        <Image Source="pack://application:,,,/Assets/grid_paper.png" Stretch="Uniform" UseLayoutRounding="True" SnapsToDevicePixels="True"/>
+                        <Image Source="pack://application:,,,/Assets/grid_paper.png" Stretch="Uniform" UseLayoutRounding="True" SnapsToDevicePixels="True" />
                     </VisualBrush.Visual>
                 </VisualBrush>
             </Border.Background>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
-                <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"/>
-                <test:TestPanel x:Name="testPanel" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                <typeAnalyzer:TypeAnalyzer x:Name="typeAnalyzer" Grid.Column="2" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                <scene:Scene x:Name="scene" Background="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="3" />
+                <errorReporter:ErrorReporter x:Name="errorReporter" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" />
+                <test:TestPanel x:Name="testPanel" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <typeAnalyzer:TypeAnalyzer x:Name="typeAnalyzer" Grid.Column="2" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" />
             </Grid>
         </Border>
-        <executor:Executor  x:Name="executor" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3"/>
+        <executor:Executor  x:Name="executor" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" />
     </Grid>
 </Window>

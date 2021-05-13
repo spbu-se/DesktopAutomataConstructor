@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
-using ControlsLibrary.Controls.Scene;
+﻿using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Executor;
-using ControlsLibrary.Controls.ErrorReporter;
-using ControlsLibrary.ViewModel;
+using ControlsLibrary.Controls.Scene;
 using ControlsLibrary.Model;
+using ControlsLibrary.ViewModel;
+using NUnit.Framework;
 using System.Threading;
 
 namespace ControlsLibrary.Tests
@@ -57,17 +57,17 @@ namespace ControlsLibrary.Tests
                     Assert.True(edge.EditionAvailable);
                 }
 
-                // start the Dispatcher processing  
+                // start the Dispatcher processing
                 System.Windows.Threading.Dispatcher.Run();
             }));
 
-            // set the apartment state  
+            // set the apartment state
             newWindowThread.SetApartmentState(ApartmentState.STA);
 
-            // make the thread a background thread  
+            // make the thread a background thread
             newWindowThread.IsBackground = true;
 
-            // start the thread  
+            // start the thread
             newWindowThread.Start();
         }
     }

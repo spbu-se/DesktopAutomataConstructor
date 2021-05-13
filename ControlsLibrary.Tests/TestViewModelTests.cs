@@ -1,9 +1,8 @@
-﻿using NUnit.Framework;
-using ControlsLibrary.Controls.TestPanel;
+﻿using ControlsLibrary.Controls.TestPanel;
 using ControlsLibrary.Model;
 using ControlsLibrary.ViewModel;
+using NUnit.Framework;
 using QuickGraph;
-using System;
 using System.Collections.Generic;
 
 namespace ControlsLibrary.Tests

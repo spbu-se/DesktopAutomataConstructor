@@ -1,10 +1,9 @@
-﻿using NUnit.Framework;
+﻿using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Scene;
-using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.ViewModel;
-using System.Threading;
-using System;
+using NUnit.Framework;
 using System.Linq;
+using System.Threading;
 
 namespace ControlsLibrary.Tests
 {
@@ -25,17 +24,17 @@ namespace ControlsLibrary.Tests
                 scene.Open(path);
                 Assert.True(help.Graph.VertexCount == 0 && help.Graph.EdgeCount == 0);
 
-                // start the Dispatcher processing  
+                // start the Dispatcher processing
                 System.Windows.Threading.Dispatcher.Run();
             }));
 
-            // set the apartment state  
+            // set the apartment state
             newWindowThread.SetApartmentState(ApartmentState.STA);
 
-            // make the thread a background thread  
+            // make the thread a background thread
             newWindowThread.IsBackground = true;
 
-            // start the thread  
+            // start the thread
             newWindowThread.Start();
         }
 
@@ -67,18 +66,18 @@ namespace ControlsLibrary.Tests
                 Assert.True(help.Graph.Vertices.FirstOrDefault(v => v.Name == "S1").IsInitial);
                 Assert.True(help.Graph.Vertices.FirstOrDefault(v => v.Name == "S2").IsFinal);
                 Assert.True(help.Graph.Edges.FirstOrDefault(v => v.TransitionTokensString == "1").IsEpsilon);
-                Assert.True(help.Graph.Edges.Any(v => v.TransitionTokensString== "0"));
-                // start the Dispatcher processing  
+                Assert.True(help.Graph.Edges.Any(v => v.TransitionTokensString == "0"));
+                // start the Dispatcher processing
                 System.Windows.Threading.Dispatcher.Run();
             }));
 
-            // set the apartment state  
+            // set the apartment state
             newWindowThread.SetApartmentState(ApartmentState.STA);
 
-            // make the thread a background thread  
+            // make the thread a background thread
             newWindowThread.IsBackground = true;
 
-            // start the thread  
+            // start the thread
             newWindowThread.Start();
         }
     }

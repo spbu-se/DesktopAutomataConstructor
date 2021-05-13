@@ -122,7 +122,8 @@ namespace ControlsLibrary.ViewModel
         /// <summary>
         /// Returns is state final mark visibility
         /// </summary>
-        public Visibility FinalMarkVisibility { get => IsFinal ? Visibility.Visible : Visibility.Hidden; } 
+        public Visibility FinalMarkVisibility { get => IsFinal ? Visibility.Visible : Visibility.Hidden; }
+
         //TODO: Add bool to visibility converter and remove this property
 
         public void OnPropertyChanged([CallerMemberName] string name = null)

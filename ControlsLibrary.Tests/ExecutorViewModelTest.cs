@@ -1,10 +1,9 @@
-﻿using NUnit.Framework;
-using QuickGraph;
-using ControlsLibrary.Controls.Executor;
+﻿using ControlsLibrary.Controls.Executor;
 using ControlsLibrary.Model;
 using ControlsLibrary.ViewModel;
+using NUnit.Framework;
+using QuickGraph;
 using System.Collections.Generic;
-using System;
 using System.ComponentModel;
 using System.Linq;
 
@@ -64,7 +63,7 @@ namespace ControlsLibrary.Tests
 
             executorViewModel.PropertyChanged += CheckNotified;
             executorViewModel.InputString = "11010";
-            
+
             executorViewModel.StartDebugCommand.Execute(null);
             Assert.True(executorViewModel.InSimulation);
             Assert.True(notified);

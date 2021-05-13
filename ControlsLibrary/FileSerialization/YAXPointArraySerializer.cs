@@ -8,7 +8,6 @@ namespace ControlsLibrary.FileSerialization
 {
     public sealed class YAXPointArraySerializer : ICustomSerializer<Point[]>
     {
-
         private Point[] Deserialize(string str)
         {
             if (string.IsNullOrEmpty(str)) return null;

@@ -165,7 +165,7 @@ namespace ControlsLibrary.Controls.Scene
         /// </summary>
         private void EdgeEdited(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(EdgeViewModel.TransitionTokens)|| e.PropertyName == nameof(EdgeViewModel.IsEpsilon))
+            if (e.PropertyName == nameof(EdgeViewModel.TransitionTokens) || e.PropertyName == nameof(EdgeViewModel.IsEpsilon))
             {
                 GraphEdited?.Invoke(this, EventArgs.Empty);
             }
@@ -354,7 +354,7 @@ namespace ControlsLibrary.Controls.Scene
                         return;
                     }
                     var position = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
-                    
+
                     position.Offset(-60, -60); //Offset should be the half of the vertex controls width
                     var vc = CreateVertexControl(position);
                     if (selectedVertex != null)

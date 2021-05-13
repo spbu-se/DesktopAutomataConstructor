@@ -3,7 +3,7 @@
 namespace ControlsLibrary.Infrastructure.Command
 {
     /// <summary>
-    /// A command that can be instantiated passing the actions to be executed 
+    /// A command that can be instantiated passing the actions to be executed
     /// </summary>
     public class RelayCommand : BaseCommand
     {

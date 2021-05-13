@@ -6,7 +6,6 @@ namespace ControlsLibrary.FileSerialization
 {
     public sealed class YAXPointSerializer : ICustomSerializer<Point>
     {
-
         private Point Deserialize(string str)
         {
             var res = str.Split(new char[] { '|' });
