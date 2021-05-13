@@ -9,7 +9,7 @@ namespace ControlsLibrary.Model
     /// <summary>
     /// Provides analyze of a FA graph data
     /// </summary>
-    internal static class FAAnalyzer
+    public static class FAAnalyzer
     {
         /// <summary>
         /// Returns collection of errors in the FA
