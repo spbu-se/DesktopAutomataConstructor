@@ -8,9 +8,16 @@ using System.Runtime.CompilerServices;
 
 namespace ControlsLibrary.Controls.TypeAnalyzer
 {
+    /// <summary>
+    /// Contains FA type analyzer data and logic to interact with it
+    /// </summary>
     public class TypeAnalyzerViewModel : INotifyPropertyChanged
     {
         private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph = new BidirectionalGraph<NodeViewModel, EdgeViewModel>();
+
+        /// <summary>
+        /// Sets FA graph to analyze its type
+        /// </summary>
         public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
         {
             get => graph;
@@ -22,6 +29,9 @@ namespace ControlsLibrary.Controls.TypeAnalyzer
             }
         }
 
+        /// <summary>
+        /// Handles graph data changing
+        /// </summary>
         public void GraphEdited(object sender, EventArgs e)
         {
             type = FAAnalyzer.GetType(Graph);
@@ -30,6 +40,9 @@ namespace ControlsLibrary.Controls.TypeAnalyzer
 
         private FATypeEnum type = FATypeEnum.DFA;
 
+        /// <summary>
+        /// Returns current FA type converted into the string
+        /// </summary>
         public string StringType
         {
             get

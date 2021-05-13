@@ -1,8 +1,5 @@
-﻿using ControlsLibrary.Controls.Executor;
-using ControlsLibrary.Infrastructure.Command;
+﻿using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
-using ControlsLibrary.ViewModel;
-using QuickGraph;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +29,9 @@ namespace ControlsLibrary.Controls.TestPanel
             }
         }
 
+        /// <summary>
+        /// Sets FA executor model to execute strings on it
+        /// </summary>
         public FAExecutor Executor { private get; set; }
 
         public TestViewModel()
@@ -64,6 +64,9 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private bool CanExecuteCommandExecute(object p) => true;
 
+        /// <summary>
+        /// Removes test from the storage
+        /// </summary>
         public ICommand RemoveFromStorageCommand { get; set; }
 
         private void OnRemoveFromStorageCommandExecuted(object p)
@@ -76,6 +79,9 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private string testString;
 
+        /// <summary>
+        /// String to be executed by the test
+        /// </summary>
         public string TestString
         {
             get => testString;
@@ -88,6 +94,9 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private ResultEnum result;
 
+        /// <summary>
+        /// Actual result of the execution
+        /// </summary>
         public ResultEnum Result
         {
             get => result;
@@ -99,12 +108,18 @@ namespace ControlsLibrary.Controls.TestPanel
             }
         }
 
+        /// <summary>
+        /// Actual result of the execution converted to the string type
+        /// </summary>
         public string StringResult { get => ResultPrinter.PrintResult(Result); }
 
         private bool shouldReject;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Sets should test reject string or not
+        /// </summary>
         public bool ShouldReject
         {
             get => shouldReject;
