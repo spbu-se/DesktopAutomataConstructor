@@ -122,7 +122,7 @@ namespace ControlsLibrary.Controls.Executor
 
         private bool CanRunCommandExecute(object p)
         {
-            return !inSimulation;
+            return !inSimulation && Executor != null;
         }
 
         private string inputString = "";
