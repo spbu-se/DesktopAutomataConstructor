@@ -7,7 +7,6 @@ namespace ControlsLibrary.Model
 {
     public class FiniteAutomata
     {
-
         public static readonly int ERROR_STATE = -1;
         public static readonly int EPSILON = 0;
         public static int ConvertToInt(char x, List<char> alp)
