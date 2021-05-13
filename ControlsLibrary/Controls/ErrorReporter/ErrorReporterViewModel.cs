@@ -1,18 +1,25 @@
-﻿using QuickGraph;
-using ControlsLibrary.Model;
+﻿using ControlsLibrary.Model;
+using ControlsLibrary.Properties.Langs;
+using ControlsLibrary.ViewModel;
+using QuickGraph;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Linq;
-using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using ControlsLibrary.Properties.Langs;
 
 namespace ControlsLibrary.Controls.ErrorReporter
 {
+    /// <summary>
+    /// Contains data and provides interaction with error reporter logic in FAAnalyzer
+    /// </summary>
     public class ErrorReporterViewModel : INotifyPropertyChanged
     {
         private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph = new BidirectionalGraph<NodeViewModel, EdgeViewModel>();
+
+        /// <summary>
+        /// Gets or sets graph to analyze
+        /// </summary>
         public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
         {
             get => graph;
@@ -23,15 +30,21 @@ namespace ControlsLibrary.Controls.ErrorReporter
             }
         }
 
+        /// <summary>
+        /// Handles graph data changind events
+        /// </summary>
         public void GraphEdited(object sender, EventArgs e)
         {
             errors = FAAnalyzer.GetErrors(Graph);
 
-            OnPropertyChanged("Errors");
-            OnPropertyChanged("HasError");
-            OnPropertyChanged("ErrorMessage");
+            OnPropertyChanged(nameof(Errors));
+            OnPropertyChanged(nameof(HasError));
+            OnPropertyChanged(nameof(ErrorMessage));
         }
 
+        /// <summary>
+        /// Gets a short message about presence of errors in the model
+        /// </summary>
         public string ErrorMessage
         {
             get
@@ -46,6 +59,9 @@ namespace ControlsLibrary.Controls.ErrorReporter
 
         private ICollection<string> errors = new ObservableCollection<string>();
 
+        /// <summary>
+        /// Gets a list of errors in the model
+        /// </summary>
         public ObservableCollection<string> Errors { get => new ObservableCollection<string>(errors); }
 
         public bool HasError

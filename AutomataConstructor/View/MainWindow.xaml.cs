@@ -1,18 +1,15 @@
+using AutomataConstructor.Properties.Langs;
 using ControlsLibrary.Controls.ErrorReporter;
-using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.Executor;
 using ControlsLibrary.Controls.TestPanel;
+using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.TypeAnalyzer;
-using ControlsLibrary.FileSerialization;
-using System.Windows;
 using Microsoft.Win32;
-using System.Collections.Generic;
 using System;
-using System.IO;
-using YAXLib;
-using System.Windows.Input;
 using System.ComponentModel;
-using AutomataConstructor.Properties.Langs;
+using System.IO;
+using System.Windows;
+using System.Windows.Input;
 
 namespace AutomataConstructor
 {
@@ -48,8 +45,8 @@ namespace AutomataConstructor
 
         private string fileName = "";
 
-        public string WindowTitle 
-        { 
+        public string WindowTitle
+        {
             get
             {
                 var name = fileName == null || fileName == "" ? $"({Lang.Saves_Unsaved})" : fileName;
@@ -62,7 +59,7 @@ namespace AutomataConstructor
 
         private void NotifyTitleChanged() => PropertyChanged?.Invoke(
             this,
-            new PropertyChangedEventArgs(nameof(this.WindowTitle))
+            new PropertyChangedEventArgs(nameof(WindowTitle))
             );
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -99,7 +96,7 @@ namespace AutomataConstructor
         }
 
         private void CanSaveAutomatCommandExecute(object sender, CanExecuteRoutedEventArgs e)
-            => e.CanExecute = savePath != null && File.Exists(savePath) && scene != null && scene.CanSave(); 
+            => e.CanExecute = savePath != null && File.Exists(savePath) && scene != null && scene.CanSave();
         #endregion
 
         #region OpenAutomatCommand
@@ -138,12 +135,7 @@ namespace AutomataConstructor
             var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "automaton.xml" };
             if (dialog.ShowDialog() == true)
             {
-                var data = new List<TestSerializationData>();
-                foreach (var test in tests.Tests)
-                {
-                    data.Add(new TestSerializationData() { Result = test.Result, ShouldReject = test.ShouldReject, TestString = test.TestString });
-                }
-                FileServiceProviderWpf.SerializeDataToFile(dialog.FileName, data);
+                tests.Save(dialog.FileName);
             }
         }
 
@@ -156,7 +148,6 @@ namespace AutomataConstructor
 
         private void OnOpenTestsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            tests.Tests.Clear();
             var dialog = new OpenFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectTestFileName, FileName = "tests.xml" };
             if (dialog.ShowDialog() != true)
             {
@@ -164,18 +155,7 @@ namespace AutomataConstructor
             }
             try
             {
-                using (FileStream stream = File.Open(dialog.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    var deserializer = new YAXSerializer(typeof(List<TestSerializationData>));
-                    using (var textReader = new StreamReader(stream))
-                    {
-                        var datas = (List<TestSerializationData>)deserializer.Deserialize(textReader);
-                        foreach (var test in datas)
-                        {
-                            tests.AddTest(test.Result, test.TestString, test.ShouldReject);
-                        }
-                    }
-                }
+                tests.Open(dialog.FileName);
             }
             catch (Exception ex)
             {

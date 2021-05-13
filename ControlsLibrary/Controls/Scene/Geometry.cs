@@ -1,8 +1,8 @@
-﻿namespace ControlsLibrary.Controls.Scene
-{
-    using GraphX.Measure;
-    using System;
+﻿using GraphX.Measure;
+using System;
 
+namespace ControlsLibrary.Controls.Scene
+{
     /// <summary>
     /// Utility for handling various geometry-related tasks like determining distance between point and line.
     /// </summary>

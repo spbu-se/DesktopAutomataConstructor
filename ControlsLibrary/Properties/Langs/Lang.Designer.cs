@@ -133,6 +133,15 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid automaton!.
+        /// </summary>
+        public static string Errors_InvalidAutomaton {
+            get {
+                return ResourceManager.GetString("Errors.InvalidAutomaton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set accepting state.
         /// </summary>
         public static string Errors_SetAccepting {
@@ -259,6 +268,15 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Result not defined.
+        /// </summary>
+        public static string Results_NotDefined {
+            get {
+                return ResourceManager.GetString("Results.NotDefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run all.
         /// </summary>
         public static string runAllTests {
@@ -363,6 +381,15 @@ namespace ControlsLibrary.Properties.Langs {
         public static string Toolbar_SelectModeToolTip {
             get {
                 return ResourceManager.GetString("Toolbar.SelectModeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finite state machine.
+        /// </summary>
+        public static string Types_FSM {
+            get {
+                return ResourceManager.GetString("Types.FSM", resourceCulture);
             }
         }
     }

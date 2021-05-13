@@ -17,6 +17,11 @@ namespace ControlsLibrary.Controls.Scene
         private GraphArea graphArea;
         private ResourceDictionary resourceDictionary;
 
+        /// <summary>
+        /// The basic constructor
+        /// </summary>
+        /// <param name="graphArea"></param>
+        /// <param name="zoomControl"></param>
         public EditorObjectManager(GraphArea graphArea, ZoomControl zoomControl)
         {
             this.graphArea = graphArea;
@@ -28,13 +33,17 @@ namespace ControlsLibrary.Controls.Scene
             };
         }
 
-        public void CreateVirtualEdge(VertexControl source, Point mousePosition)
+        /// <summary>
+        /// Creates a new edge blueprint on the scene
+        /// </summary>
+        /// <param name="source">Source vertex for a edge bluepting</param>
+        public void CreateVirtualEdge(VertexControl source)
         {
-            edgeBlueprint = new EdgeBlueprint(source, mousePosition, (SolidColorBrush)resourceDictionary["EdgeArrowBrush"]);
+            edgeBlueprint = new EdgeBlueprint(source, (SolidColorBrush)resourceDictionary["EdgeArrowBrush"]);
             graphArea.InsertCustomChildControl(0, edgeBlueprint.EdgePath);
         }
 
-        void ZoomControlMouseMove(object sender, MouseEventArgs e)
+        private void ZoomControlMouseMove(object sender, MouseEventArgs e)
         {
             if (edgeBlueprint == null)
             {

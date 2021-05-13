@@ -1,15 +1,23 @@
 ﻿using ControlsLibrary.Model;
+using ControlsLibrary.Properties.Langs;
+using ControlsLibrary.ViewModel;
 using QuickGraph;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ControlsLibrary.Properties.Langs;
 
 namespace ControlsLibrary.Controls.TypeAnalyzer
 {
+    /// <summary>
+    /// Contains FA type analyzer data and logic to interact with it
+    /// </summary>
     public class TypeAnalyzerViewModel : INotifyPropertyChanged
     {
         private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph = new BidirectionalGraph<NodeViewModel, EdgeViewModel>();
+
+        /// <summary>
+        /// Sets FA graph to analyze its type
+        /// </summary>
         public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
         {
             get => graph;
@@ -21,14 +29,20 @@ namespace ControlsLibrary.Controls.TypeAnalyzer
             }
         }
 
+        /// <summary>
+        /// Handles graph data changing
+        /// </summary>
         public void GraphEdited(object sender, EventArgs e)
         {
             type = FAAnalyzer.GetType(Graph);
-            OnPropertyChanged("StringType");
+            OnPropertyChanged(nameof(StringType));
         }
 
         private FATypeEnum type = FATypeEnum.DFA;
 
+        /// <summary>
+        /// Returns current FA type converted into the string
+        /// </summary>
         public string StringType
         {
             get
@@ -48,7 +62,7 @@ namespace ControlsLibrary.Controls.TypeAnalyzer
                             return Lang.EpsilonNFA;
                         }
                 }
-                return "Finite state machine";
+                return Lang.Types_FSM;
             }
         }
 

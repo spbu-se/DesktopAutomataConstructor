@@ -138,6 +138,9 @@
   <data name="EpsilonNFA" xml:space="preserve">
     <value>Non-deterministic finite automaton with epsilon-transitions</value>
   </data>
+  <data name="Errors.InvalidAutomaton" xml:space="preserve">
+    <value>Invalid automaton!</value>
+  </data>
   <data name="Errors.SetAccepting" xml:space="preserve">
     <value>Set accepting state</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="resultPassed" xml:space="preserve">
     <value>Accepted</value>
   </data>
+  <data name="Results.NotDefined" xml:space="preserve">
+    <value>Result not defined</value>
+  </data>
   <data name="runAllTests" xml:space="preserve">
     <value>Run all</value>
   </data>
@@ -218,5 +224,8 @@
   </data>
   <data name="Toolbar.SelectModeToolTip" xml:space="preserve">
     <value>Layout states and fill attributes  (S)</value>
+  </data>
+  <data name="Types.FSM" xml:space="preserve">
+    <value>Finite state machine</value>
   </data>
 </root>

@@ -138,6 +138,9 @@
   <data name="EpsilonNFA" xml:space="preserve">
     <value>Недетерминированный конечный автомат с эпсилон-переходами</value>
   </data>
+  <data name="Errors.InvalidAutomaton" xml:space="preserve">
+    <value>Некорректный автомат!</value>
+  </data>
   <data name="Errors.SetAccepting" xml:space="preserve">
     <value>Выберите принимающее состояние</value>
   </data>
@@ -183,6 +186,9 @@
   <data name="resultPassed" xml:space="preserve">
     <value>Принята</value>
   </data>
+  <data name="Results.NotDefined" xml:space="preserve">
+    <value>Результат не определён</value>
+  </data>
   <data name="runAllTests" xml:space="preserve">
     <value>Запустить все</value>
   </data>
@@ -224,5 +230,8 @@
   </data>
   <data name="Toolbar.SelectModeToolTip" xml:space="preserve">
     <value>Размещайте состояние и вводите значения свойств  (S)</value>
+  </data>
+  <data name="Types.FSM" xml:space="preserve">
+    <value>Конечный автомат</value>
   </data>
 </root>

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ControlsLibrary.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ControlsLibrary.Model
 {
-    class FiniteAutomata
+    public class FiniteAutomata
     {
 
         public static readonly int ERROR_STATE = -1;
@@ -107,7 +108,7 @@ namespace ControlsLibrary.Model
             StepResult = ResultEnum.NotRunned;
         }
 
-        public void SetStr(string str)
+        public void SetString(string str)
         {
             _str = str;
             _strPosition = 0;

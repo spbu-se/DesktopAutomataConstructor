@@ -8,15 +8,22 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using YAXLib;
 
-namespace ControlsLibrary.Model
+namespace ControlsLibrary.ViewModel
 {
+    /// <summary>
+    /// Contains edge data and methods to interact with it
+    /// </summary>
     public class EdgeViewModel : EdgeBase<NodeViewModel>, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Constructor without source and target vertices
+        /// </summary>
         public EdgeViewModel()
             : base(null, null, 1)
         {
             IniitCommands();
         }
+
         /// <summary>
         /// Constructor which gets two vertices and symbols of transition
         /// </summary>
@@ -36,6 +43,9 @@ namespace ControlsLibrary.Model
 
         private bool editionAvailable = true;
 
+        /// <summary>
+        /// True if edge data can be edited
+        /// </summary>
         [YAXDontSerialize]
         public bool EditionAvailable
         {
@@ -49,6 +59,9 @@ namespace ControlsLibrary.Model
 
         private bool isEpsilon;
 
+        /// <summary>
+        /// Contains data if transition is epsilon
+        /// </summary>
         public bool IsEpsilon
         {
             get => isEpsilon;
@@ -56,11 +69,14 @@ namespace ControlsLibrary.Model
             {
                 isEpsilon = value;
                 OnPropertyChanged();
-                OnPropertyChanged("TransitionTokens");
-                OnPropertyChanged("TransitionTokensString");
+                OnPropertyChanged(nameof(TransitionTokens));
+                OnPropertyChanged(nameof(TransitionTokensString));
             }
         }
 
+        /// <summary>
+        /// Changes expangind
+        /// </summary>
         [YAXDontSerialize]
         public ICommand ChangeExpandingCommand { get; set; }
 
@@ -72,6 +88,9 @@ namespace ControlsLibrary.Model
 
         private bool isExpanded = false;
 
+        /// <summary>
+        /// Returns true if edge label is expanded
+        /// </summary>
         public bool IsExpanded
         {
             get => isExpanded;
@@ -82,9 +101,11 @@ namespace ControlsLibrary.Model
             }
         }
 
-
         private string transitionTokensString = "";
 
+        /// <summary>
+        /// Transition tokens in the string form
+        /// </summary>
         public string TransitionTokensString
         {
             get
@@ -99,12 +120,15 @@ namespace ControlsLibrary.Model
                 }
                 transitionTokensString = value;
                 OnPropertyChanged();
-                OnPropertyChanged("TransitionTokens");
+                OnPropertyChanged(nameof(TransitionTokens));
             }
         }
 
+        /// <summary>
+        /// List of tokens to do transition
+        /// </summary>
         [YAXDontSerialize]
-        public List<char> TransitionTokens
+        public ICollection<char> TransitionTokens
         {
             get
             {
@@ -116,6 +140,9 @@ namespace ControlsLibrary.Model
             }
         }
 
+        /// <summary>
+        /// Routing points
+        /// </summary>
         public override Point[] RoutingPoints { get; set; }
 
         public void OnPropertyChanged([CallerMemberName] string name = null)

@@ -1,32 +1,36 @@
-﻿using System.Collections.Generic;
-using ControlsLibrary.ViewModel.Base;
+﻿using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
-using System.Windows.Input;
-using ControlsLibrary.Infrastructure.Command;
-using QuickGraph;
-using System.Linq;
+using ControlsLibrary.Properties.Langs;
+using ControlsLibrary.ViewModel.Base;
+using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ControlsLibrary.Controls.Executor
 {
+    /// <summary>
+    /// Contains executor data and provides logic of execution
+    /// </summary>
     public class ExecutorViewModel : BaseViewModel
     {
         private FiniteAutomata FA;
-        private BidirectionalGraph<NodeViewModel, EdgeViewModel> graph;
-        public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph
-        {
-            get => graph;
-            set
-            {
-                graph = value;
-                OnPropertyChanged();
-            }
-        }
+
+        /// <summary>
+        /// Sets FA executor model to execute strings on it
+        /// </summary>
+        public FAExecutor Executor { private get; set; }
 
         private bool inSimulation = false;
 
-        public bool InSimulation { get => inSimulation; set => Set(ref inSimulation, value); }
+        /// <summary>
+        /// Returns true if executor in the simulation state else false
+        /// </summary>
+        public bool InSimulation { get => inSimulation; private set => Set(ref inSimulation, value); }
 
+        /// <summary>
+        /// Starts simulation
+        /// </summary>
         public ICommand StartDebugCommand { get; }
 
         private void OnStartDebugCommandExecuted(object p)
@@ -35,13 +39,11 @@ namespace ControlsLibrary.Controls.Executor
             {
                 return;
             }
-            FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
-            FA.SetStr(InputString);
+            FA = Executor.StartDebug(InputString);
+            FA.SetString(InputString);
             InSimulation = true;
-            currentToken = inputString[0].ToString();
-            OnPropertyChanged("CurrentToken");
-            notPassedString = inputString.Remove(0, 1);
-            OnPropertyChanged("NotPassedString");
+            CurrentToken = inputString[0].ToString();
+            NotPassedString = inputString.Remove(0, 1);
             ActualStates = FA.GetCurrentStates();
             Result = ResultEnum.NotRunned;
         }
@@ -49,13 +51,16 @@ namespace ControlsLibrary.Controls.Executor
         private bool CanStartDebugCommandExecute(object p)
             => true;
 
+        /// <summary>
+        /// Resets executor state to initial
+        /// </summary>
         public ICommand DropDebugCommand { get; }
 
         private void OnDropDebugCommandExecuted(object p)
         {
             InSimulation = false;
             ActualStates.Clear();
-            OnPropertyChanged("ActualStates");
+            OnPropertyChanged(nameof(ActualStates));
             PassedString = "";
             CurrentToken = "";
             NotPassedString = "";
@@ -64,32 +69,31 @@ namespace ControlsLibrary.Controls.Executor
         private bool CanDropDebugCommandExecute(object p)
             => true;
 
+        /// <summary>
+        /// Makes one step of execution
+        /// </summary>
         public ICommand StepInCommand { get; }
 
-        //TODO: Make in the FA methods which returns result in 
         private void OnStepInCommandExecuted(object p)
         {
             FA.SingleStep();
             ActualStates = FA.GetCurrentStates();
-            passedString += currentToken;
-            OnPropertyChanged("PassedString");
+            PassedString += currentToken;
             if (notPassedString.Length != 0)
             {
-                currentToken = notPassedString[0].ToString();
-                OnPropertyChanged("CurrentToken");
-                notPassedString = notPassedString.Remove(0, 1);
-                OnPropertyChanged("NotPassedString");
+                CurrentToken = notPassedString[0].ToString();
+                NotPassedString = notPassedString.Remove(0, 1);
             }
             else
             {
-                currentToken = "";
-                OnPropertyChanged("CurrentToken");
+                CurrentToken = "";
             }
             if (!FA.CanDoStep())
             {
                 Result = FA.StepResult;
             }
         }
+
         private bool CanStepInCommandExecute(object p)
         {
             if (!InSimulation || FA == null)
@@ -99,28 +103,36 @@ namespace ControlsLibrary.Controls.Executor
             return FA.CanDoStep();
         }
 
+        /// <summary>
+        /// Gets result of execution by fast run and sets it on the result string
+        /// </summary>
         public ICommand RunCommand { get; }
+
         private void OnRunCommandExecuted(object p)
         {
-            var errors = FAAnalyzer.GetErrors(Graph);
-            if (errors.Count > 0)
+            try
             {
-                MessageBox.Show(errors.Aggregate("", (folder, error) => folder + error + "\n"), "Invalid automat!", MessageBoxButton.OK);
-                return;
+                Result = Executor.Execute(InputString);
             }
-            FA = FiniteAutomata.ConvertGraphToAutomata(Graph.Edges.ToList(), Graph.Vertices.ToList());
-            FA.SetStr(InputString);
-            Result = FA.DoAllTransitions(InputString) ? ResultEnum.Passed : ResultEnum.Failed;
+            catch (InvalidOperationException e)
+            {
+                MessageBox.Show(e.Message, Lang.Errors_InvalidAutomaton, MessageBoxButton.OK);
+            }
         }
+
         private bool CanRunCommandExecute(object p)
         {
             return !inSimulation;
         }
 
         private string inputString = "";
-        public string InputString 
-        { 
-            get => inputString; 
+
+        /// <summary>
+        /// The input string for automaton
+        /// </summary>
+        public string InputString
+        {
+            get => inputString;
             set
             {
                 if (inSimulation)
@@ -133,45 +145,51 @@ namespace ControlsLibrary.Controls.Executor
         }
 
         private string passedString = "";
-        public string PassedString { get => passedString; set => passedString = value; }
+
+        /// <summary>
+        /// The part of a string that already has been feed to an automaton
+        /// </summary>
+        public string PassedString { get => passedString; set => Set(ref passedString, value); }
 
         private string currentToken = "";
-        public string CurrentToken { get => currentToken; set => currentToken = value; }
+
+        /// <summary>
+        /// The token which an automaton is handling at the moment
+        /// </summary>
+        public string CurrentToken { get => currentToken; set => Set(ref currentToken, value); }
 
         private string notPassedString = "";
-        public string NotPassedString { get => notPassedString; set => notPassedString = value; }
 
-        private List<int> _ActualStates;
-        public List<int> ActualStates
-        {
-            get => _ActualStates;
-            set
-            {
-                Set(ref _ActualStates, value);
-                string x = "";
-                foreach (int state in _ActualStates)
-                {
-                    x += state.ToString();
-                }
-                States = x;
-            }
-        }
-        private string _States;
-        public string States
-        {
-            get => _States;
-            set => Set(ref _States, value);
-        }
-        private ResultEnum _Result;
+        /// <summary>
+        /// The not handled by an automaton part of a string
+        /// </summary>
+        public string NotPassedString { get => notPassedString; set => Set(ref notPassedString, value); }
+
+        private List<int> actualStates;
+
+        /// <summary>
+        /// The list of states ids that an automaton stays on at the moment
+        /// </summary>
+        public List<int> ActualStates { get => actualStates; set => Set(ref actualStates, value); }
+
+        private ResultEnum result;
+
+        /// <summary>
+        /// The current result of an execution
+        /// </summary>
         public ResultEnum Result
         {
-            get => _Result;
+            get => result;
             set
             {
-                Set(ref _Result, value);
-                OnPropertyChanged("StringResult");
+                Set(ref result, value);
+                OnPropertyChanged(nameof(StringResult));
             }
         }
+
+        /// <summary>
+        /// The result converted into the string type
+        /// </summary>
         public string StringResult { get => ResultPrinter.PrintResult(Result); }
 
         public ExecutorViewModel()
@@ -183,6 +201,5 @@ namespace ControlsLibrary.Controls.Executor
             RunCommand = new RelayCommand(OnRunCommandExecuted, CanRunCommandExecute);
             #endregion
         }
-
     }
 }
