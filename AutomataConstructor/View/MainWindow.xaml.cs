@@ -120,7 +120,7 @@ namespace AutomataConstructor
                 scene.Open(dialog.FileName);
                 savePath = dialog.FileName;
                 var splittedPath = dialog.FileName.Split(@"\");
-                fileName = splittedPath[splittedPath.Length - 1];
+                fileName = splittedPath[^1];
                 saved = true;
                 NotifyTitleChanged();
             }

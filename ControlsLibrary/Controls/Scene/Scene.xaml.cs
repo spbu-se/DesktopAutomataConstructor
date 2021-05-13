@@ -352,7 +352,6 @@ namespace ControlsLibrary.Controls.Scene
                 graphArea.RemoveEdge(edgeViewModel, true);
                 UpdateEdgeRoutingPoints(source, target);
                 GraphEdited?.Invoke(this, EventArgs.Empty);
-                return;
             }
         }
 
@@ -443,6 +442,10 @@ namespace ControlsLibrary.Controls.Scene
         private void AvoidParallelEdges(EdgeControl edgeControl)
         {
             var edge = edgeControl.Edge as EdgeViewModel;
+            if (edge == null)
+            {
+                return;
+            }
             var parallelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == edge.Target && edge.Source == e.Target);
 
             if (parallelEdge == null)
@@ -477,13 +480,8 @@ namespace ControlsLibrary.Controls.Scene
                 bypassPoint2.Y += diagonal;
             }
 
-            if (edge == null)
-            {
-                return;
-            }
-
-            edge.RoutingPoints = new GraphX.Measure.Point[] { sourcePos, bypassPoint1, targetPos };
-            parallelEdge.RoutingPoints = new GraphX.Measure.Point[] { targetPos, bypassPoint2, targetPos };
+            edge.RoutingPoints = new [] { sourcePos, bypassPoint1, targetPos };
+            parallelEdge.RoutingPoints = new [] { targetPos, bypassPoint2, targetPos };
             graphArea.UpdateAllEdges();
         }
 

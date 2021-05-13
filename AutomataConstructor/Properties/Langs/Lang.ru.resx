@@ -61,102 +61,102 @@
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
+    <xsd:element propertyName="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
+          <xsd:element propertyName="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element propertyName="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute propertyName="propertyName" use="required" type="xsd:string" />
+              <xsd:attribute propertyName="type" type="xsd:string" />
+              <xsd:attribute propertyName="mimetype" type="xsd:string" />
               <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element name="assembly">
+          <xsd:element propertyName="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute propertyName="alias" type="xsd:string" />
+              <xsd:attribute propertyName="propertyName" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element name="data">
+          <xsd:element propertyName="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element propertyName="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element propertyName="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute propertyName="propertyName" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute propertyName="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute propertyName="mimetype" type="xsd:string" msdata:Ordinal="4" />
               <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element name="resheader">
+          <xsd:element propertyName="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element propertyName="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute propertyName="propertyName" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
       </xsd:complexType>
     </xsd:element>
   </xsd:schema>
-  <resheader name="resmimetype">
+  <resheader propertyName="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
-  <resheader name="version">
+  <resheader propertyName="version">
     <value>2.0</value>
   </resheader>
-  <resheader name="reader">
+  <resheader propertyName="reader">
     <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <resheader name="writer">
+  <resheader propertyName="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AutomataConstructor.Name" xml:space="preserve">
+  <data propertyName="AutomataConstructor.Name" xml:space="preserve">
     <value>Конструктор автоматов</value>
   </data>
-  <data name="file" xml:space="preserve">
+  <data propertyName="file" xml:space="preserve">
     <value>Файл</value>
   </data>
-  <data name="openAutomat" xml:space="preserve">
+  <data propertyName="openAutomat" xml:space="preserve">
     <value>Открыть автомат</value>
   </data>
-  <data name="openTests" xml:space="preserve">
+  <data propertyName="openTests" xml:space="preserve">
     <value>Открыть тесты</value>
   </data>
-  <data name="s" xml:space="preserve">
+  <data propertyName="s" xml:space="preserve">
     <value />
   </data>
-  <data name="saveAutomat" xml:space="preserve">
+  <data propertyName="saveAutomat" xml:space="preserve">
     <value>Сохранить автомат</value>
   </data>
-  <data name="saveAutomatAs" xml:space="preserve">
+  <data propertyName="saveAutomatAs" xml:space="preserve">
     <value>Сохранить автомат как...</value>
   </data>
-  <data name="Saves.FailedToLoadAutomaton" xml:space="preserve">
+  <data propertyName="Saves.FailedToLoadAutomaton" xml:space="preserve">
     <value>Ошибка при загрузке файла с автоматом</value>
   </data>
-  <data name="Saves.FailedToLoadTests" xml:space="preserve">
+  <data propertyName="Saves.FailedToLoadTests" xml:space="preserve">
     <value>Ошибка при загрузке файла с тестами</value>
   </data>
-  <data name="Saves.Reminder" xml:space="preserve">
+  <data propertyName="Saves.Reminder" xml:space="preserve">
     <value>Сохранить изменения перед закрытием?</value>
   </data>
-  <data name="Saves.SelectAutomatonFileName" xml:space="preserve">
+  <data propertyName="Saves.SelectAutomatonFileName" xml:space="preserve">
     <value>Выберите имя файла с автоматом</value>
   </data>
-  <data name="Saves.SelectTestFileName" xml:space="preserve">
+  <data propertyName="Saves.SelectTestFileName" xml:space="preserve">
     <value>Выберите имя файла с тестами</value>
   </data>
-  <data name="Saves.Unsaved" xml:space="preserve">
+  <data propertyName="Saves.Unsaved" xml:space="preserve">
     <value>Не сохранено</value>
   </data>
-  <data name="saveTestsAs" xml:space="preserve">
+  <data propertyName="saveTestsAs" xml:space="preserve">
     <value>Сохранить тесты как...</value>
   </data>
 </root>

@@ -126,9 +126,9 @@ namespace ControlsLibrary.ViewModel
 
         //TODO: Add bool to visibility converter and remove this property
 
-        public void OnPropertyChanged([CallerMemberName] string name = null)
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

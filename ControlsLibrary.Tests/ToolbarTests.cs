@@ -46,7 +46,7 @@ namespace ControlsLibrary.Tests
         public void SelectedToolChangedTest()
         {
             var eventExecuted = false;
-            toolbar.SelectedToolChanged += (object sender, EventArgs e) => eventExecuted = true;
+            toolbar.SelectedToolChanged += (sender, e) => eventExecuted = true;
             toolbar.DeleteToolSelected = true;
 
             Assert.True(eventExecuted);

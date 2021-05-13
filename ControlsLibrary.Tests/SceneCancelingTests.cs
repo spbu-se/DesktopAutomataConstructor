@@ -13,7 +13,7 @@ namespace ControlsLibrary.Tests
         [Test]
         public void SceneEditingDisablingDuringSimulationTest()
         {
-            Thread newWindowThread = new Thread(new ThreadStart(() =>
+            var newWindowThread = new Thread(new ThreadStart(() =>
             {
                 var scene = new Scene();
 
@@ -22,8 +22,8 @@ namespace ControlsLibrary.Tests
 
                 var graph = help.Graph;
 
-                var state1 = new NodeViewModel() { ID = 1, IsInitial = true };
-                var state2 = new NodeViewModel() { ID = 2, IsFinal = true };
+                var state1 = new NodeViewModel { ID = 1, IsInitial = true };
+                var state2 = new NodeViewModel { ID = 2, IsFinal = true };
                 graph.AddVertex(state1);
                 graph.AddVertex(state2);
                 graph.AddEdge(new EdgeViewModel(state1, state1) { TransitionTokensString = "1" });

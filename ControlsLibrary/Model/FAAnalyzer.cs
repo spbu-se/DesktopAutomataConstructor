@@ -3,7 +3,6 @@ using ControlsLibrary.ViewModel;
 using QuickGraph;
 using System.Collections.Generic;
 using System.Linq;
-using GraphX.Common;
 
 namespace ControlsLibrary.Model
 {

@@ -12,13 +12,13 @@ namespace ControlsLibrary.Tests
         [Test]
         public void EmptySceneTest()
         {
-            Thread newWindowThread = new Thread(new ThreadStart(() =>
+            var newWindowThread = new Thread(new ThreadStart(() =>
             {
                 Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
                 var scene = new Scene();
                 var help = new ErrorReporterViewModel();
                 scene.ErrorReporter = help;
-                var path = "../../../Files/EmptyScene.xml";
+                const string path = "../../../Files/EmptyScene.xml";
                 scene.Save(path);
                 help.Graph.AddVertex(new NodeViewModel());
                 scene.Open(path);
@@ -41,15 +41,15 @@ namespace ControlsLibrary.Tests
         [Test]
         public void SceneSerializationTest()
         {
-            Thread newWindowThread = new Thread(new ThreadStart(() =>
+            var newWindowThread = new Thread(new ThreadStart(() =>
             {
                 Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
                 var scene = new Scene();
                 var help = new ErrorReporterViewModel();
                 scene.ErrorReporter = help;
-                var path = "../../../Files/NotEmptyScene.xml";
-                var state1 = new NodeViewModel() { Name = "S1", IsInitial = true };
-                var state2 = new NodeViewModel() { Name = "S2", IsFinal = true };
+                const string path = "../../../Files/NotEmptyScene.xml";
+                var state1 = new NodeViewModel { Name = "S1", IsInitial = true };
+                var state2 = new NodeViewModel { Name = "S2", IsFinal = true };
                 help.Graph.AddVertex(state1);
                 help.Graph.AddVertex(state2);
                 var transition1 = new EdgeViewModel(state1, state2) { IsEpsilon = true, TransitionTokensString = "1" };

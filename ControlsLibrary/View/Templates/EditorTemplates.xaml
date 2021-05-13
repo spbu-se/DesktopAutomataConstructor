@@ -126,7 +126,7 @@
                         <Ellipse Visibility="{Binding FinalMarkVisibility}" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="2" Height="{StaticResource AcceptingMarkRadius}" Width="{StaticResource AcceptingMarkRadius}" />
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Height="{StaticResource NodeContentSize}">
                             <StackPanel Orientation="Horizontal" Height="{StaticResource NodeContentStringHeight}">
-                                <TextBlock Text="{x:Static language:Lang.stateName}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock Text="{x:Static language:Lang.stateName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          FontWeight="Bold" Foreground="Black" Background="Transparent" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </StackPanel>

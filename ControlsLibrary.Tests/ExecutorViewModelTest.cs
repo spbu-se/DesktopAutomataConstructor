@@ -94,7 +94,7 @@ namespace ControlsLibrary.Tests
         }
 
         [Test]
-        public void StepByStepExecutionOfNonDetermenisticAutomatonTest()
+        public void StepByStepExecutionOfNonDeterministicAutomatonTest()
         {
             var executorViewModel = new ExecutorViewModel() { Executor = executor };
             graph.Edges.FirstOrDefault(edge => edge.Source.ID == 1 && edge.Target.ID == 2).TransitionTokensString = "01";
@@ -117,7 +117,7 @@ namespace ControlsLibrary.Tests
         [Test]
         public void DropDebugTest()
         {
-            var executorViewModel = new ExecutorViewModel() { Executor = executor };
+            var executorViewModel = new ExecutorViewModel { Executor = executor };
 
             executorViewModel.InputString = "11010";
 

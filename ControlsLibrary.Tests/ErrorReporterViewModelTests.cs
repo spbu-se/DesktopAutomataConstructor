@@ -15,8 +15,8 @@ namespace ControlsLibrary.Tests
         [SetUp]
         public void SetUp()
         {
-            var state1 = new NodeViewModel() { ID = 1, IsInitial = true };
-            var state2 = new NodeViewModel() { ID = 2, IsFinal = true };
+            var state1 = new NodeViewModel { ID = 1, IsInitial = true };
+            var state2 = new NodeViewModel { ID = 2, IsFinal = true };
             graph = new BidirectionalGraph<NodeViewModel, EdgeViewModel>();
             graph.AddVertex(state1);
             graph.AddVertex(state2);
