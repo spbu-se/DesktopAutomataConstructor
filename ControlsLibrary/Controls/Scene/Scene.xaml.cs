@@ -79,7 +79,7 @@ namespace ControlsLibrary.Controls.Scene
         /// </summary>
         private void InSimulationChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "InSimulation")
+            if (e.PropertyName == nameof(ExecutorViewModel.InSimulation))
             {
                 ClearSelectMode(true);
                 ClearEditMode();
@@ -100,7 +100,7 @@ namespace ControlsLibrary.Controls.Scene
         /// </summary>
         private void UpdateActualStates(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ActualStates")
+            if (e.PropertyName == nameof(ExecutorViewModel.ActualStates))
             {
                 foreach (var node in graphArea.LogicCore.Graph.Vertices)
                 {
@@ -154,7 +154,7 @@ namespace ControlsLibrary.Controls.Scene
         /// </summary>
         private void VertexEdited(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Name" || e.PropertyName == "IsInitial" || e.PropertyName == "IsFinal")
+            if (e.PropertyName == nameof(NodeViewModel.Name) || e.PropertyName == nameof(NodeViewModel.IsInitial) || e.PropertyName == nameof(NodeViewModel.IsFinal))
             {
                 GraphEdited?.Invoke(this, EventArgs.Empty);
             }
@@ -165,7 +165,7 @@ namespace ControlsLibrary.Controls.Scene
         /// </summary>
         private void EdgeEdited(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "TransitionTokens" || e.PropertyName == "IsEpsilon")
+            if (e.PropertyName == nameof(EdgeViewModel.TransitionTokens)|| e.PropertyName == nameof(EdgeViewModel.IsEpsilon))
             {
                 GraphEdited?.Invoke(this, EventArgs.Empty);
             }
