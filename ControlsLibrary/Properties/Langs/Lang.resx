@@ -183,6 +183,9 @@
   <data name="resultPassed" xml:space="preserve">
     <value>Accepted</value>
   </data>
+  <data name="Results.NotDefined" xml:space="preserve">
+    <value>Result not defined</value>
+  </data>
   <data name="runAllTests" xml:space="preserve">
     <value>Run all</value>
   </data>
@@ -221,5 +224,8 @@
   </data>
   <data name="Toolbar.SelectModeToolTip" xml:space="preserve">
     <value>Layout states and fill attributes  (S)</value>
+  </data>
+  <data name="Types.FSM" xml:space="preserve">
+    <value>Finite state machine</value>
   </data>
 </root>

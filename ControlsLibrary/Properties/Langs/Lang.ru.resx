@@ -186,6 +186,9 @@
   <data name="resultPassed" xml:space="preserve">
     <value>Принята</value>
   </data>
+  <data name="Results.NotDefined" xml:space="preserve">
+    <value>Результат не определён</value>
+  </data>
   <data name="runAllTests" xml:space="preserve">
     <value>Запустить все</value>
   </data>
@@ -227,5 +230,8 @@
   </data>
   <data name="Toolbar.SelectModeToolTip" xml:space="preserve">
     <value>Размещайте состояние и вводите значения свойств  (S)</value>
+  </data>
+  <data name="Types.FSM" xml:space="preserve">
+    <value>Конечный автомат</value>
   </data>
 </root>

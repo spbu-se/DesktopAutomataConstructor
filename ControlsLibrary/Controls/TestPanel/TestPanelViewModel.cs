@@ -122,16 +122,21 @@ namespace ControlsLibrary.Controls.TestPanel
 
         private bool CanAddTestCommandExecute(object p) => true;
 
+        private void NotifyTestsResultsChanged()
+        {
+            OnPropertyChanged(nameof(NumberOfPassedTests));
+            OnPropertyChanged(nameof(NumberOfFailedTests));
+            OnPropertyChanged(nameof(NumberOfNotRunnedTests));
+        }
+
         /// <summary>
         /// Handles changing of result in some test view nodel
         /// </summary>
         private void UpdateStorage(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Result")
+            if (e.PropertyName == nameof(TestViewModel.Result))
             {
-                OnPropertyChanged("NumberOfPassedTests");
-                OnPropertyChanged("NumberOfFailedTests");
-                OnPropertyChanged("NumberOfNotRunnedTests");
+                NotifyTestsResultsChanged();
             }
         }
 
@@ -140,9 +145,7 @@ namespace ControlsLibrary.Controls.TestPanel
             var newTest = new TestViewModel() { Result = ResultEnum.NotRunned, Executor = this.Executor, Storage = Tests };
             newTest.PropertyChanged += UpdateStorage;
             Tests.Add(newTest);
-            OnPropertyChanged("NumberOfPassedTests");
-            OnPropertyChanged("NumberOfFailedTests");
-            OnPropertyChanged("NumberOfNotRunnedTests");
+            NotifyTestsResultsChanged();
         }
 
         private void AddTest(ResultEnum result, string testString, bool shouldReject)
@@ -156,9 +159,7 @@ namespace ControlsLibrary.Controls.TestPanel
                 Executor = this.Executor
             });
 
-            OnPropertyChanged("NumberOfPassedTests");
-            OnPropertyChanged("NumberOfFailedTests");
-            OnPropertyChanged("NumberOfNotRunnedTests");
+            NotifyTestsResultsChanged();
         }
     }
 }

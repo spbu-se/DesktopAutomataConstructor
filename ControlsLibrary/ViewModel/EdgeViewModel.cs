@@ -69,8 +69,8 @@ namespace ControlsLibrary.ViewModel
             {
                 isEpsilon = value;
                 OnPropertyChanged();
-                OnPropertyChanged("TransitionTokens");
-                OnPropertyChanged("TransitionTokensString");
+                OnPropertyChanged(nameof(TransitionTokens));
+                OnPropertyChanged(nameof(TransitionTokensString));
             }
         }
 
@@ -120,7 +120,7 @@ namespace ControlsLibrary.ViewModel
                 }
                 transitionTokensString = value;
                 OnPropertyChanged();
-                OnPropertyChanged("TransitionTokens");
+                OnPropertyChanged(nameof(TransitionTokens));
             }
         }
 

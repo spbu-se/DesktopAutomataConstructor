@@ -1,5 +1,6 @@
 ﻿using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
+using ControlsLibrary.Properties.Langs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,7 +59,7 @@ namespace ControlsLibrary.Controls.TestPanel
             }
             catch (InvalidOperationException e)
             {
-                MessageBox.Show(e.Message, "Invalid automat!", MessageBoxButton.OK);
+                MessageBox.Show(e.Message, Lang.Errors_InvalidAutomaton, MessageBoxButton.OK);
             }
         }
 
@@ -72,7 +73,7 @@ namespace ControlsLibrary.Controls.TestPanel
         private void OnRemoveFromStorageCommandExecuted(object p)
         {
             storage.Remove(this);
-            OnPropertyChanged("Result");
+            OnPropertyChanged(nameof(Result));
         }
 
         private bool CanRemoveFromStorageCommandExecute(object p) => storage != null && storage.Contains(this);
@@ -104,7 +105,7 @@ namespace ControlsLibrary.Controls.TestPanel
             {
                 result = value;
                 OnPropertyChanged();
-                OnPropertyChanged(StringResult);
+                OnPropertyChanged(nameof(StringResult));
             }
         }
 

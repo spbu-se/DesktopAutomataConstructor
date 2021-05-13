@@ -35,7 +35,7 @@ namespace ControlsLibrary.Controls.TypeAnalyzer
         public void GraphEdited(object sender, EventArgs e)
         {
             type = FAAnalyzer.GetType(Graph);
-            OnPropertyChanged("StringType");
+            OnPropertyChanged(nameof(StringType));
         }
 
         private FATypeEnum type = FATypeEnum.DFA;
@@ -62,7 +62,7 @@ namespace ControlsLibrary.Controls.TypeAnalyzer
                             return Lang.EpsilonNFA;
                         }
                 }
-                return "Finite state machine";
+                return Lang.Types_FSM;
             }
         }
 

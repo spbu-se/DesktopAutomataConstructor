@@ -30,7 +30,7 @@ namespace ControlsLibrary.Model
                     }
                 default:
                     {
-                        return "Result not defined";
+                        return Lang.Results_NotDefined;
                     }
             }
         }
