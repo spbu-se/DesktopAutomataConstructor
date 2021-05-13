@@ -6,14 +6,8 @@ using System.Linq;
 
 namespace ControlsLibrary.Model
 {
-    /// <summary>
-    /// Provides analyze of a FA graph data
-    /// </summary>
     internal static class FAAnalyzer
     {
-        /// <summary>
-        /// Returns collection of errors in the FA
-        /// </summary>
         public static ICollection<string> GetErrors(BidirectionalGraph<NodeViewModel, EdgeViewModel> graph)
         {
             var result = new List<string>();
@@ -31,9 +25,6 @@ namespace ControlsLibrary.Model
             return result;
         }
 
-        /// <summary>
-        /// Returns type of the FA
-        /// </summary>
         public static FATypeEnum GetType(BidirectionalGraph<NodeViewModel, EdgeViewModel> graph)
         {
             foreach (var edge in graph.Edges)

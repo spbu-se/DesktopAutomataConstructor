@@ -16,9 +16,6 @@ namespace ControlsLibrary.Controls.Executor
     {
         private FiniteAutomata FA;
 
-        /// <summary>
-        /// Sets FA executor model to execute strings on it
-        /// </summary>
         public FAExecutor Executor { private get; set; }
 
         private bool inSimulation = false;

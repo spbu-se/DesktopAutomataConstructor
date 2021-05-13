@@ -10,20 +10,13 @@ using YAXLib;
 
 namespace ControlsLibrary.ViewModel
 {
-    /// <summary>
-    /// Contains edge data and methods to interact with it
-    /// </summary>
     public class EdgeViewModel : EdgeBase<NodeViewModel>, INotifyPropertyChanged
     {
-        /// <summary>
-        /// Constructor without source and target vertices
-        /// </summary>
         public EdgeViewModel()
             : base(null, null, 1)
         {
             IniitCommands();
         }
-
         /// <summary>
         /// Constructor which gets two vertices and symbols of transition
         /// </summary>
@@ -43,9 +36,6 @@ namespace ControlsLibrary.ViewModel
 
         private bool editionAvailable = true;
 
-        /// <summary>
-        /// True if edge data can be edited
-        /// </summary>
         [YAXDontSerialize]
         public bool EditionAvailable
         {
@@ -59,9 +49,6 @@ namespace ControlsLibrary.ViewModel
 
         private bool isEpsilon;
 
-        /// <summary>
-        /// Contains data if transition is epsilon
-        /// </summary>
         public bool IsEpsilon
         {
             get => isEpsilon;
@@ -74,9 +61,6 @@ namespace ControlsLibrary.ViewModel
             }
         }
 
-        /// <summary>
-        /// Changes expangind
-        /// </summary>
         [YAXDontSerialize]
         public ICommand ChangeExpandingCommand { get; set; }
 
@@ -88,9 +72,6 @@ namespace ControlsLibrary.ViewModel
 
         private bool isExpanded = false;
 
-        /// <summary>
-        /// Returns true if edge label is expanded
-        /// </summary>
         public bool IsExpanded
         {
             get => isExpanded;
@@ -101,11 +82,9 @@ namespace ControlsLibrary.ViewModel
             }
         }
 
+
         private string transitionTokensString = "";
 
-        /// <summary>
-        /// Transition tokens in the string form
-        /// </summary>
         public string TransitionTokensString
         {
             get
@@ -124,11 +103,8 @@ namespace ControlsLibrary.ViewModel
             }
         }
 
-        /// <summary>
-        /// List of tokens to do transition
-        /// </summary>
         [YAXDontSerialize]
-        public ICollection<char> TransitionTokens
+        public List<char> TransitionTokens
         {
             get
             {
@@ -140,9 +116,6 @@ namespace ControlsLibrary.ViewModel
             }
         }
 
-        /// <summary>
-        /// Routing points
-        /// </summary>
         public override Point[] RoutingPoints { get; set; }
 
         public void OnPropertyChanged([CallerMemberName] string name = null)

@@ -1,7 +1,9 @@
 ﻿using ControlsLibrary.FileSerialization;
 using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
+using ControlsLibrary.ViewModel;
 using ControlsLibrary.ViewModel.Base;
+using QuickGraph;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,9 +20,6 @@ namespace ControlsLibrary.Controls.TestPanel
     /// </summary>
     public class TestPanelViewModel : BaseViewModel
     {
-        /// <summary>
-        /// Sets FA executor model to execute tests on it
-        /// </summary>
         public FAExecutor Executor { private get; set; }
 
         public TestPanelViewModel()

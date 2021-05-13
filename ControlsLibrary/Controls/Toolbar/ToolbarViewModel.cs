@@ -4,16 +4,10 @@ using System;
 
 namespace ControlsLibrary.Controls.Toolbar
 {
-    /// <summary>
-    /// Contains toolbar data and provides non-visual logic to interact with it
-    /// </summary>
     public class ToolbarViewModel : BaseViewModel
     {
         private SelectedTool selectedTool;
 
-        /// <summary>
-        /// Sets selected on the toolbar tool
-        /// </summary>
         public SelectedTool SelectedTool
         {
             get => selectedTool;
@@ -38,23 +32,14 @@ namespace ControlsLibrary.Controls.Toolbar
             }
         }
 
-        /// <summary>
-        /// Selected tool changed event handler
-        /// </summary>
         public delegate void SelectedToolChangedEventHandler(object sender, EventArgs e);
 
-        /// <summary>
-        /// Invokes if selected tool was changed
-        /// </summary>
         public event SelectedToolChangedEventHandler SelectedToolChanged;
 
         private bool selectToolSelected;
         private bool editToolSelected;
         private bool deleteToolSelected;
 
-        /// <summary>
-        /// Sets if selection tool selected
-        /// </summary>
         public bool SelectToolSelected
         {
             get => selectToolSelected;
@@ -71,9 +56,6 @@ namespace ControlsLibrary.Controls.Toolbar
             }
         }
 
-        /// <summary>
-        /// Sets if editing tool selected
-        /// </summary>
         public bool EditToolSelected
         {
             get => editToolSelected;
@@ -90,9 +72,6 @@ namespace ControlsLibrary.Controls.Toolbar
             }
         }
 
-        /// <summary>
-        /// Sets if deletion tool selected
-        /// </summary>
         public bool DeleteToolSelected
         {
             get => deleteToolSelected;

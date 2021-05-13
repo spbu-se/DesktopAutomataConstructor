@@ -8,28 +8,21 @@ using YAXLib;
 
 namespace ControlsLibrary.ViewModel
 {
-    /// <summary>
-    /// Contains node on the scene data and methods to interact with it
-    /// </summary>
     public class NodeViewModel : VertexBase, INotifyPropertyChanged
     {
-        /// <summary>
-        /// Basic constructor
-        /// </summary>
         public NodeViewModel()
         {
             ChangeHidingCommand = new RelayCommand(OnChangeHigingCommandExecuted, CanChangeHigingCommandExecute);
         }
 
-        /// <summary>
-        /// Changes hidding
-        /// </summary>
         [YAXDontSerialize]
         public ICommand ChangeHidingCommand { get; set; }
 
         private bool CanChangeHigingCommandExecute(object p) => true;
 
         private void OnChangeHigingCommandExecuted(object p) => IsExpanded = !IsExpanded;
+
+        public Visibility FinalMarkVisibility { get => IsFinal ? Visibility.Visible : Visibility.Hidden; }
 
         private string name;
         private bool isInitial;
@@ -38,9 +31,6 @@ namespace ControlsLibrary.ViewModel
         private bool isActual;
         private bool editionAvailable = true;
 
-        /// <summary>
-        /// Gets if properties editing availible
-        /// </summary>
         [YAXDontSerialize]
         public bool EditionAvailable
         {
@@ -65,9 +55,6 @@ namespace ControlsLibrary.ViewModel
             }
         }
 
-        /// <summary>
-        /// Returns true if state is actual on the execution
-        /// </summary>
         [YAXDontSerialize]
         public bool IsActual
         {
@@ -102,8 +89,15 @@ namespace ControlsLibrary.ViewModel
             {
                 isInitial = value;
                 OnPropertyChanged();
+                OnPropertyChanged("IsInitialMarkVisibility");
             }
         }
+
+        public Visibility IsInitialMarkVisibility
+        {
+            get => IsInitial ? Visibility.Visible : Visibility.Hidden;
+        }
+
 
         /// <summary>
         /// Is state final
@@ -118,12 +112,6 @@ namespace ControlsLibrary.ViewModel
                 OnPropertyChanged(nameof(FinalMarkVisibility));
             }
         }
-
-        /// <summary>
-        /// Returns is state final mark visibility
-        /// </summary>
-        public Visibility FinalMarkVisibility { get => IsFinal ? Visibility.Visible : Visibility.Hidden; } 
-        //TODO: Add bool to visibility converter and remove this property
 
         public void OnPropertyChanged([CallerMemberName] string name = null)
         {

@@ -142,32 +142,11 @@
                             </StackPanel>
                         </StackPanel>
                         <controls:VertexLabelControl x:Name="PART_vertexLabel" LabelPositionSide="Left">
-                            <ContentControl>
-                                <ContentControl.Style>
-                                    <Style TargetType="ContentControl">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="20" Height="20">
-                                                        <Path.LayoutTransform>
-                                                            <RotateTransform Angle="180"/>
-                                                        </Path.LayoutTransform>
-                                                    </Path>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsInitial}" Value="False">
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate/>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ContentControl.Style>
-                            </ContentControl>
+                            <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="20" Height="20" Visibility="{Binding IsInitialMarkVisibility}">
+                                <Path.LayoutTransform>
+                                    <RotateTransform Angle="180"/>
+                                </Path.LayoutTransform>
+                            </Path>
                         </controls:VertexLabelControl>
                     </Grid>
                 </ControlTemplate>
@@ -195,33 +174,12 @@
                                 <Ellipse Visibility="{Binding FinalMarkVisibility}" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="2" Height="{StaticResource AcceptingMarkRadius}" Width="{StaticResource AcceptingMarkRadius}"/>
                                 <TextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Center"
                                          HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Background="Transparent" FontSize="35"/>
-                                <controls:VertexLabelControl x:Name="PART_vertexLabel" LabelPositionSide="Left">
-                                    <ContentControl>
-                                        <ContentControl.Style>
-                                            <Style TargetType="ContentControl">
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate>
-                                                            <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="20" Height="20">
-                                                                <Path.LayoutTransform>
-                                                                    <RotateTransform Angle="180"/>
-                                                                </Path.LayoutTransform>
-                                                            </Path>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsInitial}" Value="False">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate/>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ContentControl.Style>
-                                    </ContentControl>
+                                <controls:VertexLabelControl x:Name="PART_vertexLabel" LabelPositionSide="Left" >
+                                    <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="{StaticResource EdgePointerSize}" Height="{StaticResource EdgePointerSize}" Visibility="{Binding IsInitialMarkVisibility}">
+                                        <Path.LayoutTransform>
+                                            <RotateTransform Angle="180"/>
+                                        </Path.LayoutTransform>
+                                    </Path>
                                 </controls:VertexLabelControl>
                             </Grid>
                         </ControlTemplate>

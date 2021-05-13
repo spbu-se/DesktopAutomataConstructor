@@ -21,15 +21,9 @@ namespace ControlsLibrary.Infrastructure.Command
             this.canExecute = canExecute;
         }
 
-        /// <summary>
-        /// Returns true if command can be executed
-        /// </summary>
+
         public override bool CanExecute(object parameter) => canExecute?.Invoke(parameter) ?? true;
 
-        /// <summary>
-        /// Invokes action
-        /// </summary>
-        /// <param name="parameter"></param>
         public override void Execute(object parameter) => execute(parameter);
     }
 }
