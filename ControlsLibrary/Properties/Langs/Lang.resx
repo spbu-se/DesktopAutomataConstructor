@@ -138,9 +138,6 @@
   <data name="EpsilonNFA" xml:space="preserve">
     <value>Non-deterministic finite automaton with epsilon-transitions</value>
   </data>
-  <data name="Errors.InvalidAutomaton" xml:space="preserve">
-    <value>Invalid automaton!</value>
-  </data>
   <data name="Errors.SetAccepting" xml:space="preserve">
     <value>Set accepting state</value>
   </data>

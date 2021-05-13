@@ -138,9 +138,6 @@
   <data name="EpsilonNFA" xml:space="preserve">
     <value>Недетерминированный конечный автомат с эпсилон-переходами</value>
   </data>
-  <data name="Errors.InvalidAutomaton" xml:space="preserve">
-    <value>Некорректный автомат!</value>
-  </data>
   <data name="Errors.SetAccepting" xml:space="preserve">
     <value>Выберите принимающее состояние</value>
   </data>

@@ -37,9 +37,9 @@ namespace ControlsLibrary.Controls.ErrorReporter
         {
             errors = FAAnalyzer.GetErrors(Graph);
 
-            OnPropertyChanged(nameof(Errors));
-            OnPropertyChanged(nameof(HasError));
-            OnPropertyChanged(nameof(ErrorMessage));
+            OnPropertyChanged("Errors");
+            OnPropertyChanged("HasError");
+            OnPropertyChanged("ErrorMessage");
         }
 
         /// <summary>

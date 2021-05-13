@@ -115,7 +115,7 @@ namespace ControlsLibrary.ViewModel
             {
                 isFinal = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(FinalMarkVisibility));
+                OnPropertyChanged("FinalMarkVisibility");
             }
         }
 
