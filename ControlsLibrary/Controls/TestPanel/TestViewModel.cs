@@ -41,7 +41,7 @@ namespace ControlsLibrary.Controls.TestPanel
             ExecuteCommand = new RelayCommand(OnExecuteCommandExecuted, CanExecuteCommandExecute);
         }
 
-        public ICommand ExecuteCommand { get; set; }
+        public ICommand ExecuteCommand { get; private set; }
 
         private void OnExecuteCommandExecuted(object p)
         {
@@ -63,12 +63,12 @@ namespace ControlsLibrary.Controls.TestPanel
             }
         }
 
-        private bool CanExecuteCommandExecute(object p) => true;
+        private bool CanExecuteCommandExecute(object p) => Executor != null;
 
         /// <summary>
         /// Removes test from the storage
         /// </summary>
-        public ICommand RemoveFromStorageCommand { get; set; }
+        public ICommand RemoveFromStorageCommand { get; private set; }
 
         private void OnRemoveFromStorageCommandExecuted(object p)
         {
