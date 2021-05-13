@@ -59,7 +59,7 @@ namespace AutomataConstructor
 
         private void NotifyTitleChanged() => PropertyChanged?.Invoke(
             this,
-            new PropertyChangedEventArgs(nameof(this.WindowTitle))
+            new PropertyChangedEventArgs(nameof(WindowTitle))
             );
 
         public event PropertyChangedEventHandler PropertyChanged;
