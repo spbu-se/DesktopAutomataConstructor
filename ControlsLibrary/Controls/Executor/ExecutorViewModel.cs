@@ -42,10 +42,8 @@ namespace ControlsLibrary.Controls.Executor
             FA = Executor.StartDebug(InputString);
             FA.SetString(InputString);
             InSimulation = true;
-            currentToken = inputString[0].ToString();
-            OnPropertyChanged(nameof(CurrentToken));
-            notPassedString = inputString.Remove(0, 1);
-            OnPropertyChanged(nameof(NotPassedString));
+            CurrentToken = inputString[0].ToString();
+            NotPassedString = inputString.Remove(0, 1);
             ActualStates = FA.GetCurrentStates();
             Result = ResultEnum.NotRunned;
         }
@@ -80,19 +78,15 @@ namespace ControlsLibrary.Controls.Executor
         {
             FA.SingleStep();
             ActualStates = FA.GetCurrentStates();
-            passedString += currentToken;
-            OnPropertyChanged(nameof(PassedString));
+            PassedString += currentToken;
             if (notPassedString.Length != 0)
             {
-                currentToken = notPassedString[0].ToString();
-                OnPropertyChanged(nameof(CurrentToken));
-                notPassedString = notPassedString.Remove(0, 1);
-                OnPropertyChanged(nameof(NotPassedString));
+                CurrentToken = notPassedString[0].ToString();
+                NotPassedString = notPassedString.Remove(0, 1);
             }
             else
             {
-                currentToken = "";
-                OnPropertyChanged(nameof(CurrentToken));
+                CurrentToken = "";
             }
             if (!FA.CanDoStep())
             {
@@ -155,21 +149,21 @@ namespace ControlsLibrary.Controls.Executor
         /// <summary>
         /// The part of a string that already has been feed to an automaton
         /// </summary>
-        public string PassedString { get => passedString; set => passedString = value; }
+        public string PassedString { get => passedString; set => Set(ref passedString, value); }
 
         private string currentToken = "";
 
         /// <summary>
         /// The token which an automaton is handling at the moment
         /// </summary>
-        public string CurrentToken { get => currentToken; set => currentToken = value; }
+        public string CurrentToken { get => currentToken; set => Set(ref currentToken, value); }
 
         private string notPassedString = "";
 
         /// <summary>
         /// The not handled by an automaton part of a string
         /// </summary>
-        public string NotPassedString { get => notPassedString; set => notPassedString = value; }
+        public string NotPassedString { get => notPassedString; set => Set(ref notPassedString, value); }
 
         private List<int> actualStates;
 
@@ -178,18 +172,18 @@ namespace ControlsLibrary.Controls.Executor
         /// </summary>
         public List<int> ActualStates { get => actualStates; set => Set(ref actualStates, value); }
 
-        private ResultEnum _Result;
+        private ResultEnum result;
 
         /// <summary>
         /// The current result of an execution
         /// </summary>
         public ResultEnum Result
         {
-            get => _Result;
+            get => result;
             set
             {
-                Set(ref _Result, value);
-                OnPropertyChanged("StringResult");
+                Set(ref result, value);
+                OnPropertyChanged(nameof(StringResult));
             }
         }
 
