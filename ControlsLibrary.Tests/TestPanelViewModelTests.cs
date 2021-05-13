@@ -52,7 +52,7 @@ namespace ControlsLibrary.Tests
             tests.PropertyChanged += (object sender, PropertyChangedEventArgs e) => notified = true;
             tests.Open("../../../Files/SimpleTests.xml");
             tests.Executor = executor;
-            Assert.True(tests.Tests.Any(test => test.Result == ResultEnum.NotRunned));
+            Assert.True(tests.Tests.All(test => test.Result == ResultEnum.NotRunned));
             Assert.True(tests.RunAllTestsCommand.CanExecute(null));
             tests.RunAllTestsCommand.Execute(null);
             Assert.True(tests.NumberOfPassedTests == 2 && tests.NumberOfFailedTests == 1);
