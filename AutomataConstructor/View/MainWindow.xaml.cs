@@ -17,7 +17,7 @@ namespace AutomataConstructor
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : INotifyPropertyChanged
     {
         public MainWindow()
         {
@@ -187,30 +187,30 @@ namespace AutomataConstructor
             switch (MessageBox.Show(Lang.Saves_Reminder, Lang.AutomataConstructor_Name, MessageBoxButton.YesNoCancel))
             {
                 case MessageBoxResult.Yes:
-                {
-                    if (scene != null && scene.CanSave() && File.Exists(savePath))
                     {
-                        scene.Save(savePath);
+                        if (scene != null && scene.CanSave() && File.Exists(savePath))
+                        {
+                            scene.Save(savePath);
+                            return;
+                        }
+
+                        var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "FSA.xml" };
+                        if (dialog.ShowDialog() == true)
+                        {
+                            scene?.Save(dialog.FileName);
+                        }
+
                         return;
                     }
-
-                    var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "FSA.xml" };
-                    if (dialog.ShowDialog() == true)
-                    {
-                        scene?.Save(dialog.FileName);
-                    }
-
-                    return;
-                }
                 case MessageBoxResult.Cancel:
-                {
-                    e.Cancel = true;
-                    return;
-                }
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
                 default:
-                {
-                    return;
-                }
+                    {
+                        return;
+                    }
             }
         }
     }

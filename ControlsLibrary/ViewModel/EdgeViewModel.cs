@@ -76,7 +76,7 @@ namespace ControlsLibrary.ViewModel
         private bool CanChangeExpandingCommandExecute(object p)
             => true;
 
-        private bool isExpanded = false;
+        private bool isExpanded;
 
         /// <summary>
         /// Returns true if edge label is expanded

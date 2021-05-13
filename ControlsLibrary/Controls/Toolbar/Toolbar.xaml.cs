@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-
-namespace ControlsLibrary.Controls.Toolbar
+﻿namespace ControlsLibrary.Controls.Toolbar
 {
     /// <summary>
     /// Interaction logic for Toolbox.xaml
     /// </summary>
-    public partial class Toolbar : UserControl
+    public partial class Toolbar
     {
         public Toolbar()
         {

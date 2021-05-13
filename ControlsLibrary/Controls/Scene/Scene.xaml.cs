@@ -17,7 +17,6 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ControlsLibrary.Controls.Scene
@@ -25,7 +24,7 @@ namespace ControlsLibrary.Controls.Scene
     /// <summary>
     /// Visualizes a graph and provides editing of a graph
     /// </summary>
-    public partial class Scene : UserControl
+    public partial class Scene
     {
         private TypeAnalyzerViewModel typeAnalyzer;
 
@@ -240,20 +239,20 @@ namespace ControlsLibrary.Controls.Scene
             switch (e.Key)
             {
                 case Key.D:
-                {
-                    toolBar.SelectedTool = SelectedTool.Delete;
-                    return;
-                }
+                    {
+                        toolBar.SelectedTool = SelectedTool.Delete;
+                        return;
+                    }
                 case Key.S:
-                {
-                    toolBar.SelectedTool = SelectedTool.Select;
-                    return;
-                }
+                    {
+                        toolBar.SelectedTool = SelectedTool.Select;
+                        return;
+                    }
                 case Key.E:
-                {
-                    toolBar.SelectedTool = SelectedTool.Edit;
-                    return;
-                }
+                    {
+                        toolBar.SelectedTool = SelectedTool.Edit;
+                        return;
+                    }
             }
         }
 
@@ -480,12 +479,12 @@ namespace ControlsLibrary.Controls.Scene
                 bypassPoint2.Y += diagonal;
             }
 
-            edge.RoutingPoints = new [] { sourcePos, bypassPoint1, targetPos };
-            parallelEdge.RoutingPoints = new [] { targetPos, bypassPoint2, targetPos };
+            edge.RoutingPoints = new[] { sourcePos, bypassPoint1, targetPos };
+            parallelEdge.RoutingPoints = new[] { targetPos, bypassPoint2, targetPos };
             graphArea.UpdateAllEdges();
         }
 
-        private int numberOfVertex = 0;
+        private int numberOfVertex;
 
         private VertexControl CreateVertexControl(Point position)
         {
@@ -510,32 +509,32 @@ namespace ControlsLibrary.Controls.Scene
             switch (Toolbar.SelectedTool)
             {
                 case SelectedTool.Delete:
-                {
-                    zoomControl.Cursor = deletionCursor;
-                    ClearEditMode();
-                    ClearSelectMode();
-                    graphArea.SetEdgesDrag(true);
-                    return;
-                }
+                    {
+                        zoomControl.Cursor = deletionCursor;
+                        ClearEditMode();
+                        ClearSelectMode();
+                        graphArea.SetEdgesDrag(true);
+                        return;
+                    }
                 case SelectedTool.Edit:
-                {
-                    zoomControl.Cursor = Cursors.Pen;
-                    ClearSelectMode();
-                    graphArea.SetEdgesDrag(false);
-                    return;
-                }
+                    {
+                        zoomControl.Cursor = Cursors.Pen;
+                        ClearSelectMode();
+                        graphArea.SetEdgesDrag(false);
+                        return;
+                    }
                 case SelectedTool.Select:
-                {
-                    zoomControl.Cursor = Cursors.Hand;
-                    ClearEditMode();
-                    graphArea.SetEdgesDrag(false);
-                    graphArea.SetVerticesDrag(true, true);
-                    return;
-                }
+                    {
+                        zoomControl.Cursor = Cursors.Hand;
+                        ClearEditMode();
+                        graphArea.SetEdgesDrag(false);
+                        graphArea.SetVerticesDrag(true, true);
+                        return;
+                    }
                 default:
-                {
-                    return;
-                }
+                    {
+                        return;
+                    }
             }
         }
 
@@ -590,12 +589,12 @@ namespace ControlsLibrary.Controls.Scene
                             break;
                         }
                     default:
-                    {
-                        if (Toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
                         {
-                            SelectVertex(args.VertexControl);
-                        }
-                        break;
+                            if (Toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
+                            {
+                                SelectVertex(args.VertexControl);
+                            }
+                            break;
                         }
                 }
             }

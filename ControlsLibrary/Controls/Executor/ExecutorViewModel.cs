@@ -21,7 +21,7 @@ namespace ControlsLibrary.Controls.Executor
         /// </summary>
         public FAExecutor Executor { private get; set; }
 
-        private bool inSimulation = false;
+        private bool inSimulation;
 
         /// <summary>
         /// Returns true if executor in the simulation state else false

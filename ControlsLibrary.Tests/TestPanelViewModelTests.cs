@@ -3,7 +3,6 @@ using ControlsLibrary.Model;
 using ControlsLibrary.ViewModel;
 using NUnit.Framework;
 using QuickGraph;
-using System.ComponentModel;
 using System.Linq;
 
 namespace ControlsLibrary.Tests

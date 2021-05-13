@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-
-namespace ControlsLibrary.Controls.ErrorReporter
+﻿namespace ControlsLibrary.Controls.ErrorReporter
 {
     /// <summary>
     /// Interaction logic for ErrorReporter.xaml
     /// </summary>
-    public partial class ErrorReporter : UserControl
+    public partial class ErrorReporter
     {
         public ErrorReporter()
         {
