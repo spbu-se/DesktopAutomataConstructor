@@ -18,10 +18,22 @@ namespace ControlsLibrary.Controls.TestPanel
     /// </summary>
     public class TestPanelViewModel : BaseViewModel
     {
+        private FAExecutor executor;
         /// <summary>
         /// Sets FA executor model to execute tests on it
         /// </summary>
-        public FAExecutor Executor { private get; set; }
+        public FAExecutor Executor 
+        { 
+            private get => executor; 
+            set
+            {
+                executor = value;
+                foreach (var test in Tests)
+                {
+                    test.Executor = executor;
+                }
+            }
+        }
 
         public TestPanelViewModel()
         {
@@ -108,7 +120,7 @@ namespace ControlsLibrary.Controls.TestPanel
         }
 
         private bool CanRunAllTestsCommandExecute(object p)
-            => Tests != null;
+            => Tests != null && Executor != null;
 
         /// <summary>
         /// Collection of tests data
