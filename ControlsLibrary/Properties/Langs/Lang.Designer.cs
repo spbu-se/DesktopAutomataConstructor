@@ -133,6 +133,15 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid automaton!.
+        /// </summary>
+        public static string Errors_InvalidAutomaton {
+            get {
+                return ResourceManager.GetString("Errors.InvalidAutomaton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set accepting state.
         /// </summary>
         public static string Errors_SetAccepting {

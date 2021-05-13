@@ -1,5 +1,6 @@
 ﻿using ControlsLibrary.Infrastructure.Command;
 using ControlsLibrary.Model;
+using ControlsLibrary.Properties.Langs;
 using ControlsLibrary.ViewModel.Base;
 using System;
 using System.Collections.Generic;
@@ -42,9 +43,9 @@ namespace ControlsLibrary.Controls.Executor
             FA.SetString(InputString);
             InSimulation = true;
             currentToken = inputString[0].ToString();
-            OnPropertyChanged("CurrentToken");
+            OnPropertyChanged(nameof(CurrentToken));
             notPassedString = inputString.Remove(0, 1);
-            OnPropertyChanged("NotPassedString");
+            OnPropertyChanged(nameof(NotPassedString));
             ActualStates = FA.GetCurrentStates();
             Result = ResultEnum.NotRunned;
         }
@@ -61,7 +62,7 @@ namespace ControlsLibrary.Controls.Executor
         {
             InSimulation = false;
             ActualStates.Clear();
-            OnPropertyChanged("ActualStates");
+            OnPropertyChanged(nameof(ActualStates));
             PassedString = "";
             CurrentToken = "";
             NotPassedString = "";
@@ -80,18 +81,18 @@ namespace ControlsLibrary.Controls.Executor
             FA.SingleStep();
             ActualStates = FA.GetCurrentStates();
             passedString += currentToken;
-            OnPropertyChanged("PassedString");
+            OnPropertyChanged(nameof(PassedString));
             if (notPassedString.Length != 0)
             {
                 currentToken = notPassedString[0].ToString();
-                OnPropertyChanged("CurrentToken");
+                OnPropertyChanged(nameof(CurrentToken));
                 notPassedString = notPassedString.Remove(0, 1);
-                OnPropertyChanged("NotPassedString");
+                OnPropertyChanged(nameof(NotPassedString));
             }
             else
             {
                 currentToken = "";
-                OnPropertyChanged("CurrentToken");
+                OnPropertyChanged(nameof(CurrentToken));
             }
             if (!FA.CanDoStep())
             {
@@ -121,7 +122,7 @@ namespace ControlsLibrary.Controls.Executor
             }
             catch (InvalidOperationException e)
             {
-                MessageBox.Show(e.Message, "Invalid automat!", MessageBoxButton.OK);
+                MessageBox.Show(e.Message, Lang.Errors_InvalidAutomaton, MessageBoxButton.OK);
             }
         }
 
