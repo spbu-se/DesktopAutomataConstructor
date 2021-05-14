@@ -61,177 +61,177 @@
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element propertyName="root" msdata:IsDataSet="true">
+    <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
-          <xsd:element propertyName="metadata">
+          <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element propertyName="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute propertyName="propertyName" use="required" type="xsd:string" />
-              <xsd:attribute propertyName="type" type="xsd:string" />
-              <xsd:attribute propertyName="mimetype" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
               <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element propertyName="assembly">
+          <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute propertyName="alias" type="xsd:string" />
-              <xsd:attribute propertyName="propertyName" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element propertyName="data">
+          <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element propertyName="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element propertyName="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute propertyName="propertyName" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute propertyName="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute propertyName="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
               <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element propertyName="resheader">
+          <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element propertyName="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute propertyName="propertyName" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
       </xsd:complexType>
     </xsd:element>
   </xsd:schema>
-  <resheader propertyName="resmimetype">
+  <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
-  <resheader propertyName="version">
+  <resheader name="version">
     <value>2.0</value>
   </resheader>
-  <resheader propertyName="reader">
+  <resheader name="reader">
     <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <resheader propertyName="writer">
+  <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data propertyName="addNewTest" xml:space="preserve">
+  <data name="addNewTest" xml:space="preserve">
     <value>Добавить новый</value>
   </data>
-  <data propertyName="AutomataConstructor.Name" xml:space="preserve">
+  <data name="AutomataConstructor.Name" xml:space="preserve">
     <value>Конструктор автоматов</value>
   </data>
-  <data propertyName="debugString" xml:space="preserve">
+  <data name="debugString" xml:space="preserve">
     <value>Отладка</value>
   </data>
-  <data propertyName="debugTest" xml:space="preserve">
+  <data name="debugTest" xml:space="preserve">
     <value>Отладка</value>
   </data>
-  <data propertyName="DFA" xml:space="preserve">
+  <data name="DFA" xml:space="preserve">
     <value>Детерминированный конечный автомат</value>
   </data>
-  <data propertyName="Editor.TransitionsToolTip" xml:space="preserve">
+  <data name="Editor.TransitionsToolTip" xml:space="preserve">
     <value>Вводите символы перехода без разделителей</value>
   </data>
-  <data propertyName="EpsilonNFA" xml:space="preserve">
+  <data name="EpsilonNFA" xml:space="preserve">
     <value>Недетерминированный конечный автомат с эпсилон-переходами</value>
   </data>
-  <data propertyName="Errors.InvalidAutomaton" xml:space="preserve">
+  <data name="Errors.InvalidAutomaton" xml:space="preserve">
     <value>Некорректный автомат!</value>
   </data>
-  <data propertyName="Errors.SetAccepting" xml:space="preserve">
+  <data name="Errors.SetAccepting" xml:space="preserve">
     <value>Выберите принимающее состояние</value>
   </data>
-  <data propertyName="Errors.SetInitial" xml:space="preserve">
+  <data name="Errors.SetInitial" xml:space="preserve">
     <value>Выберите начальное состояние</value>
   </data>
-  <data propertyName="f" xml:space="preserve">
+  <data name="f" xml:space="preserve">
     <value />
   </data>
-  <data propertyName="hide" xml:space="preserve">
+  <data name="hide" xml:space="preserve">
     <value>Скрыть</value>
   </data>
-  <data propertyName="isAccept" xml:space="preserve">
+  <data name="isAccept" xml:space="preserve">
     <value>Финальное:</value>
   </data>
-  <data propertyName="isInitial" xml:space="preserve">
+  <data name="isInitial" xml:space="preserve">
     <value>Начальное:</value>
   </data>
-  <data propertyName="NFA" xml:space="preserve">
+  <data name="NFA" xml:space="preserve">
     <value>Недетерминированный конечный автомат</value>
   </data>
-  <data propertyName="noIssuesFound" xml:space="preserve">
+  <data name="noIssuesFound" xml:space="preserve">
     <value>Ошибок не найдено</value>
   </data>
-  <data propertyName="openTestPanel" xml:space="preserve">
+  <data name="openTestPanel" xml:space="preserve">
     <value>Открыть тесты</value>
   </data>
-  <data propertyName="removeTest" xml:space="preserve">
+  <data name="removeTest" xml:space="preserve">
     <value>Удалить</value>
   </data>
-  <data propertyName="resetDebugString" xml:space="preserve">
+  <data name="resetDebugString" xml:space="preserve">
     <value>Завершить отладку</value>
   </data>
-  <data propertyName="resultDebugString" xml:space="preserve">
+  <data name="resultDebugString" xml:space="preserve">
     <value>Результат:</value>
   </data>
-  <data propertyName="resultFailed" xml:space="preserve">
+  <data name="resultFailed" xml:space="preserve">
     <value>Не принята</value>
   </data>
-  <data propertyName="resultNotRunned" xml:space="preserve">
+  <data name="resultNotRunned" xml:space="preserve">
     <value>Не запущен</value>
   </data>
-  <data propertyName="resultPassed" xml:space="preserve">
+  <data name="resultPassed" xml:space="preserve">
     <value>Принята</value>
   </data>
-  <data propertyName="Results.NotDefined" xml:space="preserve">
+  <data name="Results.NotDefined" xml:space="preserve">
     <value>Результат не определён</value>
   </data>
-  <data propertyName="runAllTests" xml:space="preserve">
+  <data name="runAllTests" xml:space="preserve">
     <value>Запустить все</value>
   </data>
-  <data propertyName="runString" xml:space="preserve">
+  <data name="runString" xml:space="preserve">
     <value>Запуск</value>
   </data>
-  <data propertyName="runTest" xml:space="preserve">
+  <data name="runTest" xml:space="preserve">
     <value>Запуск</value>
   </data>
-  <data propertyName="selectTool" xml:space="preserve">
+  <data name="selectTool" xml:space="preserve">
     <value>Выберите инструмент:</value>
   </data>
-  <data propertyName="shouldReject" xml:space="preserve">
+  <data name="shouldReject" xml:space="preserve">
     <value>Отклоняется</value>
   </data>
-  <data propertyName="startDebugString" xml:space="preserve">
+  <data name="startDebugString" xml:space="preserve">
     <value>Начать отладку</value>
   </data>
-  <data propertyName="stateName" xml:space="preserve">
+  <data name="stateName" xml:space="preserve">
     <value>Имя:</value>
   </data>
-  <data propertyName="stepDebugString" xml:space="preserve">
+  <data name="stepDebugString" xml:space="preserve">
     <value>Шаг</value>
   </data>
-  <data propertyName="string" xml:space="preserve">
+  <data name="string" xml:space="preserve">
     <value>Строка</value>
   </data>
-  <data propertyName="String1" xml:space="preserve">
+  <data name="String1" xml:space="preserve">
     <value />
   </data>
-  <data propertyName="testResult" xml:space="preserve">
+  <data name="testResult" xml:space="preserve">
     <value>Результат:</value>
   </data>
-  <data propertyName="Toolbar.DeleteModeToolTip" xml:space="preserve">
+  <data name="Toolbar.DeleteModeToolTip" xml:space="preserve">
     <value>Удаляйте состояния и переходы по клику  (D)</value>
   </data>
-  <data propertyName="Toolbar.EditModeToolTip" xml:space="preserve">
+  <data name="Toolbar.EditModeToolTip" xml:space="preserve">
     <value>Размещайте новые состояния и переходы по клику   (E)</value>
   </data>
-  <data propertyName="Toolbar.SelectModeToolTip" xml:space="preserve">
+  <data name="Toolbar.SelectModeToolTip" xml:space="preserve">
     <value>Размещайте состояние и вводите значения свойств  (S)</value>
   </data>
-  <data propertyName="Types.FSM" xml:space="preserve">
+  <data name="Types.FSM" xml:space="preserve">
     <value>Конечный автомат</value>
   </data>
 </root>

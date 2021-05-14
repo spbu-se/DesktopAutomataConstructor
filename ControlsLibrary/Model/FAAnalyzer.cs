@@ -36,7 +36,6 @@ namespace ControlsLibrary.Model
         /// </summary>
         public static FATypeEnum GetType(BidirectionalGraph<NodeViewModel, EdgeViewModel> graph)
         {
-
             foreach (var edge in graph.Edges)
             {
                 if (edge.IsEpsilon)
