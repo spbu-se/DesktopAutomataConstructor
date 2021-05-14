@@ -18,10 +18,23 @@ namespace ControlsLibrary.Controls.TestPanel
     /// </summary>
     public class TestPanelViewModel : BaseViewModel
     {
+        private FAExecutor executor;
+
         /// <summary>
         /// Sets FA executor model to execute tests on it
         /// </summary>
-        public FAExecutor Executor { private get; set; }
+        public FAExecutor Executor
+        {
+            private get => executor;
+            set
+            {
+                executor = value;
+                foreach (var test in Tests)
+                {
+                    test.Executor = executor;
+                }
+            }
+        }
 
         public TestPanelViewModel()
         {
@@ -46,40 +59,35 @@ namespace ControlsLibrary.Controls.TestPanel
         }
 
         /// <summary>
-        /// Deserializes tests data fromthe file by the given path
+        /// Deserializes tests data from the file by the given path
         /// </summary>
         /// <param name="path">Path of the file to open</param>
         public void Open(string path)
         {
             Tests.Clear();
-            using (FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var textReader = new StreamReader(stream);
+            var deserializer = new YAXSerializer(typeof(List<TestSerializationData>));
+            foreach (var test in (List<TestSerializationData>)deserializer.Deserialize(textReader))
             {
-                var deserializer = new YAXSerializer(typeof(List<TestSerializationData>));
-                using (var textReader = new StreamReader(stream))
-                {
-                    var datas = (List<TestSerializationData>)deserializer.Deserialize(textReader);
-                    foreach (var test in datas)
-                    {
-                        AddTest(test.Result, test.TestString, test.ShouldReject);
-                    }
-                }
+                AddTest(test.Result, test.TestString, test.ShouldReject);
             }
         }
 
         /// <summary>
         /// Number of tests with positive actual result
         /// </summary>
-        public int NumberOfPassedTests { get => Tests.Count(test => test.Result == ResultEnum.Passed); }
+        public int NumberOfPassedTests => Tests.Count(test => test.Result == ResultEnum.Passed);
 
         /// <summary>
         /// Number of tests with negative actual result
         /// </summary>
-        public int NumberOfFailedTests { get => Tests.Count(test => test.Result == ResultEnum.Failed); }
+        public int NumberOfFailedTests => Tests.Count(test => test.Result == ResultEnum.Failed);
 
         /// <summary>
         /// Number of tests which was not runned
         /// </summary>
-        public int NumberOfNotRunnedTests { get => Tests.Count(test => test.Result == ResultEnum.NotRunned); }
+        public int NumberOfNotRunnedTests => Tests.Count(test => test.Result == ResultEnum.NotRunned);
 
         /// <summary>
         /// Hides test panel data
@@ -93,7 +101,7 @@ namespace ControlsLibrary.Controls.TestPanel
         private bool isHidden = true;
 
         /// <summary>
-        /// Gets or sets hidding mode
+        /// Gets or sets hiding mode
         /// </summary>
         public bool IsHidden { get => isHidden; set => Set(ref isHidden, value); }
 
@@ -108,7 +116,7 @@ namespace ControlsLibrary.Controls.TestPanel
         }
 
         private bool CanRunAllTestsCommandExecute(object p)
-            => Tests != null;
+            => Tests != null && Executor != null;
 
         /// <summary>
         /// Collection of tests data
@@ -130,7 +138,7 @@ namespace ControlsLibrary.Controls.TestPanel
         }
 
         /// <summary>
-        /// Handles changing of result in some test view nodel
+        /// Handles changing of result in some test view model
         /// </summary>
         private void UpdateStorage(object sender, PropertyChangedEventArgs e)
         {

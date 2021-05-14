@@ -34,11 +34,8 @@ namespace ControlsLibrary.Controls.TypeAnalyzer
         /// </summary>
         public void GraphEdited(object sender, EventArgs e)
         {
-            type = FAAnalyzer.GetType(Graph);
             OnPropertyChanged(nameof(StringType));
         }
-
-        private FATypeEnum type = FATypeEnum.DFA;
 
         /// <summary>
         /// Returns current FA type converted into the string
@@ -47,7 +44,7 @@ namespace ControlsLibrary.Controls.TypeAnalyzer
         {
             get
             {
-                switch (type)
+                switch (FAAnalyzer.GetType(Graph))
                 {
                     case (FATypeEnum.DFA):
                         {

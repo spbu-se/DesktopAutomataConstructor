@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-
-namespace ControlsLibrary.Controls.TypeAnalyzer
+﻿namespace ControlsLibrary.Controls.TypeAnalyzer
 {
     /// <summary>
     /// Interaction logic for TypeAnalyzer.xaml
     /// </summary>
-    public partial class TypeAnalyzer : UserControl
+    public partial class TypeAnalyzer
     {
         public TypeAnalyzer()
         {

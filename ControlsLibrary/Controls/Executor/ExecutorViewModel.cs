@@ -21,7 +21,7 @@ namespace ControlsLibrary.Controls.Executor
         /// </summary>
         public FAExecutor Executor { private get; set; }
 
-        private bool inSimulation = false;
+        private bool inSimulation;
 
         /// <summary>
         /// Returns true if executor in the simulation state else false
@@ -35,7 +35,7 @@ namespace ControlsLibrary.Controls.Executor
 
         private void OnStartDebugCommandExecuted(object p)
         {
-            if (InputString == null || InputString == "")
+            if (string.IsNullOrEmpty(InputString))
             {
                 return;
             }
@@ -49,7 +49,7 @@ namespace ControlsLibrary.Controls.Executor
         }
 
         private bool CanStartDebugCommandExecute(object p)
-            => true;
+            => string.IsNullOrEmpty(InputString);
 
         /// <summary>
         /// Resets executor state to initial
@@ -122,7 +122,7 @@ namespace ControlsLibrary.Controls.Executor
 
         private bool CanRunCommandExecute(object p)
         {
-            return !inSimulation;
+            return !inSimulation && Executor != null;
         }
 
         private string inputString = "";
@@ -190,16 +190,18 @@ namespace ControlsLibrary.Controls.Executor
         /// <summary>
         /// The result converted into the string type
         /// </summary>
-        public string StringResult { get => ResultPrinter.PrintResult(Result); }
+        public string StringResult => ResultPrinter.PrintResult(Result);
 
         public ExecutorViewModel()
         {
             #region Commands
+
             StartDebugCommand = new RelayCommand(OnStartDebugCommandExecuted, CanStartDebugCommandExecute);
             DropDebugCommand = new RelayCommand(OnDropDebugCommandExecuted, CanDropDebugCommandExecute);
             StepInCommand = new RelayCommand(OnStepInCommandExecuted, CanStepInCommandExecute);
             RunCommand = new RelayCommand(OnRunCommandExecuted, CanRunCommandExecute);
-            #endregion
+
+            #endregion Commands
         }
     }
 }

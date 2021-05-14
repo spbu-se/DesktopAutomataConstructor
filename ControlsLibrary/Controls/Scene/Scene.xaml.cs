@@ -17,15 +17,14 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ControlsLibrary.Controls.Scene
 {
     /// <summary>
-    /// Visuzlizes a graph and provides editing of a graph
+    /// Visualizes a graph and provides editing of a graph
     /// </summary>
-    public partial class Scene : UserControl
+    public partial class Scene
     {
         private TypeAnalyzerViewModel typeAnalyzer;
 
@@ -79,42 +78,45 @@ namespace ControlsLibrary.Controls.Scene
         /// </summary>
         private void InSimulationChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ExecutorViewModel.InSimulation))
+            if (e.PropertyName != nameof(ExecutorViewModel.InSimulation))
             {
-                ClearSelectMode(true);
-                ClearEditMode();
-                foreach (var node in graphArea.LogicCore.Graph.Vertices)
-                {
-                    node.EditionAvailable = !ExecutorViewModel.InSimulation;
-                }
+                return;
+            }
 
-                foreach (var edge in graphArea.LogicCore.Graph.Edges)
-                {
-                    edge.EditionAvailable = !ExecutorViewModel.InSimulation;
-                }
+            ClearSelectMode(true);
+            ClearEditMode();
+            foreach (var node in graphArea.LogicCore.Graph.Vertices)
+            {
+                node.EditionAvailable = !ExecutorViewModel.InSimulation;
+            }
+
+            foreach (var edge in graphArea.LogicCore.Graph.Edges)
+            {
+                edge.EditionAvailable = !ExecutorViewModel.InSimulation;
             }
         }
 
         /// <summary>
-        /// Updates isAcutal property values in nodes of the graph if executor state changed
+        /// Updates isActual property values in nodes of the graph if executor state changed
         /// </summary>
         private void UpdateActualStates(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ExecutorViewModel.ActualStates))
+            if (e.PropertyName != nameof(ExecutorViewModel.ActualStates))
             {
-                foreach (var node in graphArea.LogicCore.Graph.Vertices)
-                {
-                    node.IsActual = false;
-                }
-                foreach (var stateId in executorViewModel.ActualStates)
-                {
-                    var node = graphArea.LogicCore.Graph.Vertices.FirstOrDefault(v => v.ID == stateId);
-                    if (node != null)
-                    {
-                        node.IsActual = true;
-                    }
-                }
+                return;
             }
+            foreach (var node in graphArea.LogicCore.Graph.Vertices)
+            {
+                node.IsActual = false;
+            }
+            executorViewModel.ActualStates.ForEach(stateId =>
+            {
+                var node = graphArea.LogicCore.Graph.Vertices.FirstOrDefault(v => v.ID == stateId);
+                if (node != null)
+                {
+                    node.IsActual = true;
+                }
+            });
         }
 
         private ExecutorViewModel executorViewModel;
@@ -165,7 +167,7 @@ namespace ControlsLibrary.Controls.Scene
         /// </summary>
         private void EdgeEdited(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(EdgeViewModel.TransitionTokens)|| e.PropertyName == nameof(EdgeViewModel.IsEpsilon))
+            if (e.PropertyName == nameof(EdgeViewModel.TransitionTokens) || e.PropertyName == nameof(EdgeViewModel.IsEpsilon))
             {
                 GraphEdited?.Invoke(this, EventArgs.Empty);
             }
@@ -178,18 +180,18 @@ namespace ControlsLibrary.Controls.Scene
         public void Save(string path)
         {
             var datas = graphArea.ExtractSerializationData();
-            foreach (var data in datas)
+            graphArea.ExtractSerializationData().ForEach(data =>
             {
                 if (data.Data.GetType() == typeof(NodeViewModel))
                 {
                     data.HasLabel = false;
                 }
-            }
+            });
             FileServiceProviderWpf.SerializeDataToFile(path, datas);
         }
 
         /// <summary>
-        /// Returs if graph can be saved or not
+        /// Returns if graph can be saved or not
         /// </summary>
         /// <returns>True if there are more than 0 vertices</returns>
         public bool CanSave()
@@ -230,21 +232,27 @@ namespace ControlsLibrary.Controls.Scene
         }
 
         /// <summary>
-        /// Handles application hotkeys
+        /// Handles application hot keys
         /// </summary>
         public void OnSceneKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.D)
+            switch (e.Key)
             {
-                toolBar.SelectedTool = SelectedTool.Delete;
-            }
-            if (e.Key == Key.S)
-            {
-                toolBar.SelectedTool = SelectedTool.Select;
-            }
-            if (e.Key == Key.E)
-            {
-                toolBar.SelectedTool = SelectedTool.Edit;
+                case Key.D:
+                    {
+                        toolBar.SelectedTool = SelectedTool.Delete;
+                        return;
+                    }
+                case Key.S:
+                    {
+                        toolBar.SelectedTool = SelectedTool.Select;
+                        return;
+                    }
+                case Key.E:
+                    {
+                        toolBar.SelectedTool = SelectedTool.Edit;
+                        return;
+                    }
             }
         }
 
@@ -258,8 +266,11 @@ namespace ControlsLibrary.Controls.Scene
             ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Hidden);
             zoomControl.MouseDown += OnSceneMouseDown;
 
-            using var deletionCursorStream = Application.GetResourceStream(new Uri("pack://application:,,,/ControlsLibrary;component/Controls/Scene/Assets/deletionCursor.cur", UriKind.RelativeOrAbsolute)).Stream;
-            deletionCursor = new Cursor(deletionCursorStream);
+            using var deletionCursorStream = Application.GetResourceStream(new Uri("pack://application:,,,/ControlsLibrary;component/Controls/Scene/Assets/deletionCursor.cur", UriKind.RelativeOrAbsolute))?.Stream;
+            if (deletionCursorStream != null)
+            {
+                deletionCursor = new Cursor(deletionCursorStream);
+            }
         }
 
         //TODO: learn how to extract drag information from the graphArea
@@ -305,14 +316,16 @@ namespace ControlsLibrary.Controls.Scene
         /// <param name="target">Target vertex</param>
         private void UpdateEdgeRoutingPoints(NodeViewModel source, NodeViewModel target)
         {
-            var parralelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == target && e.Target == source);
-            if (parralelEdge != null)
+            var parallelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == target && e.Target == source);
+            if (parallelEdge == null)
             {
-                var newEdge = new EdgeViewModel(parralelEdge.Source, parralelEdge.Target) { TransitionTokensString = parralelEdge.TransitionTokensString };
-                var ec = new EdgeControl(graphArea.VertexList[parralelEdge.Source], graphArea.VertexList[parralelEdge.Target], newEdge);
-                graphArea.RemoveEdge(parralelEdge, true);
-                graphArea.InsertEdgeAndData(newEdge, ec, 0, true);
+                return;
             }
+
+            var newEdge = new EdgeViewModel(parallelEdge.Source, parallelEdge.Target) { TransitionTokensString = parallelEdge.TransitionTokensString };
+            var ec = new EdgeControl(graphArea.VertexList[parallelEdge.Source], graphArea.VertexList[parallelEdge.Target], newEdge);
+            graphArea.RemoveEdge(parallelEdge, true);
+            graphArea.InsertEdgeAndData(newEdge, ec, 0, true);
         }
 
         /// <summary>
@@ -326,13 +339,18 @@ namespace ControlsLibrary.Controls.Scene
                 {
                     return;
                 }
-                var edgeViewModel = args.EdgeControl.Edge as EdgeViewModel;
+                var edgeViewModel = (EdgeViewModel)args.EdgeControl.Edge;
+
+                if (edgeViewModel == null)
+                {
+                    return;
+                }
+
                 var source = edgeViewModel.Source;
                 var target = edgeViewModel.Target;
                 graphArea.RemoveEdge(edgeViewModel, true);
                 UpdateEdgeRoutingPoints(source, target);
                 GraphEdited?.Invoke(this, EventArgs.Empty);
-                return;
             }
         }
 
@@ -354,7 +372,7 @@ namespace ControlsLibrary.Controls.Scene
                         return;
                     }
                     var position = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
-                    
+
                     position.Offset(-60, -60); //Offset should be the half of the vertex controls width
                     var vc = CreateVertexControl(position);
                     if (selectedVertex != null)
@@ -376,7 +394,7 @@ namespace ControlsLibrary.Controls.Scene
         {
             foreach (var edge in graphArea.EdgesList.Where(e => e.Value.Source == args.VertexControl || e.Value.Target == args.VertexControl))
             {
-                AvoidParralelEdges(edge.Value);
+                AvoidParallelEdges(edge.Value);
             }
         }
 
@@ -409,7 +427,7 @@ namespace ControlsLibrary.Controls.Scene
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
-            AvoidParralelEdges(ec);
+            AvoidParallelEdges(ec);
 
             HighlightBehaviour.SetHighlighted(selectedVertex, false);
             selectedVertex = null;
@@ -420,48 +438,53 @@ namespace ControlsLibrary.Controls.Scene
         /// Creates edge routing points to avoid overlapping of an edge by a parallel one
         /// </summary>
         /// <param name="edgeControl">Edge control which was overlapped or overlaps other</param>
-        private void AvoidParralelEdges(EdgeControl edgeControl)
+        private void AvoidParallelEdges(EdgeControl edgeControl)
         {
             var edge = edgeControl.Edge as EdgeViewModel;
-            var parralelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == edge.Target && edge.Source == e.Target);
-
-            if (parralelEdge != null)
+            if (edge == null)
             {
-                var sourcePos = edgeControl.Source.GetCenterPosition().ToGraphX();
-                var targetPos = edgeControl.Target.GetCenterPosition().ToGraphX();
-
-                var middleX = (sourcePos.X + targetPos.X) / 2;
-                var middleY = (sourcePos.Y + targetPos.Y) / 2;
-
-                var distance = Geometry.GetDistance(sourcePos, targetPos);
-                var diagonal = Math.Min(Math.Max(distance / 25, 20), 80);
-
-                var bypassPoint1 = new GraphX.Measure.Point(middleX, middleY);
-                var bypassPoint2 = new GraphX.Measure.Point(middleX, middleY);
-
-                if ((sourcePos.X - targetPos.X) * (sourcePos.Y - targetPos.Y) > 0)
-                {
-                    bypassPoint1.X -= diagonal;
-                    bypassPoint1.Y += diagonal;
-                    bypassPoint2.X += diagonal;
-                    bypassPoint2.Y -= diagonal;
-                }
-                else
-                {
-                    bypassPoint1.X -= diagonal;
-                    bypassPoint1.Y -= diagonal;
-                    bypassPoint2.X += diagonal;
-                    bypassPoint2.Y += diagonal;
-                }
-                new GraphX.Measure.Point(middleX - diagonal, middleY);
-
-                edge.RoutingPoints = new GraphX.Measure.Point[] { sourcePos, bypassPoint1, targetPos };
-                parralelEdge.RoutingPoints = new GraphX.Measure.Point[] { targetPos, bypassPoint2, targetPos };
-                graphArea.UpdateAllEdges();
+                return;
             }
+            var parallelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == edge.Target && edge.Source == e.Target);
+
+            if (parallelEdge == null)
+            {
+                return;
+            }
+
+            var sourcePos = edgeControl.Source.GetCenterPosition().ToGraphX();
+            var targetPos = edgeControl.Target.GetCenterPosition().ToGraphX();
+
+            var middleX = (sourcePos.X + targetPos.X) / 2;
+            var middleY = (sourcePos.Y + targetPos.Y) / 2;
+
+            var distance = Geometry.GetDistance(sourcePos, targetPos);
+            var diagonal = Math.Min(Math.Max(distance / 25, 20), 80);
+
+            var bypassPoint1 = new GraphX.Measure.Point(middleX, middleY);
+            var bypassPoint2 = new GraphX.Measure.Point(middleX, middleY);
+
+            if ((sourcePos.X - targetPos.X) * (sourcePos.Y - targetPos.Y) > 0)
+            {
+                bypassPoint1.X -= diagonal;
+                bypassPoint1.Y += diagonal;
+                bypassPoint2.X += diagonal;
+                bypassPoint2.Y -= diagonal;
+            }
+            else
+            {
+                bypassPoint1.X -= diagonal;
+                bypassPoint1.Y -= diagonal;
+                bypassPoint2.X += diagonal;
+                bypassPoint2.Y += diagonal;
+            }
+
+            edge.RoutingPoints = new[] { sourcePos, bypassPoint1, targetPos };
+            parallelEdge.RoutingPoints = new[] { targetPos, bypassPoint2, targetPos };
+            graphArea.UpdateAllEdges();
         }
 
-        private int numberOfVertex = 0;
+        private int numberOfVertex;
 
         private VertexControl CreateVertexControl(Point position)
         {
@@ -476,35 +499,42 @@ namespace ControlsLibrary.Controls.Scene
             return vc;
         }
 
-        private static Cursor deletionCursor;
+        private Cursor deletionCursor;
 
         /// <summary>
         /// Handles changing of the selected tool
         /// </summary>
         private void ToolSelected(object sender, EventArgs e)
         {
-            if (Toolbar.SelectedTool == SelectedTool.Delete)
+            switch (Toolbar.SelectedTool)
             {
-                zoomControl.Cursor = deletionCursor;
-                ClearEditMode();
-                ClearSelectMode();
-                graphArea.SetEdgesDrag(true);
-                return;
-            }
-            if (Toolbar.SelectedTool == SelectedTool.Edit)
-            {
-                zoomControl.Cursor = Cursors.Pen;
-                ClearSelectMode();
-                graphArea.SetEdgesDrag(false);
-                return;
-            }
-            if (Toolbar.SelectedTool == SelectedTool.Select)
-            {
-                zoomControl.Cursor = Cursors.Hand;
-                ClearEditMode();
-                graphArea.SetEdgesDrag(false);
-                graphArea.SetVerticesDrag(true, true);
-                return;
+                case SelectedTool.Delete:
+                    {
+                        zoomControl.Cursor = deletionCursor;
+                        ClearEditMode();
+                        ClearSelectMode();
+                        graphArea.SetEdgesDrag(true);
+                        return;
+                    }
+                case SelectedTool.Edit:
+                    {
+                        zoomControl.Cursor = Cursors.Pen;
+                        ClearSelectMode();
+                        graphArea.SetEdgesDrag(false);
+                        return;
+                    }
+                case SelectedTool.Select:
+                    {
+                        zoomControl.Cursor = Cursors.Hand;
+                        ClearEditMode();
+                        graphArea.SetEdgesDrag(false);
+                        graphArea.SetVerticesDrag(true, true);
+                        return;
+                    }
+                default:
+                    {
+                        return;
+                    }
             }
         }
 
@@ -559,11 +589,13 @@ namespace ControlsLibrary.Controls.Scene
                             break;
                         }
                     default:
-                        if (Toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
                         {
-                            SelectVertex(args.VertexControl);
+                            if (Toolbar.SelectedTool == SelectedTool.Select && args.Modifiers == ModifierKeys.Control)
+                            {
+                                SelectVertex(args.VertexControl);
+                            }
+                            break;
                         }
-                        break;
                 }
             }
 
@@ -610,14 +642,8 @@ namespace ControlsLibrary.Controls.Scene
 
         public void Dispose()
         {
-            if (editor != null)
-            {
-                editor.Dispose();
-            }
-            if (graphArea != null)
-            {
-                graphArea.Dispose();
-            }
+            editor?.Dispose();
+            graphArea?.Dispose();
         }
     }
 }

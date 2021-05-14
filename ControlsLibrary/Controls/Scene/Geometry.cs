@@ -6,7 +6,7 @@ namespace ControlsLibrary.Controls.Scene
     /// <summary>
     /// Utility for handling various geometry-related tasks like determining distance between point and line.
     /// </summary>
-    internal static class Geometry
+    public static class Geometry
     {
         private const double delta = 3;
 

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsLibrary", "Controls
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{91B1082F-A9FD-4FAA-B28F-BC42D9F4CC3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlsLibrary.Tests", "ControlsLibrary.Tests\ControlsLibrary.Tests.csproj", "{41EFB745-FD52-4CD6-971D-B347405BEDE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{ADDE8E8F-851C-4788-BBF1-674F85D42525}.Release|Any CPU.Build.0 = Release|Any CPU
 		{91B1082F-A9FD-4FAA-B28F-BC42D9F4CC3C}.Debug|Any CPU.ActiveCfg = Debug
 		{91B1082F-A9FD-4FAA-B28F-BC42D9F4CC3C}.Release|Any CPU.ActiveCfg = Release
+		{41EFB745-FD52-4CD6-971D-B347405BEDE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41EFB745-FD52-4CD6-971D-B347405BEDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41EFB745-FD52-4CD6-971D-B347405BEDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41EFB745-FD52-4CD6-971D-B347405BEDE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

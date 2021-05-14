@@ -1,0 +1,17 @@
+<ListOfTestSerializationData>
+  <TestSerializationData>
+    <TestString>1</TestString>
+    <ShouldReject>False</ShouldReject>
+    <Result>NotRunned</Result>
+  </TestSerializationData>
+  <TestSerializationData>
+    <TestString>11</TestString>
+    <ShouldReject>True</ShouldReject>
+    <Result>NotRunned</Result>
+  </TestSerializationData>
+  <TestSerializationData>
+    <TestString>0</TestString>
+    <ShouldReject>False</ShouldReject>
+    <Result>NotRunned</Result>
+  </TestSerializationData>
+</ListOfTestSerializationData>

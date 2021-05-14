@@ -26,14 +26,22 @@ namespace ControlsLibrary.Controls.Toolbar
                 switch (selectedTool)
                 {
                     case SelectedTool.Select:
-                        SelectToolSelected = true;
-                        return;
+                        {
+                            SelectToolSelected = true;
+                            return;
+                        }
+
                     case SelectedTool.Delete:
-                        DeleteToolSelected = true;
-                        return;
+                        {
+                            DeleteToolSelected = true;
+                            return;
+                        }
+
                     case SelectedTool.Edit:
-                        EditToolSelected = true;
-                        return;
+                        {
+                            EditToolSelected = true;
+                            return;
+                        }
                 }
             }
         }
