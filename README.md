@@ -3,4 +3,4 @@ Repository for "Automata Constructor" project, aimed at creating educational too
 
  | AppVeyor       |
  | -------------- |
-[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/y00q7839mvsd9h65?svg=true)](https://ci.appveyor.com/project/Alexander-Ploskin/desktopautomataconstructor)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/Alexander-Ploskin/desktopautomataconstructor?svg=true)](https://ci.appveyor.com/project/Alexander-Ploskin/desktopautomataconstructor)
