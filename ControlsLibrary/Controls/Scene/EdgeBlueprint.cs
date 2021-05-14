@@ -31,10 +31,10 @@ namespace ControlsLibrary.Controls.Scene
         /// The basic constructor
         /// </summary>
         /// <param name="source">Source vertex of a new edge</param>
-        /// <param name="brush">Brush to draw a bluepring</param>
+        /// <param name="brush">Brush to draw a blueprint</param>
         public EdgeBlueprint(VertexControl source, Brush brush)
         {
-            EdgePath = new Path() { Stroke = brush, Data = new LineGeometry() };
+            EdgePath = new Path { Stroke = brush, Data = new LineGeometry() };
             Source = source;
         }
 
@@ -54,7 +54,7 @@ namespace ControlsLibrary.Controls.Scene
         private void UpdateGeometry(Point start, Point finish)
         {
             EdgePath.Data = new LineGeometry(start, finish);
-            (EdgePath.Data as LineGeometry).Freeze();
+            EdgePath.Data.Freeze();
         }
 
         public void Dispose()

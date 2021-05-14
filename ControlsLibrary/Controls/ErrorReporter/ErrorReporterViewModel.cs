@@ -31,7 +31,7 @@ namespace ControlsLibrary.Controls.ErrorReporter
         }
 
         /// <summary>
-        /// Handles graph data changind events
+        /// Handles graph data changing events
         /// </summary>
         public void GraphEdited(object sender, EventArgs e)
         {
@@ -62,15 +62,9 @@ namespace ControlsLibrary.Controls.ErrorReporter
         /// <summary>
         /// Gets a list of errors in the model
         /// </summary>
-        public ObservableCollection<string> Errors { get => new ObservableCollection<string>(errors); }
+        public ObservableCollection<string> Errors => new ObservableCollection<string>(errors);
 
-        public bool HasError
-        {
-            get
-            {
-                return Errors.Count != 0;
-            }
-        }
+        public bool HasError => Errors.Count != 0;
 
         public void OnPropertyChanged([CallerMemberName] string name = null)
         {

@@ -1,11 +1,9 @@
-﻿using NUnit.Framework;
-using ControlsLibrary.Controls.TestPanel;
-using ControlsLibrary.ViewModel;
+﻿using ControlsLibrary.Controls.TestPanel;
 using ControlsLibrary.Model;
+using ControlsLibrary.ViewModel;
+using NUnit.Framework;
 using QuickGraph;
 using System.Linq;
-using System;
-using System.ComponentModel;
 
 namespace ControlsLibrary.Tests
 {
@@ -49,7 +47,7 @@ namespace ControlsLibrary.Tests
             var tests = new TestPanelViewModel();
             Assert.False(tests.RunAllTestsCommand.CanExecute(null));
             var notified = false;
-            tests.PropertyChanged += (object sender, PropertyChangedEventArgs e) => notified = true;
+            tests.PropertyChanged += (sender, e) => notified = true;
             tests.Open("../../../Files/SimpleTests.xml");
             tests.Executor = executor;
             Assert.True(tests.Tests.All(test => test.Result == ResultEnum.NotRunned));
@@ -65,7 +63,7 @@ namespace ControlsLibrary.Tests
             var tests = new TestPanelViewModel();
             Assert.False(tests.RunAllTestsCommand.CanExecute(null));
             var notified = false;
-            tests.PropertyChanged += (object sender, PropertyChangedEventArgs e) => notified = true;
+            tests.PropertyChanged += (sender, e) => notified = true;
             tests.Open("../../../Files/SimpleTests.xml");
             tests.Executor = executor;
             Assert.True(tests.Tests.Any(test => test.Result == ResultEnum.NotRunned));

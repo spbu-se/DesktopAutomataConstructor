@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
-using ControlsLibrary.Controls.TypeAnalyzer;
-using QuickGraph;
-using ControlsLibrary.ViewModel;
+﻿using ControlsLibrary.Controls.TypeAnalyzer;
 using ControlsLibrary.Properties.Langs;
-using System.Linq;
+using ControlsLibrary.ViewModel;
+using NUnit.Framework;
+using QuickGraph;
 using System.ComponentModel;
+using System.Linq;
 
 namespace ControlsLibrary.Tests
 {

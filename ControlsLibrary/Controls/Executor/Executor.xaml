@@ -1,47 +1,46 @@
 ﻿<UserControl x:Class="ControlsLibrary.Controls.Executor.Executor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ControlsLibrary.Controls.Executor"
              xmlns:languages="clr-namespace:ControlsLibrary.Properties.Langs"
-             mc:Ignorable="d" 
-             >
+             mc:Ignorable="d">
     <UserControl.DataContext>
-        <local:ExecutorViewModel/>
+        <local:ExecutorViewModel />
     </UserControl.DataContext>
     <UserControl.Resources>
         <DataTemplate x:Key="InSimulation">
             <TextBlock Width="100">
-                <Run Text="{Binding PassedString}" TextDecorations="Strikethrough"/>
-                <Run Text="{Binding CurrentToken}" FontWeight="Bold"/>
-                <Run Text="{Binding NotPassedString}" FontSize="10"/>
+                <Run Text="{Binding PassedString}" TextDecorations="Strikethrough" />
+                <Run Text="{Binding CurrentToken}" FontWeight="Bold" />
+                <Run Text="{Binding NotPassedString}" FontSize="10" />
             </TextBlock>
         </DataTemplate>
         <DataTemplate x:Key="NotInSimulation">
-            <TextBox Width="100" Text="{Binding InputString, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InSimulation}"/>
+            <TextBox Width="100" Text="{Binding InputString, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InSimulation}" />
         </DataTemplate>
         <Style x:Key="TextEditorStyle" TargetType="ContentPresenter">
-            <Setter Property="ContentTemplate" Value="{StaticResource NotInSimulation}"/>
+            <Setter Property="ContentTemplate" Value="{StaticResource NotInSimulation}" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding InSimulation}" Value="True">
-                    <Setter Property="ContentTemplate" Value="{StaticResource InSimulation}"/>
+                    <Setter Property="ContentTemplate" Value="{StaticResource InSimulation}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Label Content="{x:Static languages:Lang.debugString}"/>
-            <ContentPresenter Style="{StaticResource TextEditorStyle}" Content="{Binding}"/>
-            <Button Content="{x:Static languages:Lang.runString}" Command="{Binding RunCommand}"/>
+            <Label Content="{x:Static languages:Lang.debugString}" />
+            <ContentPresenter Style="{StaticResource TextEditorStyle}" Content="{Binding}" />
+            <Button Content="{x:Static languages:Lang.runString}" Command="{Binding RunCommand}" />
             <ContentControl>
                 <ContentControl.Style>
                     <Style TargetType="ContentControl">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate>
-                                    <Button Content="{x:Static languages:Lang.startDebugString}" Command="{Binding StartDebugCommand}"/>
+                                    <Button Content="{x:Static languages:Lang.startDebugString}" Command="{Binding StartDebugCommand}" />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -50,7 +49,7 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate>
-                                            <Button Content="{x:Static languages:Lang.resetDebugString}" Command="{Binding DropDebugCommand}"/>
+                                            <Button Content="{x:Static languages:Lang.resetDebugString}" Command="{Binding DropDebugCommand}" />
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -59,9 +58,9 @@
                     </Style>
                 </ContentControl.Style>
             </ContentControl>
-            <Button Content="{x:Static languages:Lang.stepDebugString}" Command="{Binding StepInCommand}"/>
-            <Label Content="{x:Static languages:Lang.resultDebugString}"/>
-            <Label Content="{Binding StringResult}"/>
+            <Button Content="{x:Static languages:Lang.stepDebugString}" Command="{Binding StepInCommand}" />
+            <Label Content="{x:Static languages:Lang.resultDebugString}" />
+            <Label Content="{Binding StringResult}" />
         </StackPanel>
     </Grid>
 </UserControl>

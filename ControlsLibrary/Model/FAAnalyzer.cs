@@ -18,12 +18,12 @@ namespace ControlsLibrary.Model
         {
             var result = new List<string>();
 
-            if (!graph.Vertices.Any(v => v.IsInitial == true) && graph.VertexCount != 0)
+            if (graph.Vertices.All(v => !v.IsInitial) && graph.VertexCount != 0)
             {
                 result.Add(Lang.Errors_SetInitial);
             }
 
-            if (!graph.Vertices.Any(v => v.IsFinal == true) && graph.VertexCount != 0)
+            if (graph.Vertices.All(v => !v.IsFinal) && graph.VertexCount != 0)
             {
                 result.Add(Lang.Errors_SetAccepting);
             }
@@ -48,14 +48,14 @@ namespace ControlsLibrary.Model
             {
                 foreach (var edge2 in graph.Edges)
                 {
-                    if (edge1 != edge2 && edge1.Source == edge2.Source && edge1.TransitionTokens.Intersect(edge2.TransitionTokens).Count() > 0)
+                    if (edge1 != edge2 && edge1.Source == edge2.Source && edge1.TransitionTokens.Intersect(edge2.TransitionTokens).Any())
                     {
                         return FATypeEnum.NFA;
                     }
                 }
             }
 
-            if (graph.Vertices.Where(v => v.IsInitial).Count() > 1)
+            if (graph.Vertices.Count(v => v.IsInitial) > 1)
             {
                 return FATypeEnum.NFA;
             }

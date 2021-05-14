@@ -1,10 +1,9 @@
-﻿using NUnit.Framework;
+﻿using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Scene;
-using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.ViewModel;
-using System.Threading;
-using System;
+using NUnit.Framework;
 using System.Linq;
+using System.Threading;
 
 namespace ControlsLibrary.Tests
 {
@@ -13,44 +12,44 @@ namespace ControlsLibrary.Tests
         [Test]
         public void EmptySceneTest()
         {
-            Thread newWindowThread = new Thread(new ThreadStart(() =>
+            var newWindowThread = new Thread(new ThreadStart(() =>
             {
                 Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
                 var scene = new Scene();
                 var help = new ErrorReporterViewModel();
                 scene.ErrorReporter = help;
-                var path = "../../../Files/EmptyScene.xml";
+                const string path = "../../../Files/EmptyScene.xml";
                 scene.Save(path);
                 help.Graph.AddVertex(new NodeViewModel());
                 scene.Open(path);
                 Assert.True(help.Graph.VertexCount == 0 && help.Graph.EdgeCount == 0);
 
-                // start the Dispatcher processing  
+                // start the Dispatcher processing
                 System.Windows.Threading.Dispatcher.Run();
             }));
 
-            // set the apartment state  
+            // set the apartment state
             newWindowThread.SetApartmentState(ApartmentState.STA);
 
-            // make the thread a background thread  
+            // make the thread a background thread
             newWindowThread.IsBackground = true;
 
-            // start the thread  
+            // start the thread
             newWindowThread.Start();
         }
 
         [Test]
         public void SceneSerializationTest()
         {
-            Thread newWindowThread = new Thread(new ThreadStart(() =>
+            var newWindowThread = new Thread(new ThreadStart(() =>
             {
                 Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
                 var scene = new Scene();
                 var help = new ErrorReporterViewModel();
                 scene.ErrorReporter = help;
-                var path = "../../../Files/NotEmptyScene.xml";
-                var state1 = new NodeViewModel() { Name = "S1", IsInitial = true };
-                var state2 = new NodeViewModel() { Name = "S2", IsFinal = true };
+                const string path = "../../../Files/NotEmptyScene.xml";
+                var state1 = new NodeViewModel { Name = "S1", IsInitial = true };
+                var state2 = new NodeViewModel { Name = "S2", IsFinal = true };
                 help.Graph.AddVertex(state1);
                 help.Graph.AddVertex(state2);
                 var transition1 = new EdgeViewModel(state1, state2) { IsEpsilon = true, TransitionTokensString = "1" };
@@ -67,18 +66,18 @@ namespace ControlsLibrary.Tests
                 Assert.True(help.Graph.Vertices.FirstOrDefault(v => v.Name == "S1").IsInitial);
                 Assert.True(help.Graph.Vertices.FirstOrDefault(v => v.Name == "S2").IsFinal);
                 Assert.True(help.Graph.Edges.FirstOrDefault(v => v.TransitionTokensString == "1").IsEpsilon);
-                Assert.True(help.Graph.Edges.Any(v => v.TransitionTokensString== "0"));
-                // start the Dispatcher processing  
+                Assert.True(help.Graph.Edges.Any(v => v.TransitionTokensString == "0"));
+                // start the Dispatcher processing
                 System.Windows.Threading.Dispatcher.Run();
             }));
 
-            // set the apartment state  
+            // set the apartment state
             newWindowThread.SetApartmentState(ApartmentState.STA);
 
-            // make the thread a background thread  
+            // make the thread a background thread
             newWindowThread.IsBackground = true;
 
-            // start the thread  
+            // start the thread
             newWindowThread.Start();
         }
     }

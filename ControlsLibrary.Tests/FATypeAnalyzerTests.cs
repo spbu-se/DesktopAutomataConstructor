@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
-using ControlsLibrary.Model;
+﻿using ControlsLibrary.Model;
 using ControlsLibrary.ViewModel;
+using NUnit.Framework;
 using QuickGraph;
 
 namespace ControlsLibrary.Tests

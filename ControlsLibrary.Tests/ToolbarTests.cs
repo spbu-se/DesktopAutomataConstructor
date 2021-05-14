@@ -1,7 +1,6 @@
-using NUnit.Framework;
 using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Model;
-using System;
+using NUnit.Framework;
 
 namespace ControlsLibrary.Tests
 {
@@ -46,7 +45,7 @@ namespace ControlsLibrary.Tests
         public void SelectedToolChangedTest()
         {
             var eventExecuted = false;
-            toolbar.SelectedToolChanged += (object sender, EventArgs e) => eventExecuted = true;
+            toolbar.SelectedToolChanged += (sender, e) => eventExecuted = true;
             toolbar.DeleteToolSelected = true;
 
             Assert.True(eventExecuted);

@@ -1,10 +1,9 @@
-﻿using NUnit.Framework;
-using QuickGraph;
-using ControlsLibrary.Controls.Executor;
+﻿using ControlsLibrary.Controls.Executor;
 using ControlsLibrary.Model;
 using ControlsLibrary.ViewModel;
+using NUnit.Framework;
+using QuickGraph;
 using System.Collections.Generic;
-using System;
 using System.ComponentModel;
 using System.Linq;
 
@@ -64,7 +63,7 @@ namespace ControlsLibrary.Tests
 
             executorViewModel.PropertyChanged += CheckNotified;
             executorViewModel.InputString = "11010";
-            
+
             executorViewModel.StartDebugCommand.Execute(null);
             Assert.True(executorViewModel.InSimulation);
             Assert.True(notified);
@@ -95,7 +94,7 @@ namespace ControlsLibrary.Tests
         }
 
         [Test]
-        public void StepByStepExecutionOfNonDetermenisticAutomatonTest()
+        public void StepByStepExecutionOfNonDeterministicAutomatonTest()
         {
             var executorViewModel = new ExecutorViewModel() { Executor = executor };
             graph.Edges.FirstOrDefault(edge => edge.Source.ID == 1 && edge.Target.ID == 2).TransitionTokensString = "01";
@@ -118,7 +117,7 @@ namespace ControlsLibrary.Tests
         [Test]
         public void DropDebugTest()
         {
-            var executorViewModel = new ExecutorViewModel() { Executor = executor };
+            var executorViewModel = new ExecutorViewModel { Executor = executor };
 
             executorViewModel.InputString = "11010";
 

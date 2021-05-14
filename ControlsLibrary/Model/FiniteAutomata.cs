@@ -9,6 +9,7 @@ namespace ControlsLibrary.Model
     {
         public static readonly int ERROR_STATE = -1;
         public static readonly int EPSILON = 0;
+
         public static int ConvertToInt(char x, List<char> alp)
         {
             int y = alp.IndexOf(x) + 1;
@@ -29,6 +30,7 @@ namespace ControlsLibrary.Model
         public ResultEnum StepResult;
         private bool hasErrorState;
         public bool HasErrorState { get => hasErrorState; }
+
         public static List<string> GetDefaultStatNames(int n)
         {
             List<string> list = new List<string>();
@@ -39,6 +41,7 @@ namespace ControlsLibrary.Model
             }
             return list;
         }
+
         private List<int> GetNewStatesFromSingleState(int state, char x)
         {
             if (ConvertToInt(x, _alphabet) != ERROR_STATE)
@@ -91,8 +94,8 @@ namespace ControlsLibrary.Model
                 }
                 allStates = progressStates;
             }
-
         }
+
         private void DoSingleTransition(char x)
         {
             List<int> newCurrentStates = GetAllNewStates(_currentStates, x);
@@ -125,6 +128,7 @@ namespace ControlsLibrary.Model
             }
             return false;
         }
+
         public void SingleStep()
         {
             this.DoSingleTransition(_str[_strPosition]);
@@ -141,6 +145,7 @@ namespace ControlsLibrary.Model
                 }
             }
         }
+
         public bool CanDoStep()
         {
             if (_str.Length > _strPosition)
@@ -149,6 +154,7 @@ namespace ControlsLibrary.Model
             }
             return false;
         }
+
         public bool DoAllTransitions(String str)
         {
             ResetAutomata();
@@ -168,6 +174,7 @@ namespace ControlsLibrary.Model
             }
             return false;
         }
+
         public bool IsDeterminated()
         {
             foreach (KeyValuePair<int, List<int>[]> keyValue in _transitionTable)
@@ -182,6 +189,7 @@ namespace ControlsLibrary.Model
             }
             return true;
         }
+
         public FiniteAutomata(List<char> alphabet, Dictionary<int, List<int>[]> transitionTable, List<int> numOfInitialStates, List<int> acceptingStates)
         {
             this._alphabet = alphabet;
@@ -198,6 +206,7 @@ namespace ControlsLibrary.Model
         {
             return _currentStates;
         }
+
         public static FiniteAutomata AutomataABC()
         {
             List<char> alph = new List<char>() { 'a', 'b', 'c' };
@@ -263,6 +272,5 @@ namespace ControlsLibrary.Model
             }
             return new FiniteAutomata(automataAlphabet, table, initialStates, acceptingStates);
         }
-
     }
 }

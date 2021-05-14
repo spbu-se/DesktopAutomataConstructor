@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
-using ControlsLibrary.Model;
+﻿using ControlsLibrary.Model;
 using ControlsLibrary.ViewModel;
+using NUnit.Framework;
 using QuickGraph;
 
 namespace ControlsLibrary.Tests
@@ -27,7 +27,7 @@ namespace ControlsLibrary.Tests
             Assert.AreEqual(ResultEnum.Passed, executor.Execute("1"));
             Assert.AreEqual(ResultEnum.Failed, executor.Execute("0"));
         }
-        
+
         [Test]
         public void ChangedGraphFastExecutionTest()
         {

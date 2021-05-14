@@ -1,9 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace ControlsLibrary.Controls.Executor
+﻿namespace ControlsLibrary.Controls.Executor
 {
-
-    public partial class Executor : UserControl
+    public partial class Executor
     {
         public Executor()
         {

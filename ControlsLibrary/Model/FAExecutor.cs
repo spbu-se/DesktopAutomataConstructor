@@ -13,7 +13,7 @@ namespace ControlsLibrary.Model
         public BidirectionalGraph<NodeViewModel, EdgeViewModel> Graph { private get; set; }
 
         /// <summary>
-        /// Basic constructor 
+        /// Basic constructor
         /// </summary>
         /// <param name="graph"></param>
         public FAExecutor(BidirectionalGraph<NodeViewModel, EdgeViewModel> graph)
@@ -22,10 +22,10 @@ namespace ControlsLibrary.Model
         }
 
         /// <summary>
-        /// Gets result of execuction of the FA on the string
+        /// Gets result of execution of the FA on the string
         /// </summary>
         /// <param name="input">Input string</param>
-        /// <returns>Result of exection</returns>
+        /// <returns>Execution result</returns>
         public ResultEnum Execute(string input)
         {
             var errors = FAAnalyzer.GetErrors(Graph);
