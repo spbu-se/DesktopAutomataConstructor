@@ -8,7 +8,7 @@ Repository for "Automata Constructor" project, aimed at creating educational too
 ## Usage
 
 Now application can be used only for developing and visualization of DFA, NFA and Epsilon-NFA.
-See [Usage tutorial](https://github.com/spbu-se/DesktopAutomataConstructor/wiki) to get started with AutomataConstructor.
+See [Usage tutorial](https://github.com/spbu-se/DesktopAutomataConstructor/wiki/Usage-tutorial) to get started with AutomataConstructor.
 
 ## Build
 
