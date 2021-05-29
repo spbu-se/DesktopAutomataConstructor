@@ -16,6 +16,15 @@ namespace ControlsLibrary.ViewModel
     public class EdgeViewModel : EdgeBase<NodeViewModel>, INotifyPropertyChanged
     {
         /// <summary>
+        /// Constructor aimed only for deserialization
+        /// </summary>
+        public EdgeViewModel()
+            : base(null, null, 1)
+        {
+            InitCommands();
+        }
+
+        /// <summary>
         /// Constructor which gets two vertices and symbols of transition
         /// </summary>
         /// <param name="source">Source vertex</param>
