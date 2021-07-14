@@ -49,7 +49,7 @@ namespace ControlsLibrary.Controls.Executor
         }
 
         private bool CanStartDebugCommandExecute(object p)
-            => string.IsNullOrEmpty(InputString);
+            => !string.IsNullOrEmpty(InputString);
 
         /// <summary>
         /// Resets executor state to initial

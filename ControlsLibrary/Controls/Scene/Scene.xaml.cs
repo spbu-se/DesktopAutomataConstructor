@@ -513,7 +513,7 @@ namespace ControlsLibrary.Controls.Scene
                         zoomControl.Cursor = deletionCursor;
                         ClearEditMode();
                         ClearSelectMode();
-                        graphArea.SetEdgesDrag(true);
+                        graphArea.SetEdgesDrag(false);
                         return;
                     }
                 case SelectedTool.Edit:
