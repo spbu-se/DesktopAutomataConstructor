@@ -30,6 +30,7 @@ namespace ControlsLibrary.Model
         public ResultEnum StepResult;
         private bool hasErrorState;
         public bool HasErrorState { get => hasErrorState; }
+        public List<char> Alphabet => _alphabet;
 
         public static List<string> GetDefaultStatNames(int n)
         {
@@ -67,7 +68,7 @@ namespace ControlsLibrary.Model
             }
         }
 
-        private List<int> GetAllNewStates(List<int> states, char x)
+        public List<int> GetAllNewStates(List<int> states, char x)
         {
             List<int> result_list = new List<int>() { };
             foreach (int state in states)
@@ -77,7 +78,7 @@ namespace ControlsLibrary.Model
             return result_list;
         }
 
-        private List<int> EpsilonClosure(List<int> states)
+        public List<int> EpsilonClosure(List<int> states)
         {
             List<int> allStates = states;
             List<int> progressStates = new List<int>();

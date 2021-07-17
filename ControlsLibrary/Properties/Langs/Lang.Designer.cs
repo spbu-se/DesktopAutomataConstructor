@@ -79,6 +79,15 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The automaton is already deterministic.
+        /// </summary>
+        public static string alreadyDeterministic {
+            get {
+                return ResourceManager.GetString("alreadyDeterministic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Automata constructor.
         /// </summary>
         public static string AutomataConstructor_Name {

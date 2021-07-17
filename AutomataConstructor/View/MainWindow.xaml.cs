@@ -177,6 +177,19 @@ namespace AutomataConstructor
 
         #endregion OpenTests
 
+        #region ConvertNfaToDfa
+
+        public static RoutedCommand ConvertNfaToDfaCommand { get; set; } = new RoutedCommand("ConvertNfaToDfa", typeof(MainWindow));
+
+        private void OnConvertNfaToDfaExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            scene.ConvertNfaToDfa();
+        }
+
+        private void CanConvertNfaToDfaExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+
+        #endregion
+
         private void OnWindowClosing(object sender, CancelEventArgs e)
         {
             if (saved)
