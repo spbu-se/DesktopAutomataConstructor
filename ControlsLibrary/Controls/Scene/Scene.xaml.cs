@@ -180,7 +180,7 @@ namespace ControlsLibrary.Controls.Scene
         public void Save(string path)
         {
             var datas = graphArea.ExtractSerializationData();
-            graphArea.ExtractSerializationData().ForEach(data =>
+            datas.ForEach(data =>
             {
                 if (data.Data.GetType() == typeof(NodeViewModel))
                 {
