@@ -48,14 +48,14 @@ namespace ControlsLibrary.Controls.TestPanel
         /// Saves tests into the file by the given path
         /// </summary>
         /// <param name="path">Path of the file to save</param>
-        public void Save(string path)
+        public async void Save(string path)
         {
             var data = new List<TestSerializationData>();
             foreach (var test in Tests)
             {
                 data.Add(new TestSerializationData() { Result = test.Result, ShouldReject = test.ShouldReject, TestString = test.TestString });
             }
-            FileServiceProviderWpf.SerializeDataToFile(path, data);
+            await FileServiceProviderWpf.SerializeDataToFile(path, data);
         }
 
         /// <summary>
