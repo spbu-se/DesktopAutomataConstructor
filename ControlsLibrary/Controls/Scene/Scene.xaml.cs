@@ -1,4 +1,5 @@
-﻿using ControlsLibrary.Controls.ErrorReporter;
+﻿
+using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Executor;
 using ControlsLibrary.Controls.TestPanel;
 using ControlsLibrary.Controls.Toolbar;
@@ -14,10 +15,13 @@ using GraphX.Logic.Algorithms.OverlapRemoval;
 using GraphX.Logic.Models;
 using QuickGraph;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
+
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -229,6 +233,8 @@ namespace ControlsLibrary.Controls.Scene
             SetZoomControlProperties();
             SetGraphAreaProperties();
             editor = new EditorObjectManager(graphArea, zoomControl);
+            this.VertexRemoved += SingleVertexRemoved;
+            this.SelectionStarted += StartSelection;
         }
 
         /// <summary>
@@ -265,6 +271,8 @@ namespace ControlsLibrary.Controls.Scene
             zoomControl.IsAnimationEnabled = false;
             ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Hidden);
             zoomControl.MouseDown += OnSceneMouseDown;
+            zoomControl.MouseMove += OnSceneMouseMove;
+            zoomControl.MouseUp += OnSceneMouseUp;
 
             using var deletionCursorStream = Application.GetResourceStream(new Uri("pack://application:,,,/ControlsLibrary;component/Controls/Scene/Assets/deletionCursor.cur", UriKind.RelativeOrAbsolute))?.Stream;
             if (deletionCursorStream != null)
@@ -382,7 +390,24 @@ namespace ControlsLibrary.Controls.Scene
                 }
                 else if (Toolbar.SelectedTool == SelectedTool.Select)
                 {
+                    if (selectedArea != null)
+                    {
+                        ClearSelectedArea();
+                    }
                     ClearSelectMode(true);
+                }
+            }
+
+            else if (e.RightButton == MouseButtonState.Pressed)
+            {
+                if (Toolbar.SelectedTool == SelectedTool.Select)
+                {
+                    if (selectedArea != null)
+                    {
+                        ClearSelectedArea();
+                    }
+                    ClearSelectMode(true);
+                    SelectionStarted?.Invoke(this, e);
                 }
             }
         }
@@ -512,7 +537,8 @@ namespace ControlsLibrary.Controls.Scene
                     {
                         zoomControl.Cursor = deletionCursor;
                         ClearEditMode();
-                        ClearSelectMode();
+                        SetZoomControlUnfixed();
+                        graphArea.SetVerticesDrag(false);
                         graphArea.SetEdgesDrag(false);
                         return;
                     }
@@ -520,11 +546,14 @@ namespace ControlsLibrary.Controls.Scene
                     {
                         zoomControl.Cursor = Cursors.Pen;
                         ClearSelectMode();
+                        SetZoomControlUnfixed();
+                        selectedVertices = null;
                         graphArea.SetEdgesDrag(false);
                         return;
                     }
                 case SelectedTool.Select:
                     {
+                        SetZoomControlFixed();
                         zoomControl.Cursor = Cursors.Hand;
                         ClearEditMode();
                         graphArea.SetEdgesDrag(false);
@@ -536,6 +565,24 @@ namespace ControlsLibrary.Controls.Scene
                         return;
                     }
             }
+        }
+
+        private void SetZoomControlFixed()
+        {
+            initialTranslateX = zoomControl.TranslateX;
+            initialTranslateY = zoomControl.TranslateY;
+            zoomControl.PropertyChanged += zoomControl_PropertyChanged;
+        }
+
+        private void SetZoomControlUnfixed()
+        {
+            zoomControl.PropertyChanged -= zoomControl_PropertyChanged;
+        }
+
+        private void zoomControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            zoomControl.TranslateX = initialTranslateX;
+            zoomControl.TranslateY = initialTranslateY;
         }
 
         private void ClearSelectMode(bool soft = false)
@@ -585,7 +632,7 @@ namespace ControlsLibrary.Controls.Scene
                         }
                     case SelectedTool.Delete:
                         {
-                            SafeRemoveVertex(args.VertexControl);
+                            TrySafeRemoveVertex(args.VertexControl);
                             break;
                         }
                     default:
@@ -622,12 +669,18 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
-        private void SafeRemoveVertex(VertexControl vc)
+        private void TrySafeRemoveVertex(VertexControl vc)
         {
             if (ExecutorViewModel.InSimulation)
             {
                 return;
             }
+            SafeRemoveVertex(vc);
+            VertexRemoved?.Invoke(this, new VertexRemovedEventArgs() { VertexControl = vc });
+        }
+
+        private void SafeRemoveVertex(VertexControl vc)
+        {
             foreach (var edge in graphArea.LogicCore.Graph.Edges)
             {
                 if (edge.IsSelfLoop && edge.Source == SelectNode(vc))
@@ -640,6 +693,125 @@ namespace ControlsLibrary.Controls.Scene
             GraphEdited?.Invoke(this, EventArgs.Empty);
         }
 
+        private EventHandler<VertexRemovedEventArgs> VertexRemoved;
+
+        private void SingleVertexRemoved(object sender, VertexRemovedEventArgs args)
+        {
+            if (selectedVertices == null)
+                return;
+
+            var vc = args.VertexControl;
+            if (selectedVertices.Contains(vc))
+            {
+                selectedVertices.Remove(vc);
+                SafeRemoveSelectedVertices();
+            }
+
+            ClearSelectMode(true);
+            selectedVertices = null;
+        }
+
+        private void SafeRemoveSelectedVertices()
+        {
+            foreach (var vc in selectedVertices)
+            {
+                SafeRemoveVertex(vc);
+            }
+        }
+
+        private AdornerSelectedArea selectedArea;
+        private HashSet<VertexControl> selectedVertices;
+        private Point mouseDownPosition;
+        private double initialTranslateX;
+        private double initialTranslateY;
+
+        private EventHandler<MouseButtonEventArgs> SelectionStarted;
+        private void SetVertexSelected(DependencyObject vc, bool selected = false)
+        {
+            HighlightBehaviour.SetHighlighted(vc, selected);
+            DragBehaviour.SetIsTagged(vc, selected);
+            if (selected)
+            {
+                selectedVertices.Add(vc as VertexControl);
+            }
+            else
+            {
+                selectedVertices.Remove(vc as VertexControl);
+            }
+        }
+
+        private void UpdateSelectedVertices()
+        {
+            var selectedRect = selectedArea.SelectedRect;
+            Point centrePosition;
+            bool selected;
+            foreach (var vc in graphArea.VertexList.Values)
+            {
+                centrePosition = graphArea.TranslatePoint(vc.GetCenterPosition(), zoomControl);
+                selected = selectedRect.Contains(centrePosition);
+                SetVertexSelected(vc, selected);
+            }
+        }
+
+        private Rect UpdateSelectedRect(Point mouseCurrentPosition)
+        {
+            double x, y, width, height;
+            x = mouseDownPosition.X < mouseCurrentPosition.X ?
+                mouseDownPosition.X : mouseCurrentPosition.X;
+            y = mouseDownPosition.Y < mouseCurrentPosition.Y ?
+                mouseDownPosition.Y : mouseCurrentPosition.Y;
+
+            width = Math.Abs(mouseCurrentPosition.X - mouseDownPosition.X);
+            height = Math.Abs(mouseCurrentPosition.Y - mouseDownPosition.Y);
+
+            return new Rect(x, y, width, height);
+        }
+
+        private void StartSelection(object sender, MouseButtonEventArgs e)
+        {
+            mouseDownPosition = e.GetPosition(zoomControl);
+            InitSelectedArea();
+            selectedVertices = new HashSet<VertexControl>();
+        }
+
+        private void InitSelectedArea()
+        {
+            selectedArea = new AdornerSelectedArea(zoomControl);
+            var adornerLayer = AdornerLayer.GetAdornerLayer(selectedArea.AdornedElement);
+            adornerLayer.Add(selectedArea);
+        }
+
+        private void ClearSelectedArea()
+        {
+            var adornerLayer = AdornerLayer.GetAdornerLayer(selectedArea.AdornedElement);
+            adornerLayer.Remove(selectedArea);
+            selectedArea = null;
+        }
+
+        private void OnSceneMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                if (toolBar.SelectedTool == SelectedTool.Select && selectedArea != null)
+                {
+                    selectedArea.SelectedRect = UpdateSelectedRect(e.GetPosition(selectedArea.AdornedElement));
+                    UpdateSelectedVertices();
+                    selectedArea.InvalidateVisual();
+                }
+            }
+        }
+
+        private void OnSceneMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                if (selectedArea != null)
+                {
+                    ClearSelectedArea();
+                }
+            }
+        }
+
         public void Dispose()
         {
             editor?.Dispose();
@@ -647,3 +819,4 @@ namespace ControlsLibrary.Controls.Scene
         }
     }
 }
+
