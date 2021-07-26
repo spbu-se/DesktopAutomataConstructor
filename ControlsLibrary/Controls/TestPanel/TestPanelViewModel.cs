@@ -65,13 +65,26 @@ namespace ControlsLibrary.Controls.TestPanel
         public void Open(string path)
         {
             Tests.Clear();
-            using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
-            using var textReader = new StreamReader(stream);
-            var deserializer = new YAXSerializer(typeof(List<TestSerializationData>));
-            foreach (var test in (List<TestSerializationData>)deserializer.Deserialize(textReader))
+            var testData = OpenAsync(path).Result;
+            foreach (var test in testData)
             {
                 AddTest(test.Result, test.TestString, test.ShouldReject);
             }
+        }
+
+        private static async Task<List<TestSerializationData>> OpenAsync(string path)
+        {
+            await using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var streamReader = new StreamReader(stream);
+            stream.Position = 0;
+            string xmlData = await streamReader.ReadToEndAsync();
+            return await Task.Run(() => GetSerializationData(xmlData));
+        }
+
+        private static List<TestSerializationData> GetSerializationData(string xmlData)
+        {
+            var deserializer = new YAXSerializer(typeof(List<TestSerializationData>));
+            return (List<TestSerializationData>)deserializer.Deserialize(xmlData);
         }
 
         /// <summary>

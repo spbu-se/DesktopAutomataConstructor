@@ -37,10 +37,10 @@ namespace ControlsLibrary.FileSerialization
             using var streamReader = new StreamReader(stream);
             stream.Position = 0;
             string xmlData = await streamReader.ReadToEndAsync();
-            return await AsyncGetSerializationData<T>(xmlData);
+            return await GetSerializationDataAsync<T>(xmlData);
         }
 
-        private static async Task<List<T>> AsyncGetSerializationData<T>(string xmlData)
+        private static async Task<List<T>> GetSerializationDataAsync<T>(string xmlData)
         {
             return await Task.Run(() => GetSerializationData<T>(xmlData));
         }

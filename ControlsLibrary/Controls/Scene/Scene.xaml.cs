@@ -178,7 +178,7 @@ namespace ControlsLibrary.Controls.Scene
         /// Serializes and saves graph in xml format into the file in the given path
         /// </summary>
         /// <param name="path">Path of the file to save graph</param>
-        public async Task Save(string path)
+        public async Task SaveAsync(string path)
         {
             var datas = graphArea.ExtractSerializationData();
             datas.ForEach(data =>
@@ -202,7 +202,7 @@ namespace ControlsLibrary.Controls.Scene
         /// Deserializes graph data from the file on the given path
         /// </summary>
         /// <param name="path">Path of the given file</param>
-        public async Task Open(string path)
+        public async Task OpenAsync(string path)
         {
             var data = await FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(path);
             graphArea.RebuildFromSerializationData(data);

@@ -74,7 +74,7 @@ namespace AutomataConstructor
             var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "automaton.xml" };
             if (dialog.ShowDialog() == true)
             {
-                scene.Save(dialog.FileName);
+                scene.SaveAsync(dialog.FileName);
                 savePath = dialog.FileName;
                 var splittedPath = dialog.FileName.Split(@"\");
                 fileName = splittedPath[^1];
@@ -94,7 +94,7 @@ namespace AutomataConstructor
 
         private void OnSaveAutomatonCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            scene.Save(savePath);
+            scene.SaveAsync(savePath);
             saved = true;
             NotifyTitleChanged();
         }
@@ -117,7 +117,7 @@ namespace AutomataConstructor
             }
             try
             {
-                scene.Open(dialog.FileName);
+                scene.OpenAsync(dialog.FileName);
                 savePath = dialog.FileName;
                 var splittedPath = dialog.FileName.Split(@"\");
                 fileName = splittedPath[^1];
@@ -190,14 +190,14 @@ namespace AutomataConstructor
                     {
                         if (scene != null && scene.CanSave() && File.Exists(savePath))
                         {
-                            scene.Save(savePath);
+                            scene.SaveAsync(savePath);
                             return;
                         }
 
                         var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "FSA.xml" };
                         if (dialog.ShowDialog() == true)
                         {
-                            scene?.Save(dialog.FileName);
+                            scene?.SaveAsync(dialog.FileName);
                         }
 
                         return;
