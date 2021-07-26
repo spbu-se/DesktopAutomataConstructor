@@ -14,7 +14,9 @@ namespace ControlsLibrary.Infrastructure.Command
         public abstract bool CanExecute(object parameter);
         
         public abstract void Execute(object parameter);
-        
+
         protected abstract Task ExecuteAsync(object parameter);
+        
+        protected abstract Task UndoCommand(object parameter);
     }
 }

@@ -37,9 +37,14 @@ namespace ControlsLibrary.Infrastructure.Command
             {
                 onException?.Invoke(ex);
             }
-            IsExecuting = false;
+            finally
+            {
+                IsExecuting = false;
+            }
         }
 
         protected override Task ExecuteAsync(object parameter) => execute(parameter);
+        
+        protected override Task UndoCommand(object parameter) => execute(parameter);
     }
 }
