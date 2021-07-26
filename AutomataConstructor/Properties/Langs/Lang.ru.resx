@@ -120,6 +120,12 @@
   <data name="AutomataConstructor.Name" xml:space="preserve">
     <value>Конструктор автоматов</value>
   </data>
+  <data name="convert" xml:space="preserve">
+    <value>Преобразовать</value>
+  </data>
+  <data name="convertNfaToDfa" xml:space="preserve">
+    <value>Преобразовать НКА в ДКА</value>
+  </data>
   <data name="file" xml:space="preserve">
     <value>Файл</value>
   </data>

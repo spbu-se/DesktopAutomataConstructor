@@ -20,7 +20,6 @@ namespace ControlsLibrary.Model
             else return ERROR_STATE;
         }
 
-        private readonly List<char> _alphabet;
         private readonly Dictionary<int, List<int>[]> _transitionTable;
         private List<int> _initialStates;
         private List<int> _acceptingStates;
@@ -30,6 +29,7 @@ namespace ControlsLibrary.Model
         public ResultEnum StepResult;
         private bool hasErrorState;
         public bool HasErrorState { get => hasErrorState; }
+        public List<char> Alphabet { get; }
 
         public static List<string> GetDefaultStatNames(int n)
         {
@@ -44,15 +44,15 @@ namespace ControlsLibrary.Model
 
         private List<int> GetNewStatesFromSingleState(int state, char x)
         {
-            if (ConvertToInt(x, _alphabet) != ERROR_STATE)
+            if (ConvertToInt(x, Alphabet) != ERROR_STATE)
             {
-                if (_transitionTable[state][ConvertToInt(x, _alphabet)] != null)
+                if (_transitionTable[state][ConvertToInt(x, Alphabet)] != null)
                 {
-                    if (_transitionTable[state][ConvertToInt(x, _alphabet)].Count == 0)
+                    if (_transitionTable[state][ConvertToInt(x, Alphabet)].Count == 0)
                     {
                         hasErrorState = true;
                     }
-                    return _transitionTable[state][ConvertToInt(x, _alphabet)];
+                    return _transitionTable[state][ConvertToInt(x, Alphabet)];
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace ControlsLibrary.Model
             }
         }
 
-        private List<int> GetAllNewStates(List<int> states, char x)
+        public List<int> GetAllNewStates(List<int> states, char x)
         {
             List<int> result_list = new List<int>() { };
             foreach (int state in states)
@@ -77,7 +77,7 @@ namespace ControlsLibrary.Model
             return result_list;
         }
 
-        private List<int> EpsilonClosure(List<int> states)
+        public List<int> EpsilonClosure(List<int> states)
         {
             List<int> allStates = states;
             List<int> progressStates = new List<int>();
@@ -192,7 +192,7 @@ namespace ControlsLibrary.Model
 
         public FiniteAutomata(List<char> alphabet, Dictionary<int, List<int>[]> transitionTable, List<int> numOfInitialStates, List<int> acceptingStates)
         {
-            this._alphabet = alphabet;
+            this.Alphabet = alphabet;
             this._transitionTable = transitionTable;
             this._acceptingStates = acceptingStates;
             this._initialStates = numOfInitialStates;

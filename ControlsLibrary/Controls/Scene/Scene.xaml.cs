@@ -18,6 +18,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using ControlsLibrary.Properties.Langs;
+using GraphX.Common;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -423,15 +425,23 @@ namespace ControlsLibrary.Controls.Scene
                 editor.DestroyVirtualEdge();
                 return;
             }
-            data.PropertyChanged += EdgeEdited;
-            var ec = new EdgeControl(selectedVertex, vc, data);
-            graphArea.InsertEdgeAndData(data, ec, 0, true);
+
+            var ec = CreateEdgeControl(data);
 
             AvoidParallelEdges(ec);
 
             HighlightBehaviour.SetHighlighted(selectedVertex, false);
             selectedVertex = null;
             editor.DestroyVirtualEdge();
+        }
+
+        private EdgeControl CreateEdgeControl(EdgeViewModel data)
+        {
+            data.PropertyChanged += EdgeEdited;
+            var ec = new EdgeControl(graphArea.VertexList[data.Source], graphArea.VertexList[data.Target], data);
+            graphArea.InsertEdgeAndData(data, ec, 0, true);
+            GraphEdited?.Invoke(this, EventArgs.Empty);
+            return ec;
         }
 
         /// <summary>
@@ -488,12 +498,23 @@ namespace ControlsLibrary.Controls.Scene
 
         private VertexControl CreateVertexControl(Point position)
         {
-            var data = new NodeViewModel() { Name = "S" + numberOfVertex, IsFinal = false, IsInitial = false, IsExpanded = false };
+            var vc = CreateVertexControl(new NodeViewModel
+            {
+                Name = "S" + numberOfVertex,
+                IsFinal = false,
+                IsInitial = false,
+                IsExpanded = false
+            });
+            vc.SetPosition(position);
+            return vc;
+        }
+
+        private VertexControl CreateVertexControl(NodeViewModel data)
+        {
             data.PropertyChanged += VertexEdited;
             numberOfVertex++;
             var vc = new VertexControl(data);
             data.PropertyChanged += errorReporter.GraphEdited;
-            vc.SetPosition(position);
             graphArea.AddVertexAndData(data, vc, true);
             GraphEdited?.Invoke(this, EventArgs.Empty);
             return vc;
@@ -638,6 +659,24 @@ namespace ControlsLibrary.Controls.Scene
 
             graphArea.RemoveVertexAndEdges(vc.Vertex as NodeViewModel);
             GraphEdited?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ConvertNfaToDfa()
+        {
+            try
+            {
+                var dfaGraph = NfaToDfaConverter.Convert(graphArea.LogicCore.Graph);
+                graphArea.VertexList.Values.ForEach(SafeRemoveVertex);
+                dfaGraph.Vertices.ForEach(node => CreateVertexControl(node));
+                dfaGraph.Edges.ForEach(edge => CreateEdgeControl(edge));
+                numberOfVertex = graphArea.VertexList.Count;
+                graphArea.RelayoutGraph();
+                GraphEdited?.Invoke(this, EventArgs.Empty);
+            }
+            catch (InvalidOperationException exception)
+            {
+                MessageBox.Show(exception.Message, Lang.Errors_InvalidAutomaton, MessageBoxButton.OK);
+            }
         }
 
         public void Dispose()
