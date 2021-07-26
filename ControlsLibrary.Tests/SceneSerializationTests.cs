@@ -19,9 +19,9 @@ namespace ControlsLibrary.Tests
                 var help = new ErrorReporterViewModel();
                 scene.ErrorReporter = help;
                 const string path = "../../../Files/EmptyScene.xml";
-                scene.Save(path);
+                scene.SaveAsync(path);
                 help.Graph.AddVertex(new NodeViewModel());
-                scene.Open(path);
+                scene.OpenAsync(path);
                 Assert.True(help.Graph.VertexCount == 0 && help.Graph.EdgeCount == 0);
 
                 // start the Dispatcher processing
@@ -56,12 +56,12 @@ namespace ControlsLibrary.Tests
                 var transition2 = new EdgeViewModel(state1, state1) { TransitionTokensString = "0" };
                 help.Graph.AddEdge(transition1);
                 help.Graph.AddEdge(transition2);
-                scene.Save(path);
+                scene.SaveAsync(path);
                 help.Graph.RemoveVertex(state1);
                 help.Graph.RemoveVertex(state2);
                 help.Graph.RemoveEdge(transition1);
                 help.Graph.RemoveEdge(transition2);
-                scene.Open(path);
+                scene.OpenAsync(path);
                 Assert.True(help.Graph.VertexCount == 2 && help.Graph.EdgeCount == 2);
                 Assert.True(help.Graph.Vertices.FirstOrDefault(v => v.Name == "S1").IsInitial);
                 Assert.True(help.Graph.Vertices.FirstOrDefault(v => v.Name == "S2").IsFinal);

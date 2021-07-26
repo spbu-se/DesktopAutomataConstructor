@@ -16,6 +16,7 @@ using QuickGraph;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ControlsLibrary.Properties.Langs;
@@ -179,7 +180,7 @@ namespace ControlsLibrary.Controls.Scene
         /// Serializes and saves graph in xml format into the file in the given path
         /// </summary>
         /// <param name="path">Path of the file to save graph</param>
-        public void Save(string path)
+        public async Task SaveAsync(string path)
         {
             var datas = graphArea.ExtractSerializationData();
             datas.ForEach(data =>
@@ -189,7 +190,7 @@ namespace ControlsLibrary.Controls.Scene
                     data.HasLabel = false;
                 }
             });
-            FileServiceProviderWpf.SerializeDataToFile(path, datas);
+            await FileServiceProviderWpf.SerializeDataToFile(path, datas);
         }
 
         /// <summary>
@@ -203,9 +204,9 @@ namespace ControlsLibrary.Controls.Scene
         /// Deserializes graph data from the file on the given path
         /// </summary>
         /// <param name="path">Path of the given file</param>
-        public void Open(string path)
+        public async Task OpenAsync(string path)
         {
-            var data = FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(path);
+            var data = await FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(path);
             graphArea.RebuildFromSerializationData(data);
             graphArea.UpdateAllEdges();
 
