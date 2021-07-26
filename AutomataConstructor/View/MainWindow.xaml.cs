@@ -143,7 +143,7 @@ namespace AutomataConstructor
             var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "automaton.xml" };
             if (dialog.ShowDialog() == true)
             {
-                tests.SaveAsync(dialog.FileName);
+                tests.Save(dialog.FileName);
             }
         }
 
