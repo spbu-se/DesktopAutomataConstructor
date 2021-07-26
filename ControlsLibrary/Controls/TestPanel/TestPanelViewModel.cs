@@ -48,7 +48,7 @@ namespace ControlsLibrary.Controls.TestPanel
         /// Saves tests into the file by the given path
         /// </summary>
         /// <param name="path">Path of the file to save</param>
-        public async void Save(string path)
+        public async void SaveAsync(string path)
         {
             var data = new List<TestSerializationData>();
             foreach (var test in Tests)
