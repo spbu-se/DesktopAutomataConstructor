@@ -13,7 +13,7 @@ namespace ControlsLibrary.Model
         public static BidirectionalGraph<NodeViewModel, EdgeViewModel> Convert(
             BidirectionalGraph<NodeViewModel, EdgeViewModel> nfaGraph)
         {
-            RequireValidDfa(nfaGraph);
+            RequireValidNfa(nfaGraph);
 
             var dfaGraph = new BidirectionalGraph<NodeViewModel, EdgeViewModel>();
             var nfa = FiniteAutomata.ConvertGraphToAutomata(nfaGraph.Edges.ToList(), nfaGraph.Vertices.ToList());
@@ -37,12 +37,18 @@ namespace ControlsLibrary.Model
             while (unhandledQueue.Count != 0)
             {
                 var (sourceStates, sourceNode) = unhandledQueue.Dequeue();
-                if (!handledStates.Add(sourceStates)) continue;
+                if (!handledStates.Add(sourceStates))
+                {
+                    continue;
+                }
                 var newEdges = new Dictionary<NodeViewModel, List<char>>();
                 foreach (var ch in nfa.Alphabet)
                 {
                     var targetStates = nfa.EpsilonClosure(nfa.GetAllNewStates(sourceStates.ToList(), ch)).ToHashSet();
-                    if (targetStates.Count == 0) continue;
+                    if (targetStates.Count == 0)
+                    {
+                        continue;
+                    }
                     var targetNodes = targetStates
                         .Select(id => nfaGraph.Vertices.FirstOrDefault(v => v.ID == id))
                         .ToList();
@@ -58,8 +64,15 @@ namespace ControlsLibrary.Model
                         dfaGraph.AddVertex(targetNode);
                     }
 
-                    if (newEdges.ContainsKey(targetNode)) newEdges[targetNode].Add(ch);
-                    else newEdges[targetNode] = new List<char> {ch};
+                    if (newEdges.ContainsKey(targetNode))
+                    {
+                        newEdges[targetNode].Add(ch);
+                    }
+                    else
+                    {
+                        newEdges[targetNode] = new List<char> {ch};
+                    }
+
                     unhandledQueue.Enqueue(new Tuple<HashSet<int>, NodeViewModel>(targetStates, targetNode));
                 }
 
@@ -85,7 +98,7 @@ namespace ControlsLibrary.Model
                     IsExpanded = false
                 };
 
-        private static void RequireValidDfa(BidirectionalGraph<NodeViewModel, EdgeViewModel> nfaGraph)
+        private static void RequireValidNfa(BidirectionalGraph<NodeViewModel, EdgeViewModel> nfaGraph)
         {
             var errors = FAAnalyzer.GetErrors(nfaGraph);
             if (FAAnalyzer.GetType(nfaGraph) == FATypeEnum.DFA)
