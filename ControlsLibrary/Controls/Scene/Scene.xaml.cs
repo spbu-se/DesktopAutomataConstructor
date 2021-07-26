@@ -1,5 +1,4 @@
-﻿
-using ControlsLibrary.Controls.ErrorReporter;
+﻿using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Executor;
 using ControlsLibrary.Controls.TestPanel;
 using ControlsLibrary.Controls.Toolbar;
@@ -279,6 +278,7 @@ namespace ControlsLibrary.Controls.Scene
             {
                 deletionCursor = new Cursor(deletionCursorStream);
             }
+            SetZoomControlFixed();
         }
 
         //TODO: learn how to extract drag information from the graphArea
@@ -370,7 +370,7 @@ namespace ControlsLibrary.Controls.Scene
         /// Creates new vertices by click on the scene and creates targeted edges if scene in the creating of the new edge state
         /// </summary>
         private void OnSceneMouseDown(object sender, MouseButtonEventArgs e)
-        {
+        {       
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 if (Toolbar.SelectedTool == SelectedTool.Edit)
@@ -388,27 +388,25 @@ namespace ControlsLibrary.Controls.Scene
                         CreateEdgeControl(vc);
                     }
                 }
-                else if (Toolbar.SelectedTool == SelectedTool.Select)
+                else
                 {
-                    if (selectedArea != null)
-                    {
-                        ClearSelectedArea();
-                    }
                     ClearSelectMode(true);
                 }
             }
 
             else if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (Toolbar.SelectedTool == SelectedTool.Select)
-                {
-                    if (selectedArea != null)
-                    {
-                        ClearSelectedArea();
-                    }
-                    ClearSelectMode(true);
-                    SelectionStarted?.Invoke(this, e);
-                }
+                zoomControl.Cursor = Cursors.Hand;
+                ClearSelectMode(true);
+                SelectionStarted?.Invoke(this, e);
+            }
+
+            if (e.ClickCount == 2)
+            {
+                //in case of select and delete
+                zoomControl.Cursor = Cursors.Hand;
+                ClearSelectMode(true);
+                SelectionStarted?.Invoke(this, e);
             }
         }
 
@@ -537,7 +535,6 @@ namespace ControlsLibrary.Controls.Scene
                     {
                         zoomControl.Cursor = deletionCursor;
                         ClearEditMode();
-                        SetZoomControlUnfixed();
                         graphArea.SetVerticesDrag(false);
                         graphArea.SetEdgesDrag(false);
                         return;
@@ -546,14 +543,12 @@ namespace ControlsLibrary.Controls.Scene
                     {
                         zoomControl.Cursor = Cursors.Pen;
                         ClearSelectMode();
-                        SetZoomControlUnfixed();
                         selectedVertices = null;
                         graphArea.SetEdgesDrag(false);
                         return;
                     }
                 case SelectedTool.Select:
                     {
-                        SetZoomControlFixed();
                         zoomControl.Cursor = Cursors.Hand;
                         ClearEditMode();
                         graphArea.SetEdgesDrag(false);
@@ -581,8 +576,11 @@ namespace ControlsLibrary.Controls.Scene
 
         private void zoomControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            zoomControl.TranslateX = initialTranslateX;
-            zoomControl.TranslateY = initialTranslateY;
+            /*if (e.PropertyName == Depe)
+            {*/
+                zoomControl.TranslateX = initialTranslateX;
+                zoomControl.TranslateY = initialTranslateY;
+            //}           
         }
 
         private void ClearSelectMode(bool soft = false)
@@ -756,10 +754,12 @@ namespace ControlsLibrary.Controls.Scene
         private Rect UpdateSelectedRect(Point mouseCurrentPosition)
         {
             double x, y, width, height;
-            x = mouseDownPosition.X < mouseCurrentPosition.X ?
-                mouseDownPosition.X : mouseCurrentPosition.X;
-            y = mouseDownPosition.Y < mouseCurrentPosition.Y ?
-                mouseDownPosition.Y : mouseCurrentPosition.Y;
+            x = mouseDownPosition.X < mouseCurrentPosition.X 
+                ? mouseDownPosition.X 
+                : mouseCurrentPosition.X;
+            y = mouseDownPosition.Y < mouseCurrentPosition.Y 
+                ? mouseDownPosition.Y 
+                : mouseCurrentPosition.Y;
 
             width = Math.Abs(mouseCurrentPosition.X - mouseDownPosition.X);
             height = Math.Abs(mouseCurrentPosition.Y - mouseDownPosition.Y);
@@ -776,7 +776,7 @@ namespace ControlsLibrary.Controls.Scene
 
         private void InitSelectedArea()
         {
-            selectedArea = new AdornerSelectedArea(zoomControl);
+            selectedArea = new AdornerSelectedArea(zoomControl);            
             var adornerLayer = AdornerLayer.GetAdornerLayer(selectedArea.AdornedElement);
             adornerLayer.Add(selectedArea);
         }
@@ -790,25 +790,41 @@ namespace ControlsLibrary.Controls.Scene
 
         private void OnSceneMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.RightButton == MouseButtonState.Pressed)
+            if (selectedArea != null)
             {
-                if (toolBar.SelectedTool == SelectedTool.Select && selectedArea != null)
-                {
-                    selectedArea.SelectedRect = UpdateSelectedRect(e.GetPosition(selectedArea.AdornedElement));
-                    UpdateSelectedVertices();
-                    selectedArea.InvalidateVisual();
-                }
+                selectedArea.SelectedRect = UpdateSelectedRect(e.GetPosition(selectedArea.AdornedElement));
+                UpdateSelectedVertices();
+                selectedArea.InvalidateVisual();
             }
         }
 
+        private void RecoverSelectedCursor()
+        {
+            switch (Toolbar.SelectedTool)
+            {
+                case SelectedTool.Select:
+                    {
+                        zoomControl.Cursor = Cursors.Hand;
+                        return;
+                    }
+                case SelectedTool.Edit:
+                    {
+                        zoomControl.Cursor = Cursors.Pen;
+                        return;
+                    }
+                case SelectedTool.Delete:
+                    {
+                        zoomControl.Cursor = deletionCursor;
+                        return;
+                    }
+            }
+        }
         private void OnSceneMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Right)
+            if (selectedArea != null)
             {
-                if (selectedArea != null)
-                {
-                    ClearSelectedArea();
-                }
+                ClearSelectedArea();
+                RecoverSelectedCursor();
             }
         }
 

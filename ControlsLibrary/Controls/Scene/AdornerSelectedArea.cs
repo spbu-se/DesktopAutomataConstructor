@@ -19,11 +19,7 @@ namespace ControlsLibrary.Controls.Scene
             renderPen = new Pen(new SolidColorBrush(Colors.Navy), 1.5);
         }
 
-        public Rect SelectedRect
-        {
-            get => selectedRect;
-            set => selectedRect = value;
-        }
+        public Rect SelectedRect { get; set; }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
