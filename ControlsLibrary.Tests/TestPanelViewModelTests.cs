@@ -34,7 +34,7 @@ namespace ControlsLibrary.Tests
             var testString = "12345";
             test.TestString = testString;
             var path = "../../../Files/tests.xml";
-            tests.Save(path);
+            tests.SaveAsync(path);
             tests.Tests.Clear();
             tests.Open(path);
             Assert.AreEqual(1, tests.Tests.Count);
