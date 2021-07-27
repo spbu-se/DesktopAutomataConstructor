@@ -379,6 +379,7 @@ namespace ControlsLibrary.Controls.Scene
                     {
                         return;
                     }
+                    ClearSelectMode(true);
                     var position = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
 
                     position.Offset(-60, -60); //Offset should be the half of the vertex controls width
@@ -390,22 +391,34 @@ namespace ControlsLibrary.Controls.Scene
                 }
                 else
                 {
+                    if (selectedArea != null)
+                    {
+                        ClearSelectedArea();
+                    }
                     ClearSelectMode(true);
                 }
             }
 
             else if (e.RightButton == MouseButtonState.Pressed)
             {
-                zoomControl.Cursor = Cursors.Hand;
+                if (selectedArea != null)
+                {
+                    ClearSelectedArea();
+                }
                 ClearSelectMode(true);
+                zoomControl.Cursor = Cursors.Hand;
                 SelectionStarted?.Invoke(this, e);
             }
 
             if (e.ClickCount == 2)
             {
+                if (selectedArea != null)
+                {
+                    ClearSelectedArea();
+                }
+                ClearSelectMode(true);
                 //in case of select and delete
                 zoomControl.Cursor = Cursors.Hand;
-                ClearSelectMode(true);
                 SelectionStarted?.Invoke(this, e);
             }
         }
@@ -543,7 +556,6 @@ namespace ControlsLibrary.Controls.Scene
                     {
                         zoomControl.Cursor = Cursors.Pen;
                         ClearSelectMode();
-                        selectedVertices = null;
                         graphArea.SetEdgesDrag(false);
                         return;
                     }
@@ -569,18 +581,13 @@ namespace ControlsLibrary.Controls.Scene
             zoomControl.PropertyChanged += zoomControl_PropertyChanged;
         }
 
-        private void SetZoomControlUnfixed()
-        {
-            zoomControl.PropertyChanged -= zoomControl_PropertyChanged;
-        }
-
         private void zoomControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            /*if (e.PropertyName == Depe)
-            {*/
+            if (e.PropertyName == nameof(zoomControl.Presenter))
+            {
                 zoomControl.TranslateX = initialTranslateX;
                 zoomControl.TranslateY = initialTranslateY;
-            //}           
+            }           
         }
 
         private void ClearSelectMode(bool soft = false)
@@ -790,7 +797,9 @@ namespace ControlsLibrary.Controls.Scene
 
         private void OnSceneMouseMove(object sender, MouseEventArgs e)
         {
-            if (selectedArea != null)
+            //redo
+            if ((MouseButtonState.Pressed == e.LeftButton || MouseButtonState.Pressed == e.RightButton)
+                && selectedArea != null)
             {
                 selectedArea.SelectedRect = UpdateSelectedRect(e.GetPosition(selectedArea.AdornedElement));
                 UpdateSelectedVertices();
