@@ -37,6 +37,7 @@ namespace ControlsLibrary.ViewModel
         private bool isExpanded;
         private bool isActual;
         private bool editionAvailable = true;
+        private bool isComponentObject = false;
 
         /// <summary>
         /// Gets if properties editing available
@@ -116,6 +117,17 @@ namespace ControlsLibrary.ViewModel
                 isFinal = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(FinalMarkVisibility));
+            }
+        }
+        
+        [YAXDontSerialize]
+        public bool IsComponentObject
+        {
+            get => isComponentObject;
+            set
+            {
+                isComponentObject = value;
+                OnPropertyChanged();
             }
         }
 

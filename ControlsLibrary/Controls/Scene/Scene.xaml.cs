@@ -14,6 +14,7 @@ using GraphX.Logic.Algorithms.OverlapRemoval;
 using GraphX.Logic.Models;
 using QuickGraph;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -208,6 +209,7 @@ namespace ControlsLibrary.Controls.Scene
             var data = FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(path);
             graphArea.RebuildFromSerializationData(data);
             graphArea.UpdateAllEdges();
+            openedAutomatonsCount = 1;
 
             foreach (var node in graphArea.LogicCore.Graph.Vertices)
             {
@@ -222,6 +224,44 @@ namespace ControlsLibrary.Controls.Scene
             GraphEdited?.Invoke(this, EventArgs.Empty);
         }
 
+        public void OpenOverAutomatonOnScene(string path)
+        {
+            var data = FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(path);
+            openedAutomatonsCount++;
+            RebuildFromSerializationDataOverAutomaton(data);
+        }
+
+        private void RebuildFromSerializationDataOverAutomaton(IEnumerable<GraphSerializationData> data)
+        {
+            foreach (var element in data)
+            {
+                if (element.Data is NodeViewModel)
+                {
+                    var newNodeViewModel = element.Data as NodeViewModel;
+                    newNodeViewModel.IsComponentObject = true;
+                    newNodeViewModel.ID = Convert.ToInt64($"{newNodeViewModel.ID}{openedAutomatonsCount}");
+                    var vc = CreateVertexControl(newNodeViewModel);
+                    vc.SetPosition(element.Position.X, element.Position.Y);
+                }
+
+                if (element.Data is EdgeViewModel)
+                {
+                    var edgeViewModel = element.Data as EdgeViewModel;
+                    edgeViewModel.Source.ID = Convert.ToInt64($"{edgeViewModel.Source.ID}{openedAutomatonsCount}");
+                    edgeViewModel.Target.ID = Convert.ToInt64($"{edgeViewModel.Target.ID}{openedAutomatonsCount}");
+                    var dataSource 
+                        = graphArea.VertexList.Keys.FirstOrDefault(
+                            a => a.ID == edgeViewModel.Source.ID && a.IsComponentObject);
+                    var dataTarget 
+                        = graphArea.VertexList.Keys.FirstOrDefault(
+                            a => a.ID == edgeViewModel.Target.ID && a.IsComponentObject);
+                    edgeViewModel.Source = dataSource;
+                    edgeViewModel.Target = dataTarget;
+                    CreateEdgeControl(edgeViewModel);
+                }
+            }
+        }
+
         /// <summary>
         /// The basic constructor
         /// </summary>
@@ -231,6 +271,7 @@ namespace ControlsLibrary.Controls.Scene
             SetZoomControlProperties();
             SetGraphAreaProperties();
             editor = new EditorObjectManager(graphArea, zoomControl);
+            openedAutomatonsCount = 0;
         }
 
         /// <summary>
@@ -359,6 +400,8 @@ namespace ControlsLibrary.Controls.Scene
         private VertexControl selectedVertex;
 
         private readonly EditorObjectManager editor;
+
+        private long openedAutomatonsCount;
 
         /// <summary>
         /// Creates new vertices by click on the scene and creates targeted edges if scene in the creating of the new edge state

@@ -134,6 +134,31 @@ namespace AutomataConstructor
 
         #endregion OpenAutomatonCommand
 
+        #region OpenOverAutomatonCommand
+
+        public static RoutedCommand OpenOverAutomatonCommand { get; set; } = new RoutedCommand("OpenOverAutomat", typeof(MainWindow));
+        
+        private void OnOpenOverAutomatonCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog { Filter = "All files|*.*", Title = Lang.Saves_SelectAutomatonFileName, FileName = "automaton.xml" };
+            if (dialog.ShowDialog() != true)
+            {
+                return;
+            }
+            try
+            {
+                scene.OpenOverAutomatonOnScene(dialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format($"{Lang.Saves_FailedToLoadAutomaton}\n {0}", ex));
+            }
+        }
+        
+        private void CanOpenOverAutomatonCommandExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+
+        #endregion
+
         #region SaveTestsAsCommand
 
         public static RoutedCommand SaveTestsAsCommand { get; set; } = new RoutedCommand("SaveTestsAs", typeof(MainWindow));

@@ -1,5 +1,6 @@
 ﻿using GraphX.Measure;
 using System;
+using System.Collections.Generic;
 
 namespace ControlsLibrary.Controls.Scene
 {

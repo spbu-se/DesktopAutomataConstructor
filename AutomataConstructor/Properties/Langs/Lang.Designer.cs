@@ -106,6 +106,15 @@ namespace AutomataConstructor.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open automat component.
+        /// </summary>
+        public static string openOverAutomat {
+            get {
+                return ResourceManager.GetString("openOverAutomat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open tests.
         /// </summary>
         public static string openTests {
