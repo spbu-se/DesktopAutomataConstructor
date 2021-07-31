@@ -148,6 +148,14 @@ namespace AutomataConstructor
             try
             {
                 scene.OpenOverAutomatonOnScene(dialog.FileName);
+                if (savePath == "")
+                {
+                    savePath = dialog.FileName;
+                    var splittedPath = dialog.FileName.Split(@"\");
+                    fileName = splittedPath[^1];
+                    saved = true;
+                    NotifyTitleChanged();
+                }
             }
             catch (Exception ex)
             {
