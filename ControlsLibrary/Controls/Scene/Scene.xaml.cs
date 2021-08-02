@@ -449,7 +449,7 @@ namespace ControlsLibrary.Controls.Scene
         {
             foreach (var edge in graphArea.EdgesList.Where(e => e.Value.Source == args.VertexControl || e.Value.Target == args.VertexControl))
             {
-                AvoidParallelEdges(edge.Value);
+                ParallelEdgesProblemSolver.AvoidParallelEdges(graphArea, edge.Value);
             }
             CreateDragCommand(args.VertexControl);
         }
@@ -480,17 +480,24 @@ namespace ControlsLibrary.Controls.Scene
             dragStartPosition = args.VertexControl.GetPosition();
         }
 
+        private void CreateEdgeBlueprint(VertexControl vc)
+        {
+            editor.CreateVirtualEdge(vc);
+            selectedVertex = vc;
+            HighlightBehaviour.SetHighlighted(selectedVertex, true);
+        }
+
+        private void DestroyEdgeBlueprint()
+        {
+            HighlightBehaviour.SetHighlighted(selectedVertex, false);
+            selectedVertex = null;
+            editor.DestroyVirtualEdge();
+        }
+
         private void CreateEdgeControl(VertexControl vc)
         {
             if (ExecutorViewModel.InSimulation)
             {
-                return;
-            }
-            if (selectedVertex == null)
-            {
-                editor.CreateVirtualEdge(vc);
-                selectedVertex = vc;
-                HighlightBehaviour.SetHighlighted(selectedVertex, true);
                 return;
             }
 
@@ -500,70 +507,15 @@ namespace ControlsLibrary.Controls.Scene
             // TODO: should somehow notice user that edge wasn't created
             if (graphArea.LogicCore.Graph.Edges.Any(e => e.Source == (NodeViewModel)selectedVertex.Vertex && e.Target == (NodeViewModel)vc.Vertex))
             {
-                HighlightBehaviour.SetHighlighted(selectedVertex, false);
-                selectedVertex = null;
-                editor.DestroyVirtualEdge();
+                DestroyEdgeBlueprint();
                 return;
             }
             data.PropertyChanged += EdgeEdited;
             var ec = new EdgeControl(selectedVertex, vc, data);
             graphArea.InsertEdgeAndData(data, ec, 0, true);
 
-            AvoidParallelEdges(ec);
-
-            HighlightBehaviour.SetHighlighted(selectedVertex, false);
-            selectedVertex = null;
-            editor.DestroyVirtualEdge();
-        }
-
-        /// <summary>
-        /// Creates edge routing points to avoid overlapping of an edge by a parallel one
-        /// </summary>
-        /// <param name="edgeControl">Edge control which was overlapped or overlaps other</param>
-        private void AvoidParallelEdges(EdgeControl edgeControl)
-        {
-            var edge = edgeControl.Edge as EdgeViewModel;
-            if (edge == null)
-            {
-                return;
-            }
-            var parallelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == edge.Target && edge.Source == e.Target);
-
-            if (parallelEdge == null)
-            {
-                return;
-            }
-
-            var sourcePos = edgeControl.Source.GetCenterPosition().ToGraphX();
-            var targetPos = edgeControl.Target.GetCenterPosition().ToGraphX();
-
-            var middleX = (sourcePos.X + targetPos.X) / 2;
-            var middleY = (sourcePos.Y + targetPos.Y) / 2;
-
-            var distance = Geometry.GetDistance(sourcePos, targetPos);
-            var diagonal = Math.Min(Math.Max(distance / 25, 20), 80);
-
-            var bypassPoint1 = new GraphX.Measure.Point(middleX, middleY);
-            var bypassPoint2 = new GraphX.Measure.Point(middleX, middleY);
-
-            if ((sourcePos.X - targetPos.X) * (sourcePos.Y - targetPos.Y) > 0)
-            {
-                bypassPoint1.X -= diagonal;
-                bypassPoint1.Y += diagonal;
-                bypassPoint2.X += diagonal;
-                bypassPoint2.Y -= diagonal;
-            }
-            else
-            {
-                bypassPoint1.X -= diagonal;
-                bypassPoint1.Y -= diagonal;
-                bypassPoint2.X += diagonal;
-                bypassPoint2.Y += diagonal;
-            }
-
-            edge.RoutingPoints = new[] { sourcePos, bypassPoint1, targetPos };
-            parallelEdge.RoutingPoints = new[] { targetPos, bypassPoint2, targetPos };
-            graphArea.UpdateAllEdges();
+            ParallelEdgesProblemSolver.AvoidParallelEdges(graphArea, ec);
+            DestroyEdgeBlueprint();
         }
 
         private int numberOfVertex;
@@ -678,7 +630,14 @@ namespace ControlsLibrary.Controls.Scene
                 {
                     case SelectedTool.Edit:
                         {
-                            CreateEdgeControl(args.VertexControl);
+                            if (selectedVertex == null)
+                            {
+                                CreateEdgeBlueprint(args.VertexControl);
+                            }
+                            else
+                            {
+                                CreateEdgeControl(args.VertexControl);
+                            }                            
                             break;
                         }
                     case SelectedTool.Delete:
