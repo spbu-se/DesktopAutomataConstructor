@@ -58,8 +58,4 @@
     </Page>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controls\Scene\Commands\" />
-  </ItemGroup>
-
 </Project>

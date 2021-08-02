@@ -1,5 +1,6 @@
 ﻿using ControlsLibrary.Controls.ErrorReporter;
 using ControlsLibrary.Controls.Executor;
+using ControlsLibrary.Controls.Scene.Commands;
 using ControlsLibrary.Controls.TestPanel;
 using ControlsLibrary.Controls.Toolbar;
 using ControlsLibrary.Controls.TypeAnalyzer;
@@ -221,6 +222,7 @@ namespace ControlsLibrary.Controls.Scene
             }
 
             GraphEdited?.Invoke(this, EventArgs.Empty);
+            undoRedoStack.Clear();
         }
 
         /// <summary>
@@ -232,9 +234,12 @@ namespace ControlsLibrary.Controls.Scene
             SetZoomControlProperties();
             SetGraphAreaProperties();
             editor = new EditorObjectManager(graphArea, zoomControl);
+            undoRedoStack = new UndoRedoStack();
             this.VertexRemoved += SingleVertexRemoved;
             this.SelectionStarted += StartSelection;
         }
+
+        private readonly UndoRedoStack undoRedoStack;
 
         /// <summary>
         /// Handles application hot keys
@@ -256,6 +261,22 @@ namespace ControlsLibrary.Controls.Scene
                 case Key.E:
                     {
                         toolBar.SelectedTool = SelectedTool.Edit;
+                        return;
+                    }
+                case Key.Z:
+                    {
+                        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                        {
+                            undoRedoStack.Undo();
+                        }
+                        return;
+                    }
+                case Key.Y:
+                    {
+                        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                        {
+                            undoRedoStack.Redo();
+                        }
                         return;
                     }
             }
@@ -302,9 +323,10 @@ namespace ControlsLibrary.Controls.Scene
             logic.EdgeCurvingEnabled = false;
 
             graphArea.VertexSelected += OnSceneVertexSelected;
+            graphArea.VertexSelected += VertexDraggingStarted;
             graphArea.EdgeSelected += EdgeSelected;
             graphArea.SetEdgesDrag(false);
-            graphArea.VertexMouseUp += VertexDragged;
+            graphArea.VertexMouseUp += VertexDragged;            
         }
 
         /// <summary>
@@ -391,6 +413,7 @@ namespace ControlsLibrary.Controls.Scene
                 }
                 else
                 {
+                    ClearSelectedVertices();
                     ClearSelectMode(true);
                     SelectionStarted?.Invoke(this, e);
                 }
@@ -398,20 +421,63 @@ namespace ControlsLibrary.Controls.Scene
 
             else if (e.RightButton == MouseButtonState.Pressed)
             {
+                ClearSelectedVertices();
                 ClearSelectMode(true);
                 SelectionStarted?.Invoke(this, e);
             }
         }
 
-        /// <summary>
-        /// Fixes edges routing if vertex was dragged
-        /// </summary>
+        private void ClearSelectedVertices()
+        {
+            if (selectedVertices != null)
+            {
+                if (selectedVertices.Count > 0)
+                {
+                    ClearSelectedArea();
+                    var command = new SelectCommand(selectedVertices, false);
+                    undoRedoStack.AddCommand(command);
+                }
+                selectedVertices = null;
+            }
+        }
+
+
+    /// <summary>
+    /// Fixes edges routing if vertex was dragged
+    /// </summary>
         private void VertexDragged(object sender, VertexSelectedEventArgs args)
         {
             foreach (var edge in graphArea.EdgesList.Where(e => e.Value.Source == args.VertexControl || e.Value.Target == args.VertexControl))
             {
                 AvoidParallelEdges(edge.Value);
             }
+            CreateDragCommand(args.VertexControl);
+        }
+
+        private void CreateDragCommand(VertexControl vc)
+        {
+            var currentPosition = vc.GetPosition();
+            if (currentPosition != dragStartPosition)
+            {
+                DragCommand command;
+                if (selectedVertices != null && selectedVertices.Contains(vc))
+                {
+                    command = new DragCommand(graphArea, selectedVertices,
+                        currentPosition.X - dragStartPosition.X, currentPosition.Y - dragStartPosition.Y);
+                }
+                else
+                {
+                    command = new DragCommand(graphArea, new HashSet<VertexControl> { vc },
+                        currentPosition.X - dragStartPosition.X, currentPosition.Y - dragStartPosition.Y);
+                }
+                undoRedoStack.AddCommand(command);
+            }
+        }
+
+        private Point dragStartPosition;
+        private void VertexDraggingStarted(object sender, VertexSelectedEventArgs args)
+        {
+            dragStartPosition = args.VertexControl.GetPosition();
         }
 
         private void CreateEdgeControl(VertexControl vc)
@@ -771,9 +837,12 @@ namespace ControlsLibrary.Controls.Scene
 
         private void ClearSelectedArea()
         {
-            var adornerLayer = AdornerLayer.GetAdornerLayer(selectedArea.AdornedElement);
-            adornerLayer.Remove(selectedArea);
-            selectedArea = null;
+            if (selectedArea != null)
+            {
+                var adornerLayer = AdornerLayer.GetAdornerLayer(selectedArea.AdornedElement);
+                adornerLayer.Remove(selectedArea);
+                selectedArea = null;
+            }          
         }
 
         private void OnSceneMouseMove(object sender, MouseEventArgs e)
@@ -811,6 +880,11 @@ namespace ControlsLibrary.Controls.Scene
         {
             if (selectedArea != null)
             {
+                if (selectedVertices != null && selectedVertices.Count > 0)
+                {
+                    var command = new SelectCommand(selectedVertices, true);
+                    undoRedoStack.AddCommand(command);
+                }
                 ClearSelectedArea();
                 RecoverSelectedCursor();
             }

@@ -5,7 +5,7 @@ namespace ControlsLibrary.Controls.Scene
 {
     public class CompositeCommand : ISceneCommand
     {
-        private IList<ISceneCommand> commands;
+        private readonly IList<ISceneCommand> commands;
 
         public CompositeCommand(IList<ISceneCommand> commands)
         {
