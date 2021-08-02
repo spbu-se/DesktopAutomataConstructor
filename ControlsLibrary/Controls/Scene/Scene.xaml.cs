@@ -271,7 +271,7 @@ namespace ControlsLibrary.Controls.Scene
             ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Hidden);
             zoomControl.MouseDown += OnSceneMouseDown;
             zoomControl.MouseMove += OnSceneMouseMove;
-            zoomControl.MouseUp += OnSceneMouseUp;
+            zoomControl.PreviewMouseUp += OnSceneMouseUp;
 
             using var deletionCursorStream = Application.GetResourceStream(new Uri("pack://application:,,,/ControlsLibrary;component/Controls/Scene/Assets/deletionCursor.cur", UriKind.RelativeOrAbsolute))?.Stream;
             if (deletionCursorStream != null)
@@ -391,34 +391,14 @@ namespace ControlsLibrary.Controls.Scene
                 }
                 else
                 {
-                    if (selectedArea != null)
-                    {
-                        ClearSelectedArea();
-                    }
                     ClearSelectMode(true);
+                    SelectionStarted?.Invoke(this, e);
                 }
             }
 
             else if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (selectedArea != null)
-                {
-                    ClearSelectedArea();
-                }
                 ClearSelectMode(true);
-                zoomControl.Cursor = Cursors.Hand;
-                SelectionStarted?.Invoke(this, e);
-            }
-
-            if (e.ClickCount == 2)
-            {
-                if (selectedArea != null)
-                {
-                    ClearSelectedArea();
-                }
-                ClearSelectMode(true);
-                //in case of select and delete
-                zoomControl.Cursor = Cursors.Hand;
                 SelectionStarted?.Invoke(this, e);
             }
         }
@@ -731,17 +711,17 @@ namespace ControlsLibrary.Controls.Scene
         private double initialTranslateY;
 
         private EventHandler<MouseButtonEventArgs> SelectionStarted;
-        private void SetVertexSelected(DependencyObject vc, bool selected = false)
+        private void SetVertexSelected(VertexControl vc, bool selected)
         {
             HighlightBehaviour.SetHighlighted(vc, selected);
             DragBehaviour.SetIsTagged(vc, selected);
             if (selected)
             {
-                selectedVertices.Add(vc as VertexControl);
+                selectedVertices.Add(vc);
             }
             else
             {
-                selectedVertices.Remove(vc as VertexControl);
+                selectedVertices.Remove(vc);
             }
         }
 
@@ -776,6 +756,7 @@ namespace ControlsLibrary.Controls.Scene
 
         private void StartSelection(object sender, MouseButtonEventArgs e)
         {
+            zoomControl.Cursor = Cursors.Arrow;
             mouseDownPosition = e.GetPosition(zoomControl);
             InitSelectedArea();
             selectedVertices = new HashSet<VertexControl>();
@@ -797,9 +778,7 @@ namespace ControlsLibrary.Controls.Scene
 
         private void OnSceneMouseMove(object sender, MouseEventArgs e)
         {
-            //redo
-            if ((MouseButtonState.Pressed == e.LeftButton || MouseButtonState.Pressed == e.RightButton)
-                && selectedArea != null)
+            if (selectedArea != null)
             {
                 selectedArea.SelectedRect = UpdateSelectedRect(e.GetPosition(selectedArea.AdornedElement));
                 UpdateSelectedVertices();
