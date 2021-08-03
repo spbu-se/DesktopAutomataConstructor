@@ -268,6 +268,7 @@ namespace ControlsLibrary.Controls.Scene
                         if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
                         {
                             undoRedoStack.Undo();
+                            // GraphEdited - in case of creation and deletion
                         }
                         return;
                     }
@@ -276,6 +277,7 @@ namespace ControlsLibrary.Controls.Scene
                         if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
                         {
                             undoRedoStack.Redo();
+                            // GraphEdited - in case of creation and deletion
                         }
                         return;
                     }
@@ -340,25 +342,6 @@ namespace ControlsLibrary.Controls.Scene
         public event EventHandler<EventArgs> GraphEdited;
 
         /// <summary>
-        /// Update edge route if graph was edited
-        /// </summary>
-        /// <param name="source">Source vertex</param>
-        /// <param name="target">Target vertex</param>
-        private void UpdateEdgeRoutingPoints(NodeViewModel source, NodeViewModel target)
-        {
-            var parallelEdge = graphArea.LogicCore.Graph.Edges.FirstOrDefault(e => e.Source == target && e.Target == source);
-            if (parallelEdge == null)
-            {
-                return;
-            }
-
-            var newEdge = new EdgeViewModel(parallelEdge.Source, parallelEdge.Target) { TransitionTokensString = parallelEdge.TransitionTokensString };
-            var ec = new EdgeControl(graphArea.VertexList[parallelEdge.Source], graphArea.VertexList[parallelEdge.Target], newEdge);
-            graphArea.RemoveEdge(parallelEdge, true);
-            graphArea.InsertEdgeAndData(newEdge, ec, 0, true);
-        }
-
-        /// <summary>
         /// Handles edge selection and removes edge if scene in the deletion mode
         /// </summary>
         private void EdgeSelected(object sender, EdgeSelectedEventArgs args)
@@ -376,10 +359,10 @@ namespace ControlsLibrary.Controls.Scene
                     return;
                 }
 
-                var source = edgeViewModel.Source;
-                var target = edgeViewModel.Target;
-                graphArea.RemoveEdge(edgeViewModel, true);
-                UpdateEdgeRoutingPoints(source, target);
+                var command = new RemoveEdgeCommand(graphArea, args.EdgeControl);
+                command.Execute();
+                undoRedoStack.AddCommand(command);
+
                 GraphEdited?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -401,6 +384,7 @@ namespace ControlsLibrary.Controls.Scene
                     {
                         return;
                     }
+                    ClearSelectedVertices();
                     ClearSelectMode(true);
                     var position = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
 
@@ -433,7 +417,6 @@ namespace ControlsLibrary.Controls.Scene
             {
                 if (selectedVertices.Count > 0)
                 {
-                    ClearSelectedArea();
                     var command = new SelectCommand(selectedVertices, false);
                     undoRedoStack.AddCommand(command);
                 }
@@ -441,10 +424,9 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
-
-    /// <summary>
-    /// Fixes edges routing if vertex was dragged
-    /// </summary>
+        /// <summary>
+        /// Fixes edges routing if vertex was dragged
+        /// </summary>
         private void VertexDragged(object sender, VertexSelectedEventArgs args)
         {
             foreach (var edge in graphArea.EdgesList.Where(e => e.Value.Source == args.VertexControl || e.Value.Target == args.VertexControl))
@@ -512,9 +494,10 @@ namespace ControlsLibrary.Controls.Scene
             }
             data.PropertyChanged += EdgeEdited;
             var ec = new EdgeControl(selectedVertex, vc, data);
-            graphArea.InsertEdgeAndData(data, ec, 0, true);
-
-            ParallelEdgesProblemSolver.AvoidParallelEdges(graphArea, ec);
+            var command = new CreateEdgeCommand(graphArea, ec);
+            command.Execute();
+            undoRedoStack.AddCommand(command);
+            //GraphEdited
             DestroyEdgeBlueprint();
         }
 
@@ -528,7 +511,11 @@ namespace ControlsLibrary.Controls.Scene
             var vc = new VertexControl(data);
             data.PropertyChanged += errorReporter.GraphEdited;
             vc.SetPosition(position);
-            graphArea.AddVertexAndData(data, vc, true);
+
+            var command = new CreateVertexCommand(graphArea, vc);
+            command.Execute();
+            undoRedoStack.AddCommand(command);
+            
             GraphEdited?.Invoke(this, EventArgs.Empty);
             return vc;
         }
@@ -642,7 +629,7 @@ namespace ControlsLibrary.Controls.Scene
                         }
                     case SelectedTool.Delete:
                         {
-                            TrySafeRemoveVertex(args.VertexControl);
+                            SafeRemoveVertex(args.VertexControl);
                             break;
                         }
                     default:
@@ -679,28 +666,22 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
-        private void TrySafeRemoveVertex(VertexControl vc)
+        private void SafeRemoveVertex(VertexControl vc)
         {
             if (ExecutorViewModel.InSimulation)
             {
                 return;
             }
-            SafeRemoveVertex(vc);
-            VertexRemoved?.Invoke(this, new VertexRemovedEventArgs() { VertexControl = vc });
-        }
 
-        private void SafeRemoveVertex(VertexControl vc)
-        {
-            foreach (var edge in graphArea.LogicCore.Graph.Edges)
-            {
-                if (edge.IsSelfLoop && edge.Source == SelectNode(vc))
-                {
-                    graphArea.RemoveEdge(edge);
-                }
-            }
-
-            graphArea.RemoveVertexAndEdges(vc.Vertex as NodeViewModel);
+            var removeCommand = new CompositeCommand(new List<ISceneCommand>());
+            removeCommand.AddCommand(new RemoveVertexCommand(graphArea, vc));
+            removeCommand.Execute();
             GraphEdited?.Invoke(this, EventArgs.Empty);
+
+            VertexRemoved?.Invoke(this, new VertexRemovedEventArgs()
+            { VertexControl = vc, RemoveCommand = removeCommand });
+            
+            undoRedoStack.AddCommand(removeCommand);
         }
 
         private EventHandler<VertexRemovedEventArgs> VertexRemoved;
@@ -713,19 +694,25 @@ namespace ControlsLibrary.Controls.Scene
             var vc = args.VertexControl;
             if (selectedVertices.Contains(vc))
             {
+                //redo
                 selectedVertices.Remove(vc);
-                SafeRemoveSelectedVertices();
+                SafeRemoveSelectedVertices(args.RemoveCommand);
+                selectedVertices.Add(vc);
             }
 
             ClearSelectMode(true);
             selectedVertices = null;
         }
 
-        private void SafeRemoveSelectedVertices()
+        private void SafeRemoveSelectedVertices(CompositeCommand groupRemoveCommand)
         {
             foreach (var vc in selectedVertices)
             {
-                SafeRemoveVertex(vc);
+                var command = new RemoveVertexCommand(graphArea, vc);
+                command.Execute();
+                GraphEdited?.Invoke(this, EventArgs.Empty);
+                groupRemoveCommand.AddCommand(command);                
+                //raise an event vertexRemoved
             }
         }
 
