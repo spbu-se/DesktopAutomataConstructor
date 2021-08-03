@@ -7,7 +7,6 @@ using ControlsLibrary.FileSerialization;
 using ControlsLibrary.Model;
 using ControlsLibrary.ViewModel;
 using GraphX.Common.Enums;
-using GraphX.Common.Models;
 using GraphX.Controls;
 using GraphX.Controls.Models;
 using GraphX.Logic.Algorithms.OverlapRemoval;
@@ -181,15 +180,7 @@ namespace ControlsLibrary.Controls.Scene
         /// <param name="path">Path of the file to save graph</param>
         public void Save(string path)
         {
-            var datas = graphArea.ExtractSerializationData();
-            datas.ForEach(data =>
-            {
-                if (data.Data.GetType() == typeof(NodeViewModel))
-                {
-                    data.HasLabel = false;
-                }
-            });
-            FileServiceProviderWpf.SerializeDataToFile(path, datas);
+            GraphAreaSerializer.Save(graphArea, path);
         }
 
         /// <summary>
@@ -205,9 +196,9 @@ namespace ControlsLibrary.Controls.Scene
         /// <param name="path">Path of the given file</param>
         public void Open(string path)
         {
-            var data = FileServiceProviderWpf.DeserializeGraphDataFromFile<GraphSerializationData>(path);
-            graphArea.RebuildFromSerializationData(data);
+            GraphAreaSerializer.Open(graphArea, path);
             graphArea.UpdateAllEdges();
+            graphArea.EdgesList.Values.ForEach(AvoidParallelEdges);
 
             foreach (var node in graphArea.LogicCore.Graph.Vertices)
             {

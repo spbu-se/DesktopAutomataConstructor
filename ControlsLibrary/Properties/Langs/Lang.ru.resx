@@ -237,4 +237,34 @@
   <data name="Types.FSM" xml:space="preserve">
     <value>Конечный автомат</value>
   </data>
+  <data name="Serializer.MissingXmlRoot" xml:space="preserve">
+    <value>В XML файле отсутствует корневой элемент</value>
+  </data>
+  <data name="Serializer.MissingJflapTag" xml:space="preserve">
+    <value>В JFLAP файле отсутствует тег {0}</value>
+  </data>
+  <data name="Serializer.UnsupportedAutomatonType" xml:space="preserve">
+    <value>Тип автомата "{0}" не поддерживается</value>
+  </data>
+  <data name="Serializer.StateWithoutIdTag" xml:space="preserve">
+    <value>Обнаружено состояние без тега &lt;id&gt;</value>
+  </data>
+  <data name="Serializer.StateWithNonIntegerId" xml:space="preserve">
+    <value>Обнаружено состояние с не целочисленным id = {0}</value>
+  </data>
+  <data name="Serializer.StateWithNonNumericalProperty" xml:space="preserve">
+    <value>Обнаружено состояние "{0}" с не числовым {1} = {2}</value>
+  </data>
+  <data name="Serializer.TransitionWithNonIntegerProperty" xml:space="preserve">
+    <value>Обнаружен переход с не целочисленным {0} = {1}</value>
+  </data>
+  <data name="Serializer.TransitionWithoutTag" xml:space="preserve">
+    <value>Обнаружен переход без тега {0}</value>
+  </data>
+  <data name="Serializer.TransitionWithNonExistent" xml:space="preserve">
+    <value>Обнаружен переход с несуществующим {0} = {1}</value>
+  </data>
+  <data name="Serializer.MultiCharTransitionTokenUnsupported" xml:space="preserve">
+    <value>Многосимвольные токены перехода не поддерживаются</value>
+  </data>
 </root>

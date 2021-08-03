@@ -126,7 +126,7 @@ namespace AutomataConstructor
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format($"{Lang.Saves_FailedToLoadAutomaton}\n {0}", ex));
+                MessageBox.Show(ex.Message, Lang.Saves_FailedToLoadAutomaton);
             }
         }
 
