@@ -679,6 +679,8 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
+        public bool CanConvertNfaToDfa() => !executorViewModel.InSimulation;
+
         public void Dispose()
         {
             editor?.Dispose();
