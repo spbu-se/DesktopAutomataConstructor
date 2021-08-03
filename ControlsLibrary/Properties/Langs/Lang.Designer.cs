@@ -322,6 +322,96 @@ namespace ControlsLibrary.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JFLAP file has no {0} tag.
+        /// </summary>
+        public static string Serializer_MissingJflapTag {
+            get {
+                return ResourceManager.GetString("Serializer.MissingJflapTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XML file has no root element.
+        /// </summary>
+        public static string Serializer_MissingXmlRoot {
+            get {
+                return ResourceManager.GetString("Serializer.MissingXmlRoot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multi-char transition tokens aren&apos;t supported.
+        /// </summary>
+        public static string Serializer_MultiCharTransitionTokenUnsupported {
+            get {
+                return ResourceManager.GetString("Serializer.MultiCharTransitionTokenUnsupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encountered state with non-integer id = {0}.
+        /// </summary>
+        public static string Serializer_StateWithNonIntegerId {
+            get {
+                return ResourceManager.GetString("Serializer.StateWithNonIntegerId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encountered state &quot;{0}&quot; with non-numerical {1} = {2}.
+        /// </summary>
+        public static string Serializer_StateWithNonNumericalProperty {
+            get {
+                return ResourceManager.GetString("Serializer.StateWithNonNumericalProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encountered state without &lt;id&gt; tag.
+        /// </summary>
+        public static string Serializer_StateWithoutIdTag {
+            get {
+                return ResourceManager.GetString("Serializer.StateWithoutIdTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encountered transition with non-existent {0} = {1}.
+        /// </summary>
+        public static string Serializer_TransitionWithNonExistent {
+            get {
+                return ResourceManager.GetString("Serializer.TransitionWithNonExistent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encountered transition with non-integer {0} = {1}.
+        /// </summary>
+        public static string Serializer_TransitionWithNonIntegerProperty {
+            get {
+                return ResourceManager.GetString("Serializer.TransitionWithNonIntegerProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encountered transition without {0} tag.
+        /// </summary>
+        public static string Serializer_TransitionWithoutTag {
+            get {
+                return ResourceManager.GetString("Serializer.TransitionWithoutTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automaton type &quot;{0}&quot; isn&apos;t supported.
+        /// </summary>
+        public static string Serializer_UnsupportedAutomatonType {
+            get {
+                return ResourceManager.GetString("Serializer.UnsupportedAutomatonType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reject.
         /// </summary>
         public static string shouldReject {

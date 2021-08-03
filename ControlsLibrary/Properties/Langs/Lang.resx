@@ -231,4 +231,34 @@
   <data name="Types.FSM" xml:space="preserve">
     <value>Finite state machine</value>
   </data>
+  <data name="Serializer.MissingXmlRoot" xml:space="preserve">
+    <value>XML file has no root element</value>
+  </data>
+  <data name="Serializer.MissingJflapTag" xml:space="preserve">
+    <value>JFLAP file has no {0} tag</value>
+  </data>
+  <data name="Serializer.UnsupportedAutomatonType" xml:space="preserve">
+    <value>Automaton type "{0}" isn't supported</value>
+  </data>
+  <data name="Serializer.StateWithoutIdTag" xml:space="preserve">
+    <value>Encountered state without &lt;id&gt; tag</value>
+  </data>
+  <data name="Serializer.StateWithNonIntegerId" xml:space="preserve">
+    <value>Encountered state with non-integer id = {0}</value>
+  </data>
+  <data name="Serializer.StateWithNonNumericalProperty" xml:space="preserve">
+    <value>Encountered state "{0}" with non-numerical {1} = {2}</value>
+  </data>
+  <data name="Serializer.TransitionWithNonIntegerProperty" xml:space="preserve">
+    <value>Encountered transition with non-integer {0} = {1}</value>
+  </data>
+  <data name="Serializer.TransitionWithoutTag" xml:space="preserve">
+    <value>Encountered transition without {0} tag</value>
+  </data>
+  <data name="Serializer.TransitionWithNonExistent" xml:space="preserve">
+    <value>Encountered transition with non-existent {0} = {1}</value>
+  </data>
+  <data name="Serializer.MultiCharTransitionTokenUnsupported" xml:space="preserve">
+    <value>Multi-char transition tokens aren't supported</value>
+  </data>
 </root>
