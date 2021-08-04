@@ -24,15 +24,17 @@ namespace ControlsLibrary.Controls.Scene.Commands
             graphArea.RemoveEdge(data, true);
             UpdateEdgeRoutingPoints(source, target);
             edgeControl = copy;
+            //make a copy in order to preserve the references to properties            
         }
 
         public void Undo()
         {
-            var copy = new EdgeControl(edgeControl.Source, edgeControl.Target, 
-                edgeControl.Edge as EdgeViewModel);
-            var command = new CreateEdgeCommand(graphArea, edgeControl);
+            var command = new CreateEdgeCommand(graphArea,
+                new EdgeControl(edgeControl.Source, edgeControl.Target,
+                edgeControl.Edge as EdgeViewModel));
             command.Execute();
-            edgeControl = copy;
+            //pass a copy in order to preserve the references to properties
+            //which may be lost while undoing CreateEdgeCommand
         }
 
         private void UpdateEdgeRoutingPoints(NodeViewModel source, NodeViewModel target)

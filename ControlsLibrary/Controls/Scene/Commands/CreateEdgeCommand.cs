@@ -23,15 +23,14 @@ namespace ControlsLibrary.Controls.Scene.Commands
             graphArea.InsertEdgeAndData(data, edgeControl, 0, true);
             ParallelEdgesProblemSolver.AvoidParallelEdges(graphArea, edgeControl);
             edgeControl = copy;
+            //references to properties may be lost because of execution of Undo command or independent Remove- one
         }
 
         public void Undo()
         {
-            var copy = new EdgeControl(edgeControl.Source,
-                edgeControl.Target, edgeControl.Edge as EdgeViewModel); 
             var command = new RemoveEdgeCommand(graphArea, edgeControl);
             command.Execute();
-            edgeControl = copy;
+            //the data isn't lost as far as it is preserved in Execute method of RemoveEdgeCommand
         }
     }
 }

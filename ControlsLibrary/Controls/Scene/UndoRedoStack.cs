@@ -2,7 +2,7 @@
 
 namespace ControlsLibrary.Controls.Scene
 {
-    class UndoRedoStack
+    public class UndoRedoStack
     {
         private readonly Stack<ISceneCommand> undoStack;
         private readonly Stack<ISceneCommand> redoStack;

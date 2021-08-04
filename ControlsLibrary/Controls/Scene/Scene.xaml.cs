@@ -239,7 +239,13 @@ namespace ControlsLibrary.Controls.Scene
             this.SelectionStarted += StartSelection;
         }
 
-        private readonly UndoRedoStack undoRedoStack;
+        private UndoRedoStack undoRedoStack;
+
+        public UndoRedoStack UndoRedoStack
+        {
+            get => undoRedoStack;
+            set => undoRedoStack = value;
+        }
 
         /// <summary>
         /// Handles application hot keys
@@ -358,6 +364,8 @@ namespace ControlsLibrary.Controls.Scene
                 {
                     return;
                 }
+
+                ClearSelectedVertices();
 
                 var command = new RemoveEdgeCommand(graphArea, args.EdgeControl);
                 command.Execute();
@@ -692,16 +700,14 @@ namespace ControlsLibrary.Controls.Scene
                 return;
 
             var vc = args.VertexControl;
-            if (selectedVertices.Contains(vc))
+            if (selectedVertices.Remove(vc))
             {
-                //redo
-                selectedVertices.Remove(vc);
                 SafeRemoveSelectedVertices(args.RemoveCommand);
                 selectedVertices.Add(vc);
             }
 
+            ClearSelectedVertices();
             ClearSelectMode(true);
-            selectedVertices = null;
         }
 
         private void SafeRemoveSelectedVertices(CompositeCommand groupRemoveCommand)
@@ -712,7 +718,6 @@ namespace ControlsLibrary.Controls.Scene
                 command.Execute();
                 GraphEdited?.Invoke(this, EventArgs.Empty);
                 groupRemoveCommand.AddCommand(command);                
-                //raise an event vertexRemoved
             }
         }
 

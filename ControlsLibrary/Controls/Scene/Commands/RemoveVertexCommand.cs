@@ -28,22 +28,22 @@ namespace ControlsLibrary.Controls.Scene.Commands
 
         public bool CanBeUndone => true;
         public void Execute()
-        {
-            var vertex = vertexControl.Vertex as NodeViewModel;
-            graphArea.RemoveVertex(vertex, true);
-            vertexControl.Vertex = vertex;
-            
+        {                       
             EdgeControl ec;
-            EdgeControl edge;
+            EdgeControl copy;
             EdgeViewModel data;
             for (int i = 0; i < edges.Count; i++)
             { 
-                edge = edges[i];
-                data = edge.Edge as EdgeViewModel;
-                ec = new EdgeControl(edge.Source, edge.Target, data);
+                ec = edges[i];
+                data = ec.Edge as EdgeViewModel;
+                copy = new EdgeControl(ec.Source, ec.Target, data);
                 graphArea.RemoveEdge(data, true);
-                edges[i] = ec;
-            }            
+                edges[i] = copy;
+            }
+
+            var vertex = vertexControl.Vertex as NodeViewModel;
+            graphArea.RemoveVertex(vertexControl.Vertex as NodeViewModel, true);
+            vertexControl.Vertex = vertex;
         }
 
         public void Undo()
@@ -51,8 +51,8 @@ namespace ControlsLibrary.Controls.Scene.Commands
             var command = new CompositeCommand(new List<ISceneCommand>());
             command.AddCommand(new CreateVertexCommand(graphArea, vertexControl));
 
-            EdgeControl copy;
             EdgeControl ec;
+            EdgeControl copy;            
             for (int i = 0; i < edges.Count; i++)
             {
                 ec = edges[i];
@@ -60,6 +60,7 @@ namespace ControlsLibrary.Controls.Scene.Commands
                 command.AddCommand(new CreateEdgeCommand(graphArea, ec));
                 edges[i] = copy;
             }
+
             command.Execute();            
         }
     }
