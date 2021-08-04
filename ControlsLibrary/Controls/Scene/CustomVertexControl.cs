@@ -8,7 +8,7 @@ namespace ControlsLibrary.Controls.Scene
         public CustomVertexControl(object vertexData, bool tracePositionChange = true, bool bindToDataObject = true)
             : base(vertexData, tracePositionChange, bindToDataObject)
         {
-
+            IsSelected = false;
         }
         public bool IsSelected { get; set; }
     }
