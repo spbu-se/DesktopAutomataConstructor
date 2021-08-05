@@ -231,35 +231,52 @@ namespace ControlsLibrary.Controls.Scene
             RebuildFromSerializationDataOverAutomaton(data);
         }
 
-        private void RebuildFromSerializationDataOverAutomaton(IEnumerable<GraphSerializationData> data)
+        private void RebuildFromSerializationDataOverAutomaton(List<GraphSerializationData> data)
         {
-            foreach (var element in data)
-            {
-                if (element.Data is NodeViewModel)
-                {
-                    var newNodeViewModel = element.Data as NodeViewModel;
-                    newNodeViewModel.IsComponentObject = true;
-                    newNodeViewModel.ID = Convert.ToInt64($"{newNodeViewModel.ID}{openedAutomatonsCount}");
-                    var vc = CreateVertexControl(newNodeViewModel);
-                    vc.SetPosition(element.Position.X, element.Position.Y);
-                }
+            var vertexData = data.Where(a => a.Data is NodeViewModel);
+            var egdeData = data.Where(a => a.Data is EdgeViewModel);
 
-                if (element.Data is EdgeViewModel)
+            foreach (var element in vertexData)
+            {
+                var newNodeViewModel = element.Data as NodeViewModel;
+                newNodeViewModel.IsComponentObject = true;
+                newNodeViewModel.ID = Convert.ToInt64($"{newNodeViewModel.ID}{openedAutomatonsCount}");
+                var vc = CreateVertexControl(newNodeViewModel);
+                var position = ChangeVertexPosition(115, new Point(element.Position.X, element.Position.Y), newNodeViewModel);
+                vc.SetPosition(position);
+            }
+
+            foreach (var element in egdeData)
+            {
+                var edgeViewModel = element.Data as EdgeViewModel;
+                edgeViewModel.Source.ID = Convert.ToInt64($"{edgeViewModel.Source.ID}{openedAutomatonsCount}");
+                edgeViewModel.Target.ID = Convert.ToInt64($"{edgeViewModel.Target.ID}{openedAutomatonsCount}");
+                var dataSource 
+                    = graphArea.VertexList.Keys.FirstOrDefault(
+                        a => a.ID == edgeViewModel.Source.ID && a.IsComponentObject);
+                var dataTarget 
+                    = graphArea.VertexList.Keys.FirstOrDefault(
+                        a => a.ID == edgeViewModel.Target.ID && a.IsComponentObject);
+                edgeViewModel.Source = dataSource;
+                edgeViewModel.Target = dataTarget;
+                CreateEdgeControl(edgeViewModel);
+            }
+        }
+        
+        private Point ChangeVertexPosition(double nodeDiameter, Point position, NodeViewModel node)
+        {
+            var newPosition = position;
+            foreach (var vertex in graphArea.VertexList)
+            {
+                var currentPosition = new Point(vertex.Value.GetPosition().X, vertex.Value.GetPosition().Y);
+                var distance = Geometry.GetDistance(position, currentPosition);
+                if (node != vertex.Key && distance <= nodeDiameter)
                 {
-                    var edgeViewModel = element.Data as EdgeViewModel;
-                    edgeViewModel.Source.ID = Convert.ToInt64($"{edgeViewModel.Source.ID}{openedAutomatonsCount}");
-                    edgeViewModel.Target.ID = Convert.ToInt64($"{edgeViewModel.Target.ID}{openedAutomatonsCount}");
-                    var dataSource 
-                        = graphArea.VertexList.Keys.FirstOrDefault(
-                            a => a.ID == edgeViewModel.Source.ID && a.IsComponentObject);
-                    var dataTarget 
-                        = graphArea.VertexList.Keys.FirstOrDefault(
-                            a => a.ID == edgeViewModel.Target.ID && a.IsComponentObject);
-                    edgeViewModel.Source = dataSource;
-                    edgeViewModel.Target = dataTarget;
-                    CreateEdgeControl(edgeViewModel);
+                    newPosition = new Point(currentPosition.X + nodeDiameter * 2, currentPosition.Y + nodeDiameter * 2);
                 }
             }
+
+            return newPosition;
         }
 
         /// <summary>
