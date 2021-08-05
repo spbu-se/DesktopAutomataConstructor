@@ -86,8 +86,8 @@ namespace ControlsLibrary.Controls.Scene
             {
                 return;
             }
-
-            ClearSelectMode(true);
+                        
+            ClearSelectedVertices();
             ClearEditMode();
             foreach (var node in graphArea.LogicCore.Graph.Vertices)
             {
@@ -380,7 +380,7 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
-        private VertexControl selectedVertex;
+        private CustomVertexControl selectedVertex;
 
         private readonly EditorObjectManager editor;
 
@@ -398,7 +398,6 @@ namespace ControlsLibrary.Controls.Scene
                         return;
                     }
                     ClearSelectedVertices();
-                    ClearSelectMode(true);
                     var position = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
 
                     position.Offset(-60, -60); //Offset should be the half of the vertex controls width
@@ -411,15 +410,13 @@ namespace ControlsLibrary.Controls.Scene
                 else
                 {
                     ClearSelectedVertices();
-                    ClearSelectMode(true);
                     SelectionStarted?.Invoke(this, e);
                 }
             }
 
             else if (e.RightButton == MouseButtonState.Pressed)
             {
-                ClearSelectedVertices();
-                ClearSelectMode(true);
+                ClearSelectedVertices();                
                 SelectionStarted?.Invoke(this, e);
             }
         }
@@ -430,6 +427,12 @@ namespace ControlsLibrary.Controls.Scene
             {
                 if (selectedVertices.Count > 0)
                 {
+                    foreach(var vc in selectedVertices)
+                    {
+                        vc.IsSelected = false;
+                        DragBehaviour.SetIsTagged(vc, false);
+                    }
+
                     var command = new SelectCommand(selectedVertices, false);
                     undoRedoStack.AddCommand(command);
                 }
@@ -446,10 +449,10 @@ namespace ControlsLibrary.Controls.Scene
             {
                 ParallelEdgesProblemSolver.AvoidParallelEdges(graphArea, edge.Value);
             }
-            CreateDragCommand(args.VertexControl);
+            CreateDragCommand((CustomVertexControl)args.VertexControl);
         }
 
-        private void CreateDragCommand(VertexControl vc)
+        private void CreateDragCommand(CustomVertexControl vc)
         {
             var currentPosition = vc.GetPosition();
             if (currentPosition != dragStartPosition)
@@ -462,7 +465,7 @@ namespace ControlsLibrary.Controls.Scene
                 }
                 else
                 {
-                    command = new DragCommand(graphArea, new HashSet<VertexControl> { vc },
+                    command = new DragCommand(graphArea, new HashSet<CustomVertexControl> { vc },
                         currentPosition.X - dragStartPosition.X, currentPosition.Y - dragStartPosition.Y);
                 }
                 undoRedoStack.AddCommand(command);
@@ -475,7 +478,7 @@ namespace ControlsLibrary.Controls.Scene
             dragStartPosition = args.VertexControl.GetPosition();
         }
 
-        private void CreateEdgeBlueprint(VertexControl vc)
+        private void CreateEdgeBlueprint(CustomVertexControl vc)
         {
             editor.CreateVirtualEdge(vc);
             selectedVertex = vc;
@@ -489,7 +492,7 @@ namespace ControlsLibrary.Controls.Scene
             editor.DestroyVirtualEdge();
         }
 
-        private void CreateEdgeControl(VertexControl vc)
+        private void CreateEdgeControl(CustomVertexControl vc)
         {
             if (ExecutorViewModel.InSimulation)
             {
@@ -516,12 +519,12 @@ namespace ControlsLibrary.Controls.Scene
 
         private int numberOfVertex;
 
-        private VertexControl CreateVertexControl(Point position)
+        private CustomVertexControl CreateVertexControl(Point position)
         {
             var data = new NodeViewModel() { Name = "S" + numberOfVertex, IsFinal = false, IsInitial = false, IsExpanded = false };
             data.PropertyChanged += VertexEdited;
             numberOfVertex++;
-            var vc = new VertexControl(data);
+            var vc = new CustomVertexControl(data);
             data.PropertyChanged += errorReporter.GraphEdited;
             vc.SetPosition(position);
 
@@ -552,8 +555,9 @@ namespace ControlsLibrary.Controls.Scene
                     }
                 case SelectedTool.Edit:
                     {
-                        zoomControl.Cursor = Cursors.Pen;
-                        ClearSelectMode();
+                        zoomControl.Cursor = Cursors.Pen;                        
+                        ClearSelectedVertices();
+                        graphArea.SetVerticesDrag(false);
                         graphArea.SetEdgesDrag(false);
                         return;
                     }
@@ -618,31 +622,32 @@ namespace ControlsLibrary.Controls.Scene
         /// <summary>
         /// Selects node view model by the vertex control
         /// </summary>
-        private NodeViewModel SelectNode(VertexControl vertexControl)
+        private NodeViewModel SelectNode(CustomVertexControl vertexControl)
             => graphArea.VertexList.FirstOrDefault(x => x.Value == vertexControl).Key;
 
         private void OnSceneVertexSelected(object sender, VertexSelectedEventArgs args)
         {
+            var vertexControl = (CustomVertexControl)args.VertexControl;
             if (args.MouseArgs.LeftButton == MouseButtonState.Pressed)
             {
-                NodeSelected?.Invoke(this, new NodeSelectedEventArgs() { Node = SelectNode(args.VertexControl) });
+                NodeSelected?.Invoke(this, new NodeSelectedEventArgs() { Node = SelectNode(vertexControl) });
                 switch (Toolbar.SelectedTool)
                 {
                     case SelectedTool.Edit:
                         {
                             if (selectedVertex == null)
                             {
-                                CreateEdgeBlueprint(args.VertexControl);
+                                CreateEdgeBlueprint(vertexControl);
                             }
                             else
                             {
-                                CreateEdgeControl(args.VertexControl);
+                                CreateEdgeControl(vertexControl);
                             }                            
                             break;
                         }
                     case SelectedTool.Delete:
                         {
-                            SafeRemoveVertex(args.VertexControl);
+                            SafeRemoveVertex(vertexControl);
                             break;
                         }
                     default:
@@ -660,7 +665,7 @@ namespace ControlsLibrary.Controls.Scene
             {
                 if (Toolbar.SelectedTool == SelectedTool.Select)
                 {
-                    SelectNode(args.VertexControl).IsExpanded = !SelectNode(args.VertexControl).IsExpanded;
+                    SelectNode(vertexControl).IsExpanded = !SelectNode(vertexControl).IsExpanded;
                 }
             }
         }
@@ -679,7 +684,7 @@ namespace ControlsLibrary.Controls.Scene
             }
         }
 
-        private void SafeRemoveVertex(VertexControl vc)
+        private void SafeRemoveVertex(CustomVertexControl vc)
         {
             if (ExecutorViewModel.InSimulation)
             {
@@ -712,7 +717,6 @@ namespace ControlsLibrary.Controls.Scene
             }
 
             ClearSelectedVertices();
-            ClearSelectMode(true);
         }
 
         private void SafeRemoveSelectedVertices(CompositeCommand groupRemoveCommand)
@@ -727,15 +731,15 @@ namespace ControlsLibrary.Controls.Scene
         }
 
         private AdornerSelectedArea selectedArea;
-        private HashSet<VertexControl> selectedVertices;
+        private HashSet<CustomVertexControl> selectedVertices;
         private Point mouseDownPosition;
         private double initialTranslateX;
         private double initialTranslateY;
 
         private EventHandler<MouseButtonEventArgs> SelectionStarted;
-        private void SetVertexSelected(VertexControl vc, bool selected)
+        private void SetVertexSelected(CustomVertexControl vc, bool selected)
         {
-            HighlightBehaviour.SetHighlighted(vc, selected);
+            vc.IsSelected = selected;
             DragBehaviour.SetIsTagged(vc, selected);
             if (selected)
             {
@@ -756,7 +760,7 @@ namespace ControlsLibrary.Controls.Scene
             {
                 centrePosition = graphArea.TranslatePoint(vc.GetCenterPosition(), zoomControl);
                 selected = selectedRect.Contains(centrePosition);
-                SetVertexSelected(vc, selected);
+                SetVertexSelected((CustomVertexControl)vc, selected);
             }
         }
 
@@ -781,7 +785,7 @@ namespace ControlsLibrary.Controls.Scene
             zoomControl.Cursor = Cursors.Arrow;
             mouseDownPosition = e.GetPosition(zoomControl);
             InitSelectedArea();
-            selectedVertices = new HashSet<VertexControl>();
+            selectedVertices = new HashSet<CustomVertexControl>();
         }
 
         private void InitSelectedArea()

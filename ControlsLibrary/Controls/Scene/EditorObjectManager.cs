@@ -37,7 +37,7 @@ namespace ControlsLibrary.Controls.Scene
         /// Creates a new edge blueprint on the scene
         /// </summary>
         /// <param name="source">Source vertex for a edge bluepting</param>
-        public void CreateVirtualEdge(VertexControl source)
+        public void CreateVirtualEdge(CustomVertexControl source)
         {
             edgeBlueprint = new EdgeBlueprint(source, (SolidColorBrush)resourceDictionary["EdgeArrowBrush"]);
             graphArea.InsertCustomChildControl(0, edgeBlueprint.EdgePath);

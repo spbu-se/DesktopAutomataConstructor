@@ -22,13 +22,13 @@ namespace ControlsLibrary.Tests
                 var graphArea = scene.GraphArea;
 
                 var firstNodeData = new NodeViewModel() { Name = "S1", IsInitial = false, IsFinal = false };
-                var firstVertexControl = new VertexControl(firstNodeData);
+                var firstVertexControl = new CustomVertexControl(firstNodeData);
                 var command = new CreateVertexCommand(graphArea, firstVertexControl);
                 command.Execute();
                 stack.AddCommand(command);
 
                 var secondNodeData = new NodeViewModel() { Name = "S2", IsInitial = false, IsFinal = false };
-                var secondVertexControl = new VertexControl(secondNodeData);
+                var secondVertexControl = new CustomVertexControl(secondNodeData);
                 command = new CreateVertexCommand(graphArea, secondVertexControl);
                 command.Execute();
                 stack.AddCommand(command);
@@ -99,7 +99,7 @@ namespace ControlsLibrary.Tests
                 var graphArea = scene.GraphArea;
 
                 var data = new NodeViewModel() { Name = "S", IsInitial = false, IsFinal = false };
-                var vertexControl = new VertexControl(data);
+                var vertexControl = new CustomVertexControl(data);
                 var createCommand = new CreateVertexCommand(graphArea, vertexControl);
                 createCommand.Execute();
                 stack.AddCommand(createCommand);

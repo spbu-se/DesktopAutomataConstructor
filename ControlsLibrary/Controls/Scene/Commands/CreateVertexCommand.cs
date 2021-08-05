@@ -7,8 +7,8 @@ namespace ControlsLibrary.Controls.Scene.Commands
     public class CreateVertexCommand : ISceneCommand
     {
         private readonly GraphArea graphArea;
-        private readonly VertexControl vertexControl;
-        public CreateVertexCommand(GraphArea graphArea, VertexControl vertexControl)
+        private readonly CustomVertexControl vertexControl;
+        public CreateVertexCommand(GraphArea graphArea, CustomVertexControl vertexControl)
         {
             this.graphArea = graphArea;
             this.vertexControl = vertexControl;

@@ -5,18 +5,18 @@ namespace ControlsLibrary.Controls.Scene.Commands
 {
     public class SelectCommand : ISceneCommand
     {
-        private readonly ICollection<VertexControl> vertices;
+        private readonly ICollection<CustomVertexControl> vertices;
         private readonly bool selected;
 
-        public SelectCommand(ICollection<VertexControl> vertices, bool selected)
+        public SelectCommand(ICollection<CustomVertexControl> vertices, bool selected)
         {
             this.vertices = vertices;
             this.selected = selected;
         }
-        private void SelectVertex(VertexControl vc)
+        private void SelectVertex(CustomVertexControl vc)
         {
             DragBehaviour.SetIsTagged(vc, selected);
-            HighlightBehaviour.SetHighlighted(vc, selected);
+            vc.IsSelected = selected;
         }
         public bool CanBeUndone => true;
 

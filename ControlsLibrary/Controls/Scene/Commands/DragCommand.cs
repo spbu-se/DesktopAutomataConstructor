@@ -6,11 +6,11 @@ namespace ControlsLibrary.Controls.Scene.Commands
     public class DragCommand : ISceneCommand
     {
         private readonly GraphArea graphArea;
-        private readonly ICollection<VertexControl> vertices;
+        private readonly ICollection<CustomVertexControl> vertices;
         private readonly double X_coordDiff;
         private readonly double Y_coordDiff;
 
-        public DragCommand(GraphArea graphArea, ICollection<VertexControl> vertices,
+        public DragCommand(GraphArea graphArea, ICollection<CustomVertexControl> vertices,
         double X_coordDiff, double Y_coordDiff)
         {
             this.graphArea = graphArea;

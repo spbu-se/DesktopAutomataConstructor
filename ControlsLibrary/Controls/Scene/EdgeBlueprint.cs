@@ -15,7 +15,7 @@ namespace ControlsLibrary.Controls.Scene
         /// <summary>
         /// The source vertex of an edge
         /// </summary>
-        public VertexControl Source { get; set; }
+        public CustomVertexControl Source { get; set; }
 
         /// <summary>
         /// The current target position of an edge
@@ -32,7 +32,7 @@ namespace ControlsLibrary.Controls.Scene
         /// </summary>
         /// <param name="source">Source vertex of a new edge</param>
         /// <param name="brush">Brush to draw a blueprint</param>
-        public EdgeBlueprint(VertexControl source, Brush brush)
+        public EdgeBlueprint(CustomVertexControl source, Brush brush)
         {
             EdgePath = new Path { Stroke = brush, Data = new LineGeometry() };
             Source = source;

@@ -7,7 +7,7 @@ namespace ControlsLibrary.Controls.Scene.Commands
     public class RemoveVertexCommand : ISceneCommand
     {
         private readonly GraphArea graphArea;
-        private readonly VertexControl vertexControl;
+        private readonly CustomVertexControl vertexControl;
         private readonly List<EdgeControl> edges;
 
         private void AddAllEdges()
@@ -18,7 +18,7 @@ namespace ControlsLibrary.Controls.Scene.Commands
             }
         }
 
-        public RemoveVertexCommand(GraphArea graphArea, VertexControl vc)
+        public RemoveVertexCommand(GraphArea graphArea, CustomVertexControl vc)
         {
             this.graphArea = graphArea;
             this.vertexControl = vc;

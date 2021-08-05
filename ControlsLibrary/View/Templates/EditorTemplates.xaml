@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:controls="http://schemas.panthernet.ru/graphx/"
+                    xmlns:scene="clr-namespace:ControlsLibrary.Controls.Scene" 
                     xmlns:language="clr-namespace:ControlsLibrary.Properties.Langs"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
@@ -108,14 +109,14 @@
     </Style>
 
     <!-- VERTEX CONTROL -->
-    <Style TargetType="{x:Type controls:VertexControl}">
+    <Style TargetType="{x:Type scene:CustomVertexControl}">
         <Setter Property="Background" Value="White" />
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="VertexShape" Value="Circle" />
         <Setter Property="ShowLabel" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VertexControl}">
+                <ControlTemplate TargetType="{x:Type scene:CustomVertexControl}">
                     <Grid Width="{StaticResource NodeRadius}"  Height="{StaticResource NodeRadius}">
                         <Button MaxHeight="24" Command="{Binding ChangeHidingCommand}" Background="Transparent" BorderThickness="0"
                                 HorizontalAlignment="Right" VerticalAlignment="Top">
@@ -179,13 +180,17 @@
                 <Setter Property="BorderBrush" Value="Gold" />
                 <Setter Property="BorderThickness" Value="3" />
             </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="BorderBrush" Value="Brown" />
+                <Setter Property="BorderThickness" Value="3" />
+            </Trigger>
             <DataTrigger Binding="{Binding IsActual}" Value="True">
                 <Setter Property="Background" Value="PaleVioletRed" />
             </DataTrigger>
             <DataTrigger Binding="{Binding IsExpanded}" Value="False">
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type controls:VertexControl}">
+                        <ControlTemplate TargetType="{x:Type scene:CustomVertexControl}">
                             <Grid Width="{StaticResource NodeRadius}" Height="{StaticResource NodeRadius}">
                                 <Button MaxHeight="18" Command="{Binding ChangeHidingCommand}" Background="Transparent" BorderThickness="0"
                                         HorizontalAlignment="Right" VerticalAlignment="Top">

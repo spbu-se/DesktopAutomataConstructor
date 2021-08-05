@@ -1,5 +1,5 @@
 ﻿using GraphX.Controls;
-using System;
+using System.Windows;
 
 namespace ControlsLibrary.Controls.Scene
 {
@@ -10,6 +10,16 @@ namespace ControlsLibrary.Controls.Scene
         {
             IsSelected = false;
         }
-        public bool IsSelected { get; set; }
+
+        public static readonly DependencyProperty IsSelectedProperty;
+        static CustomVertexControl()
+        {
+            IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(CustomVertexControl));
+        }
+        public bool IsSelected 
+        {
+            get => (bool)GetValue(IsSelectedProperty);
+            set => SetValue(IsSelectedProperty, value);
+        }
     }
 }
