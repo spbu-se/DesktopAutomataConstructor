@@ -120,6 +120,12 @@
   <data name="AutomataConstructor.Name" xml:space="preserve">
     <value>Automata constructor</value>
   </data>
+  <data name="convert" xml:space="preserve">
+    <value>Convert</value>
+  </data>
+  <data name="convertNfaToDfa" xml:space="preserve">
+    <value>Convert NFA to DFA</value>
+  </data>
   <data name="file" xml:space="preserve">
     <value>File</value>
   </data>

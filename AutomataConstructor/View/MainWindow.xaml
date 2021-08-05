@@ -21,6 +21,7 @@
         <CommandBinding Command="{x:Static local:MainWindow.OpenAutomatonCommand}" CanExecute="CanOpenAutomatonCommandExecute" Executed="OnOpenAutomatonCommandExecuted" />
         <CommandBinding Command="{x:Static local:MainWindow.SaveTestsAsCommand}" CanExecute="CanSaveTestsAsCommandExecute" Executed="OnSaveTestsAsCommandExecuted" />
         <CommandBinding Command="{x:Static local:MainWindow.OpenTestsCommand}" CanExecute="CanOpenTestsCommandExecute" Executed="OnOpenTestsCommandExecuted" />
+        <CommandBinding Command="{x:Static local:MainWindow.ConvertNfaToDfaCommand}" CanExecute="CanConvertNfaToDfaExecute" Executed="OnConvertNfaToDfaExecuted" />
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -50,6 +51,9 @@
                 <MenuItem Header="{x:Static language:Lang.openAutomat}" Command="{x:Static local:MainWindow.OpenAutomatonCommand}" InputGestureText="Ctrl+O" />
                 <MenuItem Header="{x:Static language:Lang.saveTestsAs}" Command="{x:Static local:MainWindow.SaveTestsAsCommand}" />
                 <MenuItem Header="{x:Static language:Lang.openTests}" Command="{x:Static local:MainWindow.OpenTestsCommand}" />
+            </MenuItem>
+            <MenuItem Header="{x:Static language:Lang.convert}">
+                <MenuItem Header="{x:Static language:Lang.convertNfaToDfa}" Command="{x:Static local:MainWindow.ConvertNfaToDfaCommand}" />
             </MenuItem>
         </Menu>
 

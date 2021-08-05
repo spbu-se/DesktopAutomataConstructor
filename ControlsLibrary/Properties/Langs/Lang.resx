@@ -120,6 +120,9 @@
   <data name="addNewTest" xml:space="preserve">
     <value>Add new</value>
   </data>
+  <data name="alreadyDeterministic" xml:space="preserve">
+    <value>The automaton is already deterministic</value>
+  </data>
   <data name="AutomataConstructor.Name" xml:space="preserve">
     <value>Automata constructor</value>
   </data>

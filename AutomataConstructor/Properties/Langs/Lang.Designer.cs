@@ -70,6 +70,24 @@ namespace AutomataConstructor.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Convert.
+        /// </summary>
+        public static string convert {
+            get {
+                return ResourceManager.GetString("convert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert NFA to DFA.
+        /// </summary>
+        public static string convertNfaToDfa {
+            get {
+                return ResourceManager.GetString("convertNfaToDfa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         public static string file {
