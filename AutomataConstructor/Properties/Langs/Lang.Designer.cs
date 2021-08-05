@@ -187,6 +187,15 @@ namespace AutomataConstructor.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save selected area.
+        /// </summary>
+        public static string saveSelectedArea {
+            get {
+                return ResourceManager.GetString("saveSelectedArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save tests as....
         /// </summary>
         public static string saveTestsAs {

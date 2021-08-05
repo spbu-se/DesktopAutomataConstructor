@@ -162,4 +162,7 @@
   <data name="saveTestsAs" xml:space="preserve">
     <value>Save tests as...</value>
   </data>
+  <data name="saveSelectedArea" xml:space="preserve">
+    <value>Save selected area</value>
+  </data>
 </root>

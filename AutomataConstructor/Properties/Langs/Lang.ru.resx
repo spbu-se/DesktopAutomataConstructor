@@ -165,4 +165,7 @@
   <data name="saveTestsAs" xml:space="preserve">
     <value>Сохранить тесты как...</value>
   </data>
+  <data name="saveSelectedArea" xml:space="preserve">
+    <value>Сохранить выбранную область</value>
+  </data>
 </root>

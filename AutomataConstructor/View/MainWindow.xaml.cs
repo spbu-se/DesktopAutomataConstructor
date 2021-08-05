@@ -103,6 +103,24 @@ namespace AutomataConstructor
             => e.CanExecute = savePath != null && File.Exists(savePath) && scene != null && scene.CanSave();
 
         #endregion SaveAutomatonCommand
+        
+        #region SaveSelectedAreaCommand
+
+        public static RoutedCommand SaveSelectedAreaCommand { get; set; } = new RoutedCommand("SaveSelectedArea", typeof(MainWindow));
+
+        private void OnSaveSelectedAreaCommandExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog { Filter = "All files|*.xml", Title = Lang.Saves_SelectAutomatonFileName, FileName = "automaton.xml" };
+            if (dialog.ShowDialog() == true)
+            {
+                scene.SaveSelectedArea(dialog.FileName);
+            }
+        }
+
+        private void CanSaveSelectedAreaCommandExecute(object sender, CanExecuteRoutedEventArgs e)
+            => e.CanExecute = savePath != null && scene.CanSelectedAreaBeSaved();
+
+        #endregion SaveSelectedAreaCommand
 
         #region OpenAutomatonCommand
 
