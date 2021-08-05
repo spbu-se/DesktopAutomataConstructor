@@ -86,8 +86,8 @@ namespace ControlsLibrary.Controls.Scene
             {
                 return;
             }
-                        
-            ClearSelectedVertices();
+
+            ClearSelectMode();
             ClearEditMode();
             foreach (var node in graphArea.LogicCore.Graph.Vertices)
             {
@@ -370,6 +370,7 @@ namespace ControlsLibrary.Controls.Scene
                     return;
                 }
 
+                ClearSelectMode(true);
                 ClearSelectedVertices();
 
                 var command = new RemoveEdgeCommand(graphArea, args.EdgeControl);
@@ -397,6 +398,7 @@ namespace ControlsLibrary.Controls.Scene
                     {
                         return;
                     }
+                    ClearSelectMode(true);
                     ClearSelectedVertices();
                     var position = zoomControl.TranslatePoint(e.GetPosition(zoomControl), graphArea);
 
@@ -409,6 +411,7 @@ namespace ControlsLibrary.Controls.Scene
                 }
                 else
                 {
+                    ClearSelectMode(true);
                     ClearSelectedVertices();
                     SelectionStarted?.Invoke(this, e);
                 }
@@ -416,6 +419,7 @@ namespace ControlsLibrary.Controls.Scene
 
             else if (e.RightButton == MouseButtonState.Pressed)
             {
+                ClearSelectMode(true);
                 ClearSelectedVertices();                
                 SelectionStarted?.Invoke(this, e);
             }
@@ -427,12 +431,6 @@ namespace ControlsLibrary.Controls.Scene
             {
                 if (selectedVertices.Count > 0)
                 {
-                    foreach(var vc in selectedVertices)
-                    {
-                        vc.IsSelected = false;
-                        DragBehaviour.SetIsTagged(vc, false);
-                    }
-
                     var command = new SelectCommand(selectedVertices, false);
                     undoRedoStack.AddCommand(command);
                 }
@@ -555,9 +553,8 @@ namespace ControlsLibrary.Controls.Scene
                     }
                 case SelectedTool.Edit:
                     {
-                        zoomControl.Cursor = Cursors.Pen;                        
-                        ClearSelectedVertices();
-                        graphArea.SetVerticesDrag(false);
+                        zoomControl.Cursor = Cursors.Pen;
+                        ClearSelectMode();
                         graphArea.SetEdgesDrag(false);
                         return;
                     }
@@ -599,7 +596,7 @@ namespace ControlsLibrary.Controls.Scene
                 .ToList()
                 .ForEach(a =>
                 {
-                    HighlightBehaviour.SetHighlighted(a, false);
+                    ((CustomVertexControl)a).IsSelected = false;
                     DragBehaviour.SetIsTagged(a, false);
                 });
 
@@ -716,6 +713,7 @@ namespace ControlsLibrary.Controls.Scene
                 selectedVertices.Add(vc);
             }
 
+            ClearSelectMode(true);
             ClearSelectedVertices();
         }
 
