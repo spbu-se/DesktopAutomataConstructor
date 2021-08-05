@@ -218,7 +218,7 @@ namespace ControlsLibrary.Controls.Scene
             foreach (var vertex in selectedVertices)
             {
                 var position = new GraphX.Measure.Point(vertex.GetPosition().X, vertex.GetPosition().Y);
-                datalist.Add(new GraphSerializationData { Position = position, Data = FindNode(vertex)});
+                datalist.Add(new GraphSerializationData { Position = position, Data = SelectNode(vertex)});
             }
 
             foreach (var edge in graphArea.EdgesList)
@@ -233,19 +233,7 @@ namespace ControlsLibrary.Controls.Scene
             return datalist;
         }
 
-        private NodeViewModel FindNode(VertexControl vc)
-        {
-            NodeViewModel node = null;
-            foreach (var vertex in graphArea.VertexList)
-            {
-                if (vertex.Value == vc)
-                {
-                    node = vertex.Key;
-                }
-            }
-
-            return node;
-        }
+        public VertexControl GetVertexControl(NodeViewModel node) => graphArea.VertexList[node];
 
         /// <summary>
         /// Returns if graph can be saved or not
@@ -766,7 +754,7 @@ namespace ControlsLibrary.Controls.Scene
         private double initialTranslateY;
 
         private EventHandler<MouseButtonEventArgs> SelectionStarted;
-        private void SetVertexSelected(VertexControl vc, bool selected)
+        public void SetVertexSelected(VertexControl vc, bool selected)
         {
             HighlightBehaviour.SetHighlighted(vc, selected);
             DragBehaviour.SetIsTagged(vc, selected);
