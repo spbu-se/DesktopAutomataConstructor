@@ -40,5 +40,7 @@ namespace ControlsLibrary.Controls.Scene
         /// <param name="p2">Second point.</param>
         /// <returns>Distance between two points.</returns>
         public static double GetDistance(Point p1, Point p2) => (p1 - p2).Length;
+
+        public static double GetDistance(System.Windows.Point p1, System.Windows.Point p2) => (p1 - p2).Length;
     }
 }

@@ -18,6 +18,7 @@
         <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatonAsCommand}" CanExecute="CanSaveAutomatonAsCommandExecute" Executed="OnSaveAutomatonAsCommandExecuted" />
         <CommandBinding Command="{x:Static local:MainWindow.SaveAutomatonCommand}" CanExecute="CanSaveAutomatonCommandExecute" Executed="OnSaveAutomatonCommandExecuted" />
         <CommandBinding Command="{x:Static local:MainWindow.OpenAutomatonCommand}" CanExecute="CanOpenAutomatonCommandExecute" Executed="OnOpenAutomatonCommandExecuted" />
+        <CommandBinding Command="{x:Static local:MainWindow.OpenOverAutomatonCommand}" CanExecute="CanOpenOverAutomatonCommandExecute" Executed="OnOpenOverAutomatonCommandExecuted" />
         <CommandBinding Command="{x:Static local:MainWindow.SaveTestsAsCommand}" CanExecute="CanSaveTestsAsCommandExecute" Executed="OnSaveTestsAsCommandExecuted" />
         <CommandBinding Command="{x:Static local:MainWindow.OpenTestsCommand}" CanExecute="CanOpenTestsCommandExecute" Executed="OnOpenTestsCommandExecuted" />
         <CommandBinding Command="{x:Static local:MainWindow.ConvertNfaToDfaCommand}" CanExecute="CanConvertNfaToDfaExecute" Executed="OnConvertNfaToDfaExecuted" />
@@ -47,6 +48,7 @@
                 <MenuItem Header="{x:Static language:Lang.saveAutomatAs}" Command="{x:Static local:MainWindow.SaveAutomatonAsCommand}" InputGestureText="Ctrl+Shift+S" />
                 <MenuItem Header="{x:Static language:Lang.saveAutomat}" Command="{x:Static local:MainWindow.SaveAutomatonCommand}" InputGestureText="Ctrl+S" />
                 <MenuItem Header="{x:Static language:Lang.openAutomat}" Command="{x:Static local:MainWindow.OpenAutomatonCommand}" InputGestureText="Ctrl+O" />
+                <MenuItem Header="{x:Static language:Lang.openOverAutomat}" Command="{x:Static local:MainWindow.OpenOverAutomatonCommand}" />
                 <MenuItem Header="{x:Static language:Lang.saveTestsAs}" Command="{x:Static local:MainWindow.SaveTestsAsCommand}" />
                 <MenuItem Header="{x:Static language:Lang.openTests}" Command="{x:Static local:MainWindow.OpenTestsCommand}" />
             </MenuItem>
