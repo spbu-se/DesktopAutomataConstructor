@@ -192,6 +192,60 @@ namespace ControlsLibrary.Controls.Scene
             });
             FileServiceProviderWpf.SerializeDataToFile(path, datas);
         }
+        
+        /// <summary>
+        /// Serializes and saves selected graph area in xml format into the file in the given path
+        /// </summary>
+        /// <param name="path">Path of the file to save graph</param>
+        public void SaveSelectedArea(string path)
+        {
+            var datas = ExtractSerializationDataFromSelected();
+            datas.ForEach(data =>
+            {
+                if (data.Data.GetType() == typeof(NodeViewModel))
+                {
+                    data.HasLabel = false;
+                }
+            });
+            FileServiceProviderWpf.SerializeDataToFile(path, datas);
+        }
+
+        public bool CanSelectedAreaBeSaved() => selectedVertices != null && selectedVertices.Count > 0;
+
+        private List<GraphSerializationData> ExtractSerializationDataFromSelected()
+        {
+            var datalist = new List<GraphSerializationData>();
+            foreach (var vertex in selectedVertices)
+            {
+                var position = new GraphX.Measure.Point(vertex.GetPosition().X, vertex.GetPosition().Y);
+                datalist.Add(new GraphSerializationData { Position = position, Data = FindNode(vertex)});
+            }
+
+            foreach (var edge in graphArea.EdgesList)
+            {
+                if (selectedVertices.Contains(graphArea.VertexList[edge.Key.Source]) &&
+                    selectedVertices.Contains(graphArea.VertexList[edge.Key.Target]))
+                {
+                    datalist.Add(new GraphSerializationData { Position = new GraphX.Measure.Point(), Data = edge.Key, IsVisible = edge.Value.Visibility == Visibility.Visible, HasLabel = true });
+                }
+            }
+
+            return datalist;
+        }
+
+        private NodeViewModel FindNode(VertexControl vc)
+        {
+            NodeViewModel node = null;
+            foreach (var vertex in graphArea.VertexList)
+            {
+                if (vertex.Value == vc)
+                {
+                    node = vertex.Key;
+                }
+            }
+
+            return node;
+        }
 
         /// <summary>
         /// Returns if graph can be saved or not
@@ -220,6 +274,7 @@ namespace ControlsLibrary.Controls.Scene
                 edge.PropertyChanged += EdgeEdited;
             }
 
+            selectedVertices = null;
             GraphEdited?.Invoke(this, EventArgs.Empty);
         }
 
@@ -705,7 +760,7 @@ namespace ControlsLibrary.Controls.Scene
         }
 
         private AdornerSelectedArea selectedArea;
-        private HashSet<VertexControl> selectedVertices;
+        private HashSet<VertexControl> selectedVertices = null;
         private Point mouseDownPosition;
         private double initialTranslateX;
         private double initialTranslateY;
