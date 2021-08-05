@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ControlsLibrary.Controls.Scene.Commands
 {
-    class RemoveVertexCommand : ISceneCommand
+    public class RemoveVertexCommand : ISceneCommand
     {
         private readonly GraphArea graphArea;
         private readonly VertexControl vertexControl;

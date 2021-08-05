@@ -4,7 +4,7 @@ using System;
 
 namespace ControlsLibrary.Controls.Scene.Commands
 {
-    class CreateVertexCommand : ISceneCommand
+    public class CreateVertexCommand : ISceneCommand
     {
         private readonly GraphArea graphArea;
         private readonly VertexControl vertexControl;

@@ -247,6 +247,11 @@ namespace ControlsLibrary.Controls.Scene
             set => undoRedoStack = value;
         }
 
+        public GraphArea GraphArea
+        {
+            get => graphArea;
+        }
+
         /// <summary>
         /// Handles application hot keys
         /// </summary>

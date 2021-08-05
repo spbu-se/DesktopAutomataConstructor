@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ControlsLibrary.Controls.Scene.Commands
 {
-    class RemoveEdgeCommand : ISceneCommand
+    public class RemoveEdgeCommand : ISceneCommand
     {
         private readonly GraphArea graphArea;
         private EdgeControl edgeControl; 

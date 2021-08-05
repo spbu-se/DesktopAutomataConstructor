@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ControlsLibrary.Controls.Scene.Commands
 {
-    class DragCommand : ISceneCommand
+    public class DragCommand : ISceneCommand
     {
         private readonly GraphArea graphArea;
         private readonly ICollection<VertexControl> vertices;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ControlsLibrary.Controls.Scene.Commands
 {
-    class EditEdgeCommand : ISceneCommand
+    public class EditEdgeCommand : ISceneCommand
     {
         static Dictionary<string, Action<EdgeViewModel, object>> setProperty =
             new Dictionary<string, Action<EdgeViewModel, object>>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ControlsLibrary.Controls.Scene.Commands
 {
-    class EditVertexCommand
+    public class EditVertexCommand
     {
         static Dictionary<string, Action<NodeViewModel, object>> setProperty =
             new Dictionary<string, Action<NodeViewModel, object>>

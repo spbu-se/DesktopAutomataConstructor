@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ControlsLibrary.Controls.Scene.Commands
 {
-    class SelectCommand : ISceneCommand
+    public class SelectCommand : ISceneCommand
     {
         private readonly ICollection<VertexControl> vertices;
         private readonly bool selected;

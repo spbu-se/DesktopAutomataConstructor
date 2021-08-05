@@ -3,7 +3,7 @@ using GraphX.Controls;
 
 namespace ControlsLibrary.Controls.Scene.Commands
 {
-    class CreateEdgeCommand : ISceneCommand
+    public class CreateEdgeCommand : ISceneCommand
     {
         private readonly GraphArea graphArea;
         private EdgeControl edgeControl;
