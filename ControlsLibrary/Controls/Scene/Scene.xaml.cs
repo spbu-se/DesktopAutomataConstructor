@@ -666,11 +666,13 @@ namespace ControlsLibrary.Controls.Scene
             try
             {
                 var dfaGraph = NfaToDfaConverter.Convert(graphArea.LogicCore.Graph);
-                graphArea.VertexList.Values.ForEach(SafeRemoveVertex);
+                graphArea.RemoveAllEdges(true);
+                graphArea.RemoveAllVertices(true);
                 dfaGraph.Vertices.ForEach(node => CreateVertexControl(node));
                 dfaGraph.Edges.ForEach(edge => CreateEdgeControl(edge));
                 numberOfVertex = graphArea.VertexList.Count;
                 graphArea.RelayoutGraph();
+                graphArea.EdgesList.Values.ForEach(AvoidParallelEdges);
                 GraphEdited?.Invoke(this, EventArgs.Empty);
             }
             catch (InvalidOperationException exception)
@@ -678,6 +680,8 @@ namespace ControlsLibrary.Controls.Scene
                 MessageBox.Show(exception.Message, Lang.Errors_InvalidAutomaton, MessageBoxButton.OK);
             }
         }
+
+        public bool CanConvertNfaToDfa() => !executorViewModel.InSimulation;
 
         public void Dispose()
         {

@@ -88,15 +88,13 @@ namespace ControlsLibrary.Model
         }
 
         private static NodeViewModel CreateCompositeNode(IReadOnlyList<NodeViewModel> nodes) =>
-            nodes.Count == 1
-                ? nodes[0]
-                : new NodeViewModel
-                {
-                    Name = String.Join(",", nodes.Select(v => v.Name)),
-                    IsFinal = nodes.Any(v => v.IsFinal),
-                    IsInitial = false,
-                    IsExpanded = false
-                };
+            new NodeViewModel
+            {
+                Name = String.Join(",", nodes.Select(v => v.Name)),
+                IsFinal = nodes.Any(v => v.IsFinal),
+                IsInitial = false,
+                IsExpanded = false
+            };
 
         private static void RequireValidNfa(BidirectionalGraph<NodeViewModel, EdgeViewModel> nfaGraph)
         {

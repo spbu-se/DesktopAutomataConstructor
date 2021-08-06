@@ -186,7 +186,7 @@ namespace AutomataConstructor
             scene.ConvertNfaToDfa();
         }
 
-        private void CanConvertNfaToDfaExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+        private void CanConvertNfaToDfaExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = scene.CanConvertNfaToDfa();
 
         #endregion
 
