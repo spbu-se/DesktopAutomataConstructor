@@ -666,8 +666,8 @@ namespace ControlsLibrary.Controls.Scene
             try
             {
                 var dfaGraph = NfaToDfaConverter.Convert(graphArea.LogicCore.Graph);
-                graphArea.RemoveAllEdges();
-                graphArea.RemoveAllVertices();
+                graphArea.RemoveAllEdges(true);
+                graphArea.RemoveAllVertices(true);
                 dfaGraph.Vertices.ForEach(node => CreateVertexControl(node));
                 dfaGraph.Edges.ForEach(edge => CreateEdgeControl(edge));
                 numberOfVertex = graphArea.VertexList.Count;
